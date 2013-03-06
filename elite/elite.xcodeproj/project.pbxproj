@@ -24,6 +24,8 @@
 		65B7FDFB16E746A500F65710 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B7FDDA16E746A400F65710 /* CoreData.framework */; };
 		65B7FE0316E746A500F65710 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE0116E746A500F65710 /* InfoPlist.strings */; };
 		65B7FE0616E746A500F65710 /* eliteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE0516E746A500F65710 /* eliteTests.m */; };
+		65B7FE1316E7477000F65710 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE1116E7477000F65710 /* LoginViewController.m */; };
+		65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1216E7477000F65710 /* LoginViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,9 @@
 		65B7FE0216E746A500F65710 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		65B7FE0416E746A500F65710 /* eliteTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = eliteTests.h; sourceTree = "<group>"; };
 		65B7FE0516E746A500F65710 /* eliteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eliteTests.m; sourceTree = "<group>"; };
+		65B7FE1016E7477000F65710 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		65B7FE1116E7477000F65710 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		65B7FE1216E7477000F65710 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +127,10 @@
 			children = (
 				65B7FDE516E746A400F65710 /* AppDelegate.h */,
 				65B7FDE616E746A400F65710 /* AppDelegate.m */,
+				65B7FE1016E7477000F65710 /* LoginViewController.h */,
+				65B7FE1116E7477000F65710 /* LoginViewController.m */,
 				65B7FDEE16E746A500F65710 /* elite.xcdatamodeld */,
+				65B7FE0F16E7475B00F65710 /* XIB */,
 				65B7FDDD16E746A400F65710 /* Supporting Files */,
 			);
 			path = elite;
@@ -159,6 +167,14 @@
 				65B7FE0116E746A500F65710 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		65B7FE0F16E7475B00F65710 /* XIB */ = {
+			isa = PBXGroup;
+			children = (
+				65B7FE1216E7477000F65710 /* LoginViewController.xib */,
+			);
+			name = XIB;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +252,7 @@
 				65B7FDE916E746A400F65710 /* Default.png in Resources */,
 				65B7FDEB16E746A400F65710 /* Default@2x.png in Resources */,
 				65B7FDED16E746A400F65710 /* Default-568h@2x.png in Resources */,
+				65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +290,7 @@
 				65B7FDE316E746A400F65710 /* main.m in Sources */,
 				65B7FDE716E746A400F65710 /* AppDelegate.m in Sources */,
 				65B7FDF016E746A500F65710 /* elite.xcdatamodeld in Sources */,
+				65B7FE1316E7477000F65710 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
