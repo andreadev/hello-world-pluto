@@ -26,6 +26,7 @@
 		65B7FE0616E746A500F65710 /* eliteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE0516E746A500F65710 /* eliteTests.m */; };
 		65B7FE1316E7477000F65710 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE1116E7477000F65710 /* LoginViewController.m */; };
 		65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1216E7477000F65710 /* LoginViewController.xib */; };
+		65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1616E7486800F65710 /* LG_FBConnect.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		65B7FE1016E7477000F65710 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		65B7FE1116E7477000F65710 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		65B7FE1216E7477000F65710 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		65B7FE1616E7486800F65710 /* LG_FBConnect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LG_FBConnect.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,9 +145,7 @@
 				65B7FDDF16E746A400F65710 /* InfoPlist.strings */,
 				65B7FDE216E746A400F65710 /* main.m */,
 				65B7FDE416E746A400F65710 /* elite-Prefix.pch */,
-				65B7FDE816E746A400F65710 /* Default.png */,
-				65B7FDEA16E746A400F65710 /* Default@2x.png */,
-				65B7FDEC16E746A400F65710 /* Default-568h@2x.png */,
+				65B7FE1516E7480800F65710 /* Images */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -175,6 +175,17 @@
 				65B7FE1216E7477000F65710 /* LoginViewController.xib */,
 			);
 			name = XIB;
+			sourceTree = "<group>";
+		};
+		65B7FE1516E7480800F65710 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				65B7FE1616E7486800F65710 /* LG_FBConnect.png */,
+				65B7FDE816E746A400F65710 /* Default.png */,
+				65B7FDEA16E746A400F65710 /* Default@2x.png */,
+				65B7FDEC16E746A400F65710 /* Default-568h@2x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +264,7 @@
 				65B7FDEB16E746A400F65710 /* Default@2x.png in Resources */,
 				65B7FDED16E746A400F65710 /* Default-568h@2x.png in Resources */,
 				65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */,
+				65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
