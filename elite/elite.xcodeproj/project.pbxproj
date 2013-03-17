@@ -27,6 +27,8 @@
 		65B7FE1316E7477000F65710 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE1116E7477000F65710 /* LoginViewController.m */; };
 		65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1216E7477000F65710 /* LoginViewController.xib */; };
 		65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1616E7486800F65710 /* LG_FBConnect.png */; };
+		F70B27BA16F612C20048694C /* NewProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27B816F612C20048694C /* NewProductViewController.m */; };
+		F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27B916F612C20048694C /* NewProductViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,9 @@
 		65B7FE1116E7477000F65710 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		65B7FE1216E7477000F65710 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		65B7FE1616E7486800F65710 /* LG_FBConnect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LG_FBConnect.png; sourceTree = "<group>"; };
+		F70B27B716F612C20048694C /* NewProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewProductViewController.h; sourceTree = "<group>"; };
+		F70B27B816F612C20048694C /* NewProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewProductViewController.m; sourceTree = "<group>"; };
+		F70B27B916F612C20048694C /* NewProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewProductViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +136,8 @@
 				65B7FDE616E746A400F65710 /* AppDelegate.m */,
 				65B7FE1016E7477000F65710 /* LoginViewController.h */,
 				65B7FE1116E7477000F65710 /* LoginViewController.m */,
+				F70B27B716F612C20048694C /* NewProductViewController.h */,
+				F70B27B816F612C20048694C /* NewProductViewController.m */,
 				65B7FDEE16E746A500F65710 /* elite.xcdatamodeld */,
 				65B7FE0F16E7475B00F65710 /* XIB */,
 				65B7FDDD16E746A400F65710 /* Supporting Files */,
@@ -173,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				65B7FE1216E7477000F65710 /* LoginViewController.xib */,
+				F70B27B916F612C20048694C /* NewProductViewController.xib */,
 			);
 			name = XIB;
 			sourceTree = "<group>";
@@ -265,6 +273,7 @@
 				65B7FDED16E746A400F65710 /* Default-568h@2x.png in Resources */,
 				65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */,
 				65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */,
+				F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +312,7 @@
 				65B7FDE716E746A400F65710 /* AppDelegate.m in Sources */,
 				65B7FDF016E746A500F65710 /* elite.xcdatamodeld in Sources */,
 				65B7FE1316E7477000F65710 /* LoginViewController.m in Sources */,
+				F70B27BA16F612C20048694C /* NewProductViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,7 +363,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: andrea barbieri (3T7N8T765Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: andrea barbieri (3T7N8T765Y)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -367,6 +378,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PROVISIONING_PROFILE = "3D80B282-8E85-4D16-9415-B75BAAF94341";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3D80B282-8E85-4D16-9415-B75BAAF94341";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -380,6 +393,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: andrea barbieri (3T7N8T765Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -388,6 +402,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "3D80B282-8E85-4D16-9415-B75BAAF94341";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3D80B282-8E85-4D16-9415-B75BAAF94341";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -468,6 +484,7 @@
 				65B7FE0B16E746A500F65710 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65B7FE0C16E746A500F65710 /* Build configuration list for PBXNativeTarget "eliteTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +493,7 @@
 				65B7FE0E16E746A500F65710 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

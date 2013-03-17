@@ -19,9 +19,41 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    /*
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        // To-do, show logged in view
+    } else {
+        // No, display the login page.
+        [self showLoginView];
+    }
+    return YES;
+    
+     */
+    
+    NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
+    NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod,nil];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    
+    tabBarController.viewControllers = viewControllerArray;
+    
+    self.tabBarController = tabBarController;
+    
+    self.window.rootViewController = self.tabBarController;
+    
     [self.window makeKeyAndVisible];
+    
+    
     return YES;
 }
+/*
+ //FAI UNA ROBA DEL GENERE
+- (void)showLoginView
+{
+    LoginViewController *login = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    [self.window.rootViewController presentViewController:loginViewController animated:YES completion:NULL];
+}
+*/
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

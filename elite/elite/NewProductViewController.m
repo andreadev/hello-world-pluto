@@ -1,24 +1,29 @@
 //
-//  LoginViewController.m
+//  NewProductViewController.m
 //  elite
 //
-//  Created by Andrea on 06/03/13.
+//  Created by Andrea Barbieri on 17/03/13.
 //  Copyright (c) 2013 Andrea. All rights reserved.
 //
 
-#import "LoginViewController.h"
+#import "NewProductViewController.h"
 
-@interface LoginViewController ()
-
+@interface NewProductViewController ()
 @end
 
-@implementation LoginViewController
+@implementation NewProductViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        UITabBarItem *tabBarItem =[[UITabBarItem alloc]
+                                   initWithTitle:@"Nuovo Prodotto"
+                                   image:[UIImage imageNamed:@"prodotto.png"]
+                                   tag:0];
+        self.tabBarItem=tabBarItem;
+        
     }
     return self;
 }
@@ -27,12 +32,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    
-    
-    
-    
-
 }
 
 - (void)didReceiveMemoryWarning
