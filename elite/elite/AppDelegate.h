@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
 #import "NewProductViewController.h"
+#import "TutorialViewController.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
