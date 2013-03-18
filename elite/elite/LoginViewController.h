@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewProductViewController.h"
+#import "TutorialViewController.h"
 
 
 @interface LoginViewController : UIViewController
 
+@property (strong, nonatomic) UITabBarController *tabBarController;
+- (IBAction)Login:(id)sender;
 
 @end

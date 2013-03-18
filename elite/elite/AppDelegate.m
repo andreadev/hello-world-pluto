@@ -34,26 +34,10 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Tutorial"];
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
-        //proceed with app normally
-        NSLog(@"accettato");
-        NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
-        NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod,nil];
-        
-        UITabBarController *tabBarController = [[UITabBarController alloc] init];
-        
-        tabBarController.viewControllers = viewControllerArray;
-        
-        self.tabBarController = tabBarController;
-        
-        self.window.rootViewController = self.tabBarController;
-    }
-    else{
-        //show terms
-        NSLog(@"NO accettato");
-        [self loadTutorial];
-    }
     
+    LoginViewController *login = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    
+    self.window.rootViewController = login;
     
     
     [self.window makeKeyAndVisible];
@@ -194,13 +178,5 @@
 }
 
 
-- (void) loadTutorial{
-    NSLog(@"loaded");
-    TutorialViewController *tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
-    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:tutorial];
-    self.window.rootViewController = navVC;
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
-    NSLog(@"EX");
-    
-}
+
 @end
