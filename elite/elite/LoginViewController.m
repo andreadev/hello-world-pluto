@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "AppDelegate.h"
 
 @interface LoginViewController ()
 
@@ -79,5 +80,10 @@
 }
 
 - (IBAction)Login:(id)sender {
+    
+    //if(loginOK){
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate presentTabBarController];
+    //}
 }
 @end

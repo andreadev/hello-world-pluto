@@ -20,8 +20,11 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) UITabBarController *tabBarController;
+@property (strong, nonatomic) LoginViewController *loginController;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+
+-(void)presentTabBarController;
 
 @end

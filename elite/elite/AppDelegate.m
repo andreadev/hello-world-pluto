@@ -13,6 +13,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize tabBarController,loginController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -39,14 +40,16 @@
     NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
     NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod,nil];
     
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController = [[UITabBarController alloc] init];
     
     tabBarController.viewControllers = viewControllerArray;
     
-    self.tabBarController = tabBarController;
+    loginController = [[LoginViewController alloc] init];
+    
+    //self.tabBarController = tabBarController;
     
     //self.view = self.tabBarController.view;
-    self.window.rootViewController = self.tabBarController;
+    self.window.rootViewController = loginController;
     
     
     [self.window makeKeyAndVisible];
@@ -176,6 +179,10 @@
     }    
     
     return _persistentStoreCoordinator;
+}
+
+-(void)presentTabBarController{
+    self.window.rootViewController = tabBarController;
 }
 
 #pragma mark - Application's Documents directory
