@@ -35,9 +35,18 @@
     }
     
     
-    LoginViewController *login = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     
-    self.window.rootViewController = login;
+    NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
+    NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod,nil];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    
+    tabBarController.viewControllers = viewControllerArray;
+    
+    self.tabBarController = tabBarController;
+    
+    //self.view = self.tabBarController.view;
+    self.window.rootViewController = self.tabBarController;
     
     
     [self.window makeKeyAndVisible];
