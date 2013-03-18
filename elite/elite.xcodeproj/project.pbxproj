@@ -25,7 +25,6 @@
 		65B7FE0316E746A500F65710 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE0116E746A500F65710 /* InfoPlist.strings */; };
 		65B7FE0616E746A500F65710 /* eliteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE0516E746A500F65710 /* eliteTests.m */; };
 		65B7FE1316E7477000F65710 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE1116E7477000F65710 /* LoginViewController.m */; };
-		65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1216E7477000F65710 /* LoginViewController.xib */; };
 		65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1616E7486800F65710 /* LG_FBConnect.png */; };
 		F70B27BA16F612C20048694C /* NewProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27B816F612C20048694C /* NewProductViewController.m */; };
 		F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27B916F612C20048694C /* NewProductViewController.xib */; };
@@ -67,7 +66,6 @@
 		65B7FE0516E746A500F65710 /* eliteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eliteTests.m; sourceTree = "<group>"; };
 		65B7FE1016E7477000F65710 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		65B7FE1116E7477000F65710 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		65B7FE1216E7477000F65710 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		65B7FE1616E7486800F65710 /* LG_FBConnect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LG_FBConnect.png; sourceTree = "<group>"; };
 		F70B27B716F612C20048694C /* NewProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewProductViewController.h; sourceTree = "<group>"; };
 		F70B27B816F612C20048694C /* NewProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewProductViewController.m; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				F70B27BE16F656E50048694C /* TutorialViewController.xib */,
-				65B7FE1216E7477000F65710 /* LoginViewController.xib */,
 				F70B27B916F612C20048694C /* NewProductViewController.xib */,
 			);
 			name = XIB;
@@ -279,7 +276,6 @@
 				65B7FDE916E746A400F65710 /* Default.png in Resources */,
 				65B7FDEB16E746A400F65710 /* Default@2x.png in Resources */,
 				65B7FDED16E746A400F65710 /* Default-568h@2x.png in Resources */,
-				65B7FE1416E7477000F65710 /* LoginViewController.xib in Resources */,
 				65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */,
 				F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */,
 				F70B27C016F656E50048694C /* TutorialViewController.xib in Resources */,
