@@ -1,3 +1,4 @@
+
 //
 //  LoginViewController.m
 //  elite
@@ -33,12 +34,9 @@
     //check tutorial
     NSLog(@"Tutorial?");
     //[self checkTutorial];
-    
-    
-    
-    
-    
 
+    
+    
 }
 
 -(void) checkTutorial{
@@ -81,9 +79,59 @@
 
 - (IBAction)Login:(id)sender {
     
-    //if(loginOK){
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate presentTabBarController];
-    //}
+
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    if (appDelegate.session.isOpen) {
+        // if a user logs out explicitly, we delete any cached token information, and next
+        // time they run the applicaiton they will be presented with log in UX again; most
+        // users will simply close the app or switch away, without logging out; this will
+        // cause the implicit cached-token login to occur on next launch of the application
+        
+        
+        ///////AUTOLOGIN////////
+        //sessione aperta quindi autologin: ovviamente poi va visto anche dal lato server elite
+        
+    } else {
+        [appDelegate.session closeAndClearTokenInformation];
+        appDelegate.session = [[FBSession alloc] init];
+ 
+        [appDelegate.session openWithCompletionHandler:^(FBSession *session,FBSessionState state, NSError *error) {
+             [self sessionStateChanged:session state:state error:error];
+         }];
+    }
+
+    
+
 }
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    switch (state) {
+        case FBSessionStateOpen: {
+                [appDelegate presentTabBarController];
+            }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+                
+            
+            break;
+        default:
+            break;
+    }
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }    
+}
+
 @end

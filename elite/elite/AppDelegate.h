@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "LoginViewController.h"
 #import "NewProductViewController.h"
 #import "TutorialViewController.h"
@@ -19,8 +20,12 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) LoginViewController *loginController;
+
+@property (strong, nonatomic) FBSession *session;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
