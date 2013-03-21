@@ -36,6 +36,7 @@
 		F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27B916F612C20048694C /* NewProductViewController.xib */; };
 		F70B27BF16F656E50048694C /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27BD16F656E50048694C /* TutorialViewController.m */; };
 		F70B27C016F656E50048694C /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27BE16F656E50048694C /* TutorialViewController.xib */; };
+		F78EC2C816FA574B00E57078 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC2C716FA574B00E57078 /* test.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		F70B27BC16F656E50048694C /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		F70B27BD16F656E50048694C /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		F70B27BE16F656E50048694C /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
+		F78EC2C716FA574B00E57078 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 				659A1D9116F7296A007589FF /* LoginViewController.h */,
 				659A1D9216F7296A007589FF /* LoginViewController.m */,
 				65B7FDEE16E746A500F65710 /* elite.xcdatamodeld */,
+				F78EC2C716FA574B00E57078 /* test.png */,
 				65B7FE0F16E7475B00F65710 /* XIB */,
 				65B7FDDD16E746A400F65710 /* Supporting Files */,
 			);
@@ -303,6 +306,7 @@
 				F70B27C016F656E50048694C /* TutorialViewController.xib in Resources */,
 				659A1D9516F7296A007589FF /* LoginViewController.xib in Resources */,
 				659A1DA816F7563E007589FF /* FacebookSDKResources.bundle in Resources */,
+				F78EC2C816FA574B00E57078 /* test.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
