@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 
 
-@interface NewProductViewController : UIViewController<NSURLConnectionDelegate>
+@interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate>
+{
+
+
+}
+
 @property (weak, nonatomic) IBOutlet UIImageView *imageProd;
 @property (weak, nonatomic) IBOutlet UITextField *nameProd;
 @property (weak, nonatomic) IBOutlet UITextField *priceProd;

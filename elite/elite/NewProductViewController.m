@@ -54,6 +54,16 @@
     [super viewDidUnload];
 }
 - (IBAction)photo:(id)sender {
+            
+            // si - Attiva fotocamera in modalità editing
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            [picker setDelegate: self ];
+            [picker setAllowsEditing: NO ];
+            [picker setSourceType: UIImagePickerControllerSourceTypeCamera ];
+            [self presentModalViewController: picker animated: YES ];
+            //[picker release];
+
+    
 }
 
 - (IBAction)consiglia:(id)sender {
@@ -61,12 +71,12 @@
     //NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
     
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @"aname", @"name",
-                               @"11", @"store_id",
-                               @"12", @"price",
-                               @"13", @"category_id",
-                               @"212131", @"insertion_code",
-                               @"url", @"imageurl",
+                               @"name", @"name",
+                               @"store_id", @"store_id",
+                               @"price", @"price",
+                               @"category_id", @"category_id",
+                               @"insertion_code", @"insertion_code",
+                               @"imageurl", @"imageurl",
                                nil];
     
     
@@ -103,10 +113,14 @@
     NSError *error;
     
     //NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
     NSLog(@"%@",postData);
+    NSString *myString = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",myString);
+    NSData *tData = [myString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES ];
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -114,8 +128,8 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
-    
+    [request setHTTPBody:tData];
+        
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
