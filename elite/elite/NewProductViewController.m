@@ -111,16 +111,11 @@
     
     //NSString *post = [NSString stringWithFormat:@"example"];
     NSError *error;
-    
-    //NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
     NSLog(@"%@",postData);
-    NSString *myString = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",myString);
-    NSData *tData = [myString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES ];
+    
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -128,7 +123,7 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:tData];
+    [request setHTTPBody:postData];
         
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
