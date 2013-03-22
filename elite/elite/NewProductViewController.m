@@ -8,6 +8,7 @@
 
 #import "NewProductViewController.h"
 
+
 @interface NewProductViewController (){
     NSString *filenames;
 }
@@ -57,61 +58,68 @@
 
 - (IBAction)consiglia:(id)sender {
     
-    NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
+    //NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
     
-    if (imageData != nil)
-    {
-        filenames = [NSString stringWithFormat:@"1000.png"];      //set name here
-        NSLog(@"%@", filenames);
-        NSString *urlString = @"http://eliteitalia.altervista.org/webservice/Prodotti/create_product.php";
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setURL:[NSURL URLWithString:urlString]];
-        [request setHTTPMethod:@"POST"];
-        
-        NSString *boundary = @"---------------------------14737809831466499882746641449";
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-        [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-        
-        NSMutableData *body = [NSMutableData data];
-        
-        
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"name\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[nameProd.text dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"price\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"store_id\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"category_id\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"insertion_code\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[@"Content-Disposition: form-data; name=\"imageurl\"; filename=\".jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[NSData dataWithData:imageData]];
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        // setting the body of the post to the reqeust
-        [request setHTTPBody:body];
-        // now lets make the connection to the web
-        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-        NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-        NSLog(returnString);
-        NSLog(@"finish");
-    }
+    NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"aname", @"name",
+                               @"11", @"store_id",
+                               @"12", @"price",
+                               @"13", @"category_id",
+                               @"212131", @"insertion_code",
+                               @"url", @"imageurl",
+                               nil];
+    
+    
+    //NSString *jsonString = [loginDict JSONRepresentation];
+    
+    /*NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    //NSString *post = [NSString stringWithFormat:@"json=%@", jsonString];
+    //NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:NO];
+    //convert object to data
+    NSError *error;
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Prodotti/create_product.php"]];
+    
+    
+    [request setHTTPMethod:@"POST"];
+    
+    
+    //[request setHTTPMethod:@"POST"];
+    [request setHTTPBody:jsonData];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    //[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSError *aerror;
+    
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&aerror];
+    NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    NSLog(returnString);
+    NSLog(@"finish");*/
+    
+    //NSString *post = [NSString stringWithFormat:@"example"];
+    NSError *error;
+    
+    //NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSLog(@"%@",postData);
+    
+    NSString *postLength = [NSString stringWithFormat:@"12321443"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Prodotti/create_product.php"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    NSURLResponse *response;
+    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    NSLog(@"Reply: %@", theReply);
     
     
 }
