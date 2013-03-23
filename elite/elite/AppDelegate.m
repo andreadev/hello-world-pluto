@@ -13,7 +13,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize tabBarController,loginController;
+@synthesize tabBarController,loginController,homeController;
 @synthesize session;
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -43,7 +43,11 @@
     
     
     NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
-    NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod,nil];
+    homeController = [[HomeViewController alloc] initWithNibName:@"homeViewController" bundle:nil];
+    
+    UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
+    
+    NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod, navHome,nil];
     
     tabBarController = [[UITabBarController alloc] init];
     

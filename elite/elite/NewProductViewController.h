@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *categoryProd;
 @property (weak, nonatomic) IBOutlet UITextField *shopProd;
 @property (weak, nonatomic) IBOutlet UITextField *descProd;
+@property (weak, nonatomic) IBOutlet UITextView *debugT;
+
 - (IBAction)photo:(id)sender;
 
 - (IBAction)consiglia:(id)sender;

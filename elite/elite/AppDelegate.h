@@ -11,6 +11,7 @@
 #import "LoginViewController.h"
 #import "NewProductViewController.h"
 #import "TutorialViewController.h"
+#import "HomeViewController.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -24,6 +25,7 @@
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) LoginViewController *loginController;
+@property (strong, nonatomic) HomeViewController *homeController;
 
 @property (strong, nonatomic) FBSession *session;
 
