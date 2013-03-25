@@ -25,16 +25,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    /*
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-        // To-do, show logged in view
-    } else {
-        // No, display the login page.
-        [self showLoginView];
-    }
-    return YES;
-    
-     */
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]!=YES)
     {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Tutorial"];
@@ -43,11 +33,12 @@
     
     
     NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
-    homeController = [[HomeViewController alloc] initWithNibName:@"homeViewController" bundle:nil];
+    homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    homeController.session = session;
     
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
-    
-    NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod, navHome,nil];
+    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:newprod];
+    NSArray *viewControllerArray =[NSArray arrayWithObjects:navProd, navHome,nil];
     
     tabBarController = [[UITabBarController alloc] init];
     
@@ -55,9 +46,8 @@
     
     loginController = [[LoginViewController alloc] init];
     
-    //self.tabBarController = tabBarController;
     
-    //self.view = self.tabBarController.view;
+    
     self.window.rootViewController = loginController;
     
     

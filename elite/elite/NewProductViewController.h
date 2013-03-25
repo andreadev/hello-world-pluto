@@ -7,21 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 
-@interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate>
+@interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate , UITextFieldDelegate>
 {
 
 
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UIImageView *imageProd;
 @property (weak, nonatomic) IBOutlet UITextField *nameProd;
 @property (weak, nonatomic) IBOutlet UITextField *priceProd;
 @property (weak, nonatomic) IBOutlet UITextField *categoryProd;
 @property (weak, nonatomic) IBOutlet UITextField *shopProd;
 @property (weak, nonatomic) IBOutlet UITextField *descProd;
-@property (weak, nonatomic) IBOutlet UITextView *debugT;
+@property (nonatomic, strong) FBSession * session;
+- (IBAction)logout:(id)sender;
+
 
 - (IBAction)photo:(id)sender;
 

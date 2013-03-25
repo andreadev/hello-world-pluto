@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 
+
 @interface LoginViewController ()
 
 @end
@@ -21,6 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -33,6 +35,15 @@
     //Fai il login
     //check tutorial
     NSLog(@"Tutorial?");
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        // Yes, so just open the session (this won't display any UX).
+        [self openSession];
+        NSLog(@"apro sessione");
+        [appDelegate presentTabBarController];
+        
+    }
+    
     //[self checkTutorial];
 
     
@@ -43,16 +54,9 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
         //proceed with app normally
         NSLog(@"accettato");
-        NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
-        NSArray *viewControllerArray =[NSArray arrayWithObjects:newprod,nil];
+         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate presentTabBarController];
         
-        UITabBarController *tabBarController = [[UITabBarController alloc] init];
-        
-        tabBarController.viewControllers = viewControllerArray;
-        
-        self.tabBarController = tabBarController;
-        
-        self.view = self.tabBarController.view;
     }
     else{
         //show terms
@@ -70,7 +74,9 @@
     NSLog(@"EX");
     
 }
-
+- (void) viewWillAppear:(BOOL)animated{
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -79,15 +85,32 @@
 
 - (IBAction)Login:(id)sender {
     
-
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    if (appDelegate.session.isOpen) {
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        // Yes, so just open the session (this won't display any UX).
+        [self openSession];
+        NSLog(@"apro sessione");
+        
+    } else {
+        // No, display the login page.
+        [appDelegate.session closeAndClearTokenInformation];
+        appDelegate.session = [[FBSession alloc] init];
+        
+        [appDelegate.session openWithCompletionHandler:^(FBSession *session,FBSessionState state, NSError *error) {
+            [self sessionStateChanged:session state:state error:error];
+        }];
+    }
+
+    
+    
+    /*if (appDelegate.session.isOpen) {
         // if a user logs out explicitly, we delete any cached token information, and next
         // time they run the applicaiton they will be presented with log in UX again; most
         // users will simply close the app or switch away, without logging out; this will
         // cause the implicit cached-token login to occur on next launch of the application
-        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate presentTabBarController];
         
         ///////AUTOLOGIN////////
         //sessione aperta quindi autologin: ovviamente poi va visto anche dal lato server elite
@@ -99,11 +122,42 @@
         [appDelegate.session openWithCompletionHandler:^(FBSession *session,FBSessionState state, NSError *error) {
              [self sessionStateChanged:session state:state error:error];
          }];
-    }
+     
+        
+    }*/
 
     
 
 }
+
+- (void)populateUserDetails
+{
+    if (FBSession.activeSession.isOpen) {
+        [[FBRequest requestForMe] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary<FBGraphUser> *user,
+           NSError *error) {
+             if (!error) {
+                 
+                 NSLog(@"%@", user.name);
+                 NSLog(@"%@", user.id);
+             }
+         }];
+    }
+}
+
+- (void)openSession
+{
+    [FBSession openActiveSessionWithReadPermissions:nil
+                                       allowLoginUI:YES
+                                  completionHandler:
+     ^(FBSession *session,
+       FBSessionState state, NSError *error) {
+         [self sessionStateChanged:session state:state error:error];
+     }];
+    [self populateUserDetails];
+}
+
 - (void)sessionStateChanged:(FBSession *)session
                       state:(FBSessionState) state
                       error:(NSError *)error
@@ -111,6 +165,7 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     switch (state) {
         case FBSessionStateOpen: {
+            NSLog(@"testo");
                 [appDelegate presentTabBarController];
             }
             break;
@@ -133,5 +188,4 @@
         [alertView show];
     }    
 }
-
 @end

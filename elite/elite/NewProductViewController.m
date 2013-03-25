@@ -7,6 +7,7 @@
 //
 
 #import "NewProductViewController.h"
+#import "LoginViewController.h"
 
 
 @interface NewProductViewController (){
@@ -15,7 +16,7 @@
 @end
 
 @implementation NewProductViewController
-@synthesize imageProd,nameProd,priceProd,categoryProd,shopProd,descProd,debugT;
+@synthesize imageProd,nameProd,priceProd,categoryProd,shopProd,descProd,name;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self populateUserDetails];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -51,9 +53,18 @@
     [self setCategoryProd:nil];
     [self setShopProd:nil];
     [self setDescProd:nil];
-    [self setDebugT:nil];
+    
+    [self setName:nil];
     [super viewDidUnload];
 }
+- (IBAction)logout:(id)sender {
+    
+    [FBSession.activeSession closeAndClearTokenInformation];
+    LoginViewController *login= [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    
+    [self presentModalViewController:login animated:NO];
+}
+
 - (IBAction)photo:(id)sender {
             
             // si - Attiva fotocamera in modalità editing
@@ -80,19 +91,39 @@
     
 	[picker dismissModalViewControllerAnimated:YES];
 }
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)populateUserDetails
+{
+    if (FBSession.activeSession.isOpen) {
+        [[FBRequest requestForMe] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary<FBGraphUser> *user,
+           NSError *error) {
+             if (!error) {
+                 name.text = user.name;
+                 NSLog(@"%@", user.name);
+                 NSLog(@"%@", user.id);
+             }
+         }];
+    }
+}
 
 
 - (IBAction)consiglia:(id)sender {
     
     //NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
-    
+    NSString *ima = [[NSString alloc] initWithFormat:@"%@.jpg",nameProd.text ];
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @"name", @"name",
-                               @"store_id", @"store_id",
-                               @"price", @"price",
-                               @"category_id", @"category_id",
-                               @"insertion_code", @"insertion_code",
-                               @"imageurl", @"imageurl",
+                               nameProd.text, @"name",
+                               shopProd.text, @"store_id",
+                               priceProd.text, @"price",
+                               categoryProd.text, @"category_id",
+                               @"Dummy", @"insertion_code",
+                               ima, @"imageurl",
                                nil];
     
     
@@ -115,8 +146,6 @@
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
     NSLog(@"Reply: %@", theReply);
-    
-    debugT.text = theReply;
     
     
 }

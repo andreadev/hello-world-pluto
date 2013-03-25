@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import "ProdCell.h"
 
-@interface HomeViewController : UITableViewController
+@interface HomeViewController : UITableViewController{
+    ProdCell *itemCell;
+}
+@property (nonatomic, strong) NSArray *prodotti;
+@property (nonatomic, strong) FBSession * session;
+@property (nonatomic, strong) IBOutlet ProdCell *itemCell;
 
 @end
