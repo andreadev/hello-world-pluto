@@ -50,6 +50,17 @@
     
 }
 
+- (void) viewWillAppear:(BOOL)animated{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        // Yes, so just open the session (this won't display any UX).
+        [self openSession];
+        NSLog(@"apro sessione");
+        [appDelegate presentTabBarController];
+        
+    }
+}
+
 -(void) checkTutorial{
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
         //proceed with app normally
@@ -74,9 +85,7 @@
     NSLog(@"EX");
     
 }
-- (void) viewWillAppear:(BOOL)animated{
-    
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

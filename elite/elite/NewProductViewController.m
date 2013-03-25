@@ -105,6 +105,7 @@
            NSError *error) {
              if (!error) {
                  name.text = user.name;
+                 
                  NSLog(@"%@", user.name);
                  NSLog(@"%@", user.id);
              }
@@ -115,18 +116,18 @@
 
 - (IBAction)consiglia:(id)sender {
     
-    //NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
+    NSData *imageD = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
     NSString *ima = [[NSString alloc] initWithFormat:@"%@.jpg",nameProd.text ];
     
-    NSString *desc = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su elite Advice. Scopri Elite Advice e risparmia su ogni acquisto!",name.text,nameProd.text ];
+    NSString *desc = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su Elite.",name.text,nameProd.text ];
     
     self.postParams =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-     @"http://eliteitalia.altervista.org/", @"link",
+     @"http://eliteitalia.altervista.org", @"link",
      @"http://eliteitalia.altervista.org/webservice/product_images/mele.jpg", @"picture",
-     @"Elite Advice", @"name",
-     @"Il social Network che ti fa risparmiare", @"caption",
-     desc, @"description",
+     desc, @"name",
+     @"Il social Network che ti fa risparmiare.", @"caption",
+     @"Scopri Elite Advice e risparmia su ogni acquisto.", @"description",
      nil];
     
     
@@ -137,6 +138,7 @@
                                categoryProd.text, @"category_id",
                                @"Dummy", @"insertion_code",
                                ima, @"imageurl",
+                               imageD,@"image",
                                nil];
     
     
