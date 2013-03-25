@@ -118,13 +118,15 @@
     //NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
     NSString *ima = [[NSString alloc] initWithFormat:@"%@.jpg",nameProd.text ];
     
+    NSString *desc = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su elite Advice. Scopri Elite Advice e risparmia su ogni acquisto!",name.text,nameProd.text ];
+    
     self.postParams =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-     @"http://eliteadvice.altervista.org", @"link",
+     @"http://eliteitalia.altervista.org/", @"link",
      @"http://eliteitalia.altervista.org/webservice/product_images/mele.jpg", @"picture",
      @"Elite Advice", @"name",
      @"Il social Network che ti fa risparmiare", @"caption",
-     @"Ho appena consigliato un articolo, non conosci ancora eliteAdvice?", @"description",
+     desc, @"description",
      nil];
     
     
