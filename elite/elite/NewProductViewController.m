@@ -16,7 +16,7 @@
 @end
 
 @implementation NewProductViewController
-@synthesize imageProd,nameProd,priceProd,categoryProd,shopProd,descProd,name;
+@synthesize imageProd,nameProd,priceProd,categoryProd,shopProd,descProd,name,postParams,imageConnection,imageData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -117,6 +117,17 @@
     
     //NSData *imageData = UIImageJPEGRepresentation([UIImage imageNamed:@"test.png"],0.2);     //change Image to NSData
     NSString *ima = [[NSString alloc] initWithFormat:@"%@.jpg",nameProd.text ];
+    
+    self.postParams =
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+     @"http://eliteadvice.altervista.org", @"link",
+     @"http://eliteitalia.altervista.org/webservice/product_images/mele.jpg", @"picture",
+     @"Elite Advice", @"name",
+     @"Il social Network che ti fa risparmiare", @"caption",
+     @"Ho appena consigliato un articolo, non conosci ancora eliteAdvice?", @"description",
+     nil];
+    
+    
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                nameProd.text, @"name",
                                shopProd.text, @"store_id",
@@ -141,6 +152,7 @@
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:postData];
+    [self publishStory];
     
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
@@ -148,5 +160,55 @@
     NSLog(@"Reply: %@", theReply);
     
     
+    
 }
+-(void)connection:(NSURLConnection*)connection
+didReceiveData:(NSData*)data{
+    [self.imageData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    // Load the image
+    self.imageProd.image = [UIImage imageWithData:
+                                [NSData dataWithData:self.imageData]];
+    self.imageConnection = nil;
+    self.imageData = nil;
+}
+
+- (void)connection:(NSURLConnection *)connection
+  didFailWithError:(NSError *)error{
+    self.imageConnection = nil;
+    self.imageData = nil;
+}
+
+- (void)publishStory
+{
+    [FBRequestConnection
+     startWithGraphPath:@"me/feed"
+     parameters:self.postParams
+     HTTPMethod:@"POST"
+     completionHandler:^(FBRequestConnection *connection,
+                         id result,
+                         NSError *error) {
+         NSString *alertText;
+         if (error) {
+             alertText = [NSString stringWithFormat:
+                          @"error: domain = %@, code = %d",
+                          error.domain, error.code];
+         } else {
+             alertText = [NSString stringWithFormat:
+                          @"Posted action, id: %@",
+                          [result objectForKey:@"id"]];
+         }
+         // Show the result in an alert
+         [[[UIAlertView alloc] initWithTitle:@"Result"
+                                     message:alertText
+                                    delegate:self
+                           cancelButtonTitle:@"OK!"
+                           otherButtonTitles:nil]
+          show];
+     }];
+}
+
+
 @end

@@ -24,6 +24,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *shopProd;
 @property (weak, nonatomic) IBOutlet UITextField *descProd;
 @property (nonatomic, strong) FBSession * session;
+@property (strong, nonatomic) NSMutableDictionary *postParams;
+@property (strong, nonatomic) NSMutableData *imageData;
+@property (strong, nonatomic) NSURLConnection *imageConnection;
+
 - (IBAction)logout:(id)sender;
 
 
