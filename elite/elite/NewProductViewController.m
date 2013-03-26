@@ -53,7 +53,6 @@
     [self setCategoryProd:nil];
     [self setShopProd:nil];
     [self setDescProd:nil];
-    
     [self setName:nil];
     [super viewDidUnload];
 }

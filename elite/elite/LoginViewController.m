@@ -37,13 +37,13 @@
     NSLog(@"Tutorial?");
     //[self loadTutorial];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    /*if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         [self openSession];
         NSLog(@"apro sessione");
         [appDelegate presentTabBarController];
         
-    }*/
+    }
     
     
 
@@ -54,39 +54,13 @@
 - (void) viewWillAppear:(BOOL)animated{
     //[self loadTutorial];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    /*if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         [self openSession];
         NSLog(@"apro sessione");
         [appDelegate presentTabBarController];
         
-    }*/
-}
-
--(void) checkTutorial{
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
-        //proceed with app normally
-        NSLog(@"accettato");
-         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate presentTabBarController];
-        
     }
-    else{
-        //show terms
-        NSLog(@"NO accettato");
-        [self loadTutorial];
-    }
-}
-
-- (void) loadTutorial{
-    NSLog(@"loaded");
-    TutorialViewController *tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
-    //UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:tutorial];
-    //[self presentModalViewController:tutorial animated:YES];
-    [[self navigationController] pushViewController:tutorial animated:NO];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
-    NSLog(@"EX");
-    
 }
 
 - (void)didReceiveMemoryWarning

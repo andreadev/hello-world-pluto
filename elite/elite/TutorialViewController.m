@@ -8,6 +8,7 @@
 
 #import "TutorialViewController.h"
 #import "NewProductViewController.h"
+#import "LoginViewController.h"
 
 @interface TutorialViewController ()
 @end
@@ -85,9 +86,15 @@
 -(void)introductionDidFinishWithType:(MYFinishType)finishType{
     if (finishType == MYFinishTypeSkipButton) {
         NSLog(@"Did Finish Introduction By Skipping It");
+        LoginViewController * login = [[LoginViewController alloc] init];
+        [[self navigationController] pushViewController:login animated:YES];
+        
     }
     else if (finishType == MYFinishTypeSwipeOut){
         NSLog(@"Did Finish Introduction By Swiping Out");
+        LoginViewController * login = [[LoginViewController alloc] init];
+        [self presentModalViewController:login animated:YES];
+        
     }
     
     //One might consider making the introductionview a class variable and releasing it here.
