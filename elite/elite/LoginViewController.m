@@ -151,7 +151,8 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     switch (state) {
         case FBSessionStateOpen: {
-            NSLog(@"testo");
+                NSLog(@"testo");
+                //[self openSession];
                 [appDelegate presentTabBarController];
             }
             break;
