@@ -13,7 +13,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize tabBarController,loginController,homeController;
+@synthesize tabBarController,loginController,homeController,tutorial;
 @synthesize session;
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -46,9 +46,25 @@
     
     loginController = [[LoginViewController alloc] init];
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
+        //proceed with app normally
+        NSLog(@"accettato");
+        self.window.rootViewController = loginController;
+        
+    }
+    else{
+        //show terms
+        NSLog(@"NO accettato");
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
+        tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
+        //UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:tutorial];
+        //[self presentModalViewController:tutorial animated:YES];
+        self.window.rootViewController = tutorial;
+    }
+
+   
     
-    
-    self.window.rootViewController = loginController;
+    //self.window.rootViewController = loginController;
     
     
     [self.window makeKeyAndVisible];

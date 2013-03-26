@@ -35,30 +35,32 @@
     //Fai il login
     //check tutorial
     NSLog(@"Tutorial?");
+    //[self loadTutorial];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+    /*if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         [self openSession];
         NSLog(@"apro sessione");
         [appDelegate presentTabBarController];
         
-    }
+    }*/
     
-    //[self checkTutorial];
+    
 
     
     
 }
 
 - (void) viewWillAppear:(BOOL)animated{
+    //[self loadTutorial];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+    /*if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         [self openSession];
         NSLog(@"apro sessione");
         [appDelegate presentTabBarController];
         
-    }
+    }*/
 }
 
 -(void) checkTutorial{
@@ -79,8 +81,9 @@
 - (void) loadTutorial{
     NSLog(@"loaded");
     TutorialViewController *tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
-    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:tutorial];
-    [self.view addSubview:navVC.view];
+    //UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:tutorial];
+    //[self presentModalViewController:tutorial animated:YES];
+    [[self navigationController] pushViewController:tutorial animated:NO];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
     NSLog(@"EX");
     

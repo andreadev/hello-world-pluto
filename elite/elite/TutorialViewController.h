@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TutorialViewController : UIViewController
-@property (strong, nonatomic) UITabBarController *tabBarController;
+
+#import "MYIntroductionView.h"
+
+@interface TutorialViewController : UIViewController <MYIntroductionDelegate>
+
+
 
 @end

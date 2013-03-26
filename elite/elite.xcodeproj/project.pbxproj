@@ -36,6 +36,15 @@
 		F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27B916F612C20048694C /* NewProductViewController.xib */; };
 		F70B27BF16F656E50048694C /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27BD16F656E50048694C /* TutorialViewController.m */; };
 		F70B27C016F656E50048694C /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27BE16F656E50048694C /* TutorialViewController.xib */; };
+		F76855B61701A833001BE112 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76855B51701A833001BE112 /* QuartzCore.framework */; };
+		F76855C41701A8A1001BE112 /* SampleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = F76855C01701A8A1001BE112 /* SampleBackground.png */; };
+		F76855C51701A8A1001BE112 /* SampleHeaderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F76855C11701A8A1001BE112 /* SampleHeaderImage.png */; };
+		F76855C61701A8A1001BE112 /* SampleImage1.png in Resources */ = {isa = PBXBuildFile; fileRef = F76855C21701A8A1001BE112 /* SampleImage1.png */; };
+		F76855C71701A8A1001BE112 /* SampleImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = F76855C31701A8A1001BE112 /* SampleImage2.png */; };
+		F76855CC1701B89F001BE112 /* MYIntroductionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F76855C91701B89F001BE112 /* MYIntroductionView.m */; };
+		F76855CD1701B89F001BE112 /* MYIntroductionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F76855C91701B89F001BE112 /* MYIntroductionView.m */; };
+		F76855CE1701B89F001BE112 /* MYIntroductionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76855CB1701B89F001BE112 /* MYIntroductionPanel.m */; };
+		F76855CF1701B89F001BE112 /* MYIntroductionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76855CB1701B89F001BE112 /* MYIntroductionPanel.m */; };
 		F78EC34716FCEE6000E57078 /* 28-star.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34616FCEE6000E57078 /* 28-star.png */; };
 		F78EC34916FCEE7800E57078 /* 53-house.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34816FCEE7800E57078 /* 53-house.png */; };
 		F78EC34B16FCEE8800E57078 /* 67-tshirt.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34A16FCEE8800E57078 /* 67-tshirt.png */; };
@@ -99,6 +108,15 @@
 		F70B27BC16F656E50048694C /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		F70B27BD16F656E50048694C /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		F70B27BE16F656E50048694C /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
+		F76855B51701A833001BE112 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F76855C01701A8A1001BE112 /* SampleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleBackground.png; sourceTree = "<group>"; };
+		F76855C11701A8A1001BE112 /* SampleHeaderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleHeaderImage.png; sourceTree = "<group>"; };
+		F76855C21701A8A1001BE112 /* SampleImage1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleImage1.png; sourceTree = "<group>"; };
+		F76855C31701A8A1001BE112 /* SampleImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleImage2.png; sourceTree = "<group>"; };
+		F76855C81701B89F001BE112 /* MYIntroductionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYIntroductionView.h; sourceTree = "<group>"; };
+		F76855C91701B89F001BE112 /* MYIntroductionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYIntroductionView.m; sourceTree = "<group>"; };
+		F76855CA1701B89F001BE112 /* MYIntroductionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYIntroductionPanel.h; sourceTree = "<group>"; };
+		F76855CB1701B89F001BE112 /* MYIntroductionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYIntroductionPanel.m; sourceTree = "<group>"; };
 		F78EC34616FCEE6000E57078 /* 28-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "28-star.png"; sourceTree = "<group>"; };
 		F78EC34816FCEE7800E57078 /* 53-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house.png"; sourceTree = "<group>"; };
 		F78EC34A16FCEE8800E57078 /* 67-tshirt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "67-tshirt.png"; sourceTree = "<group>"; };
@@ -125,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F76855B61701A833001BE112 /* QuartzCore.framework in Frameworks */,
 				659A1D9D16F754C3007589FF /* Social.framework in Frameworks */,
 				659A1D9B16F754BB007589FF /* Accounts.framework in Frameworks */,
 				659A1D9916F754B2007589FF /* AdSupport.framework in Frameworks */,
@@ -153,6 +172,7 @@
 		65B7FDC516E746A400F65710 = {
 			isa = PBXGroup;
 			children = (
+				F76855B51701A833001BE112 /* QuartzCore.framework */,
 				65B7FDDC16E746A400F65710 /* elite */,
 				65B7FDFE16E746A500F65710 /* eliteTests */,
 				65B7FDD316E746A400F65710 /* Frameworks */,
@@ -193,6 +213,7 @@
 				65B7FDE616E746A400F65710 /* AppDelegate.m */,
 				F70B27BC16F656E50048694C /* TutorialViewController.h */,
 				F70B27BD16F656E50048694C /* TutorialViewController.m */,
+				F76855D01701B8A7001BE112 /* MYIntroductionView */,
 				F70B27B716F612C20048694C /* NewProductViewController.h */,
 				F70B27B816F612C20048694C /* NewProductViewController.m */,
 				F78EC35216FCF02700E57078 /* HomeViewController.h */,
@@ -270,6 +291,17 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		F76855D01701B8A7001BE112 /* MYIntroductionView */ = {
+			isa = PBXGroup;
+			children = (
+				F76855C81701B89F001BE112 /* MYIntroductionView.h */,
+				F76855C91701B89F001BE112 /* MYIntroductionView.m */,
+				F76855CA1701B89F001BE112 /* MYIntroductionPanel.h */,
+				F76855CB1701B89F001BE112 /* MYIntroductionPanel.m */,
+			);
+			name = MYIntroductionView;
+			sourceTree = "<group>";
+		};
 		F78EC34516FCEE3800E57078 /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +310,10 @@
 				F78EC34C16FCEE9600E57078 /* 74-location.png */,
 				F78EC34E16FCEEA100E57078 /* 80-shopping-cart.png */,
 				F78EC35016FCEED700E57078 /* 111-user.png */,
+				F76855C01701A8A1001BE112 /* SampleBackground.png */,
+				F76855C11701A8A1001BE112 /* SampleHeaderImage.png */,
+				F76855C21701A8A1001BE112 /* SampleImage1.png */,
+				F76855C31701A8A1001BE112 /* SampleImage2.png */,
 				F78EC34616FCEE6000E57078 /* 28-star.png */,
 			);
 			name = resources;
@@ -372,6 +408,10 @@
 				F78EC35616FCF02700E57078 /* HomeViewController.xib in Resources */,
 				F78EC38216FF977A00E57078 /* ProdCell.xib in Resources */,
 				F78EC38C170035A400E57078 /* ProdottoViewController.xib in Resources */,
+				F76855C41701A8A1001BE112 /* SampleBackground.png in Resources */,
+				F76855C51701A8A1001BE112 /* SampleHeaderImage.png in Resources */,
+				F76855C61701A8A1001BE112 /* SampleImage1.png in Resources */,
+				F76855C71701A8A1001BE112 /* SampleImage2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +457,8 @@
 				F78EC38016FF975B00E57078 /* ProdCell.m in Sources */,
 				F78EC38B170035A400E57078 /* ProdottoViewController.m in Sources */,
 				F78EC38F1700364E00E57078 /* Prodotto.m in Sources */,
+				F76855CC1701B89F001BE112 /* MYIntroductionView.m in Sources */,
+				F76855CE1701B89F001BE112 /* MYIntroductionPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +467,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B7FE0616E746A500F65710 /* eliteTests.m in Sources */,
+				F76855CD1701B89F001BE112 /* MYIntroductionView.m in Sources */,
+				F76855CF1701B89F001BE112 /* MYIntroductionPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

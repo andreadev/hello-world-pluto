@@ -26,7 +26,7 @@
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) LoginViewController *loginController;
 @property (strong, nonatomic) HomeViewController *homeController;
-
+@property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) FBSession *session;
 
 - (void)saveContext;
