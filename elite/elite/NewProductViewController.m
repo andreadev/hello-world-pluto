@@ -36,10 +36,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self populateUserDetails];
+    //[self populateUserDetails];
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void) viewWillAppear:(BOOL)animated{
+    [self populateUserDetails];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -73,8 +76,6 @@
             [picker setSourceType: UIImagePickerControllerSourceTypeCamera ];
             [self presentModalViewController: picker animated: YES ];
             //[picker release];
-
-    
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {

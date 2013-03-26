@@ -86,6 +86,7 @@
         [appDelegate.session openWithCompletionHandler:^(FBSession *session,FBSessionState state, NSError *error) {
             [self sessionStateChanged:session state:state error:error];
         }];
+        [self openSession];
     }
 
     
