@@ -12,12 +12,14 @@
 
 @interface HomeViewController (){
     NSMutableArray *ProdottiArray;
+    NSMutableArray *TmpTitle;
+    
 }
 
 @end
 
 @implementation HomeViewController
-@synthesize prodotti,itemCell;
+@synthesize prodotti,itemCell,filteredListContent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,7 +59,11 @@
                      JSONObjectWithData:responseData //1
                      options:kNilOptions error:nil];
     self.prodotti = json;
+    //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
+    [self loadProdotti];
     [self.tableView reloadData];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,9 +86,28 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [prodotti count];
+    return [filteredListContent count];
 }
 
+
+- (void) loadProdotti{
+    
+    for (int i = 0; i<[prodotti count]; i++) {
+        Prodotto *prod = [[Prodotto alloc] init];
+        prod.name = [[prodotti objectAtIndex:i] objectForKey:@"Name"];
+        prod.prezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
+        prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
+        prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
+        [ProdottiArray  addObject:prod];
+    }
+    // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
+	filteredListContent = [[NSMutableArray alloc] initWithCapacity: [ProdottiArray count]];
+	//inserisce in questa  nuova lista gli elementi della lista originale
+	[filteredListContent addObjectsFromArray:ProdottiArray];
+    
+
+    
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -95,14 +120,14 @@
         cell = itemCell;
     }
     NSLog(@"entro");
-    NSLog(@"%@",[prodotti objectAtIndex:indexPath.row]);
-    NSString *url = [[NSString alloc] initWithFormat:@"http://%@",[[prodotti objectAtIndex:indexPath.row] objectForKey:@"ImageUrl"]] ;
+    NSLog(@"%@",[filteredListContent objectAtIndex:indexPath.row]);
+    //NSString *url = [[NSString alloc] initWithFormat:@"http://%@",[[filteredListContent objectAtIndex:indexPath.row] objectForKey:@"ImageUrl"]] ;
     
-    NSURL *imageURL = [[NSURL alloc] initWithString:url];
+    //NSURL *imageURL = [[NSURL alloc] initWithString:url];
     //NSURL *imageURL = [[NSURL alloc] initWithString:@"http://eliteitalia.altervista.org/webservice/product_images/mela.jpg"];
     
     cell.prodImage.image = [UIImage imageNamed:@"53-house"];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+    /*dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     dispatch_async(queue, ^{
         NSData *data = [NSData dataWithContentsOfURL:imageURL];
         UIImage *image = [UIImage imageWithData:data];
@@ -110,46 +135,42 @@
             cell.prodImage.image = image;
         });
     });
+    */
     
-    Prodotto *prod = [[Prodotto alloc] init];
+    Prodotto *pro = [filteredListContent objectAtIndex:indexPath.row];
     
-    prod.name = [[prodotti objectAtIndex:indexPath.row] objectForKey:@"Name"];
-    prod.prezzo = [[prodotti objectAtIndex:indexPath.row] objectForKey:@"Price"];
-    prod.oldprezzo = [[prodotti objectAtIndex:indexPath.row] objectForKey:@"Price"];
-    prod.where = [[prodotti objectAtIndex:indexPath.row] objectForKey:@"Store_ID"];
-    
-    [ProdottiArray  addObject:prod];
-    
-    cell.nameProd.text = prod.name;
-    cell.Price.text = prod.prezzo;
-    cell.oldPrice.text =  prod.oldprezzo;
-    cell.whereProd.text = prod.where;
+        
+    cell.nameProd.text = pro.name;
+    cell.Price.text = pro.prezzo;
+    cell.oldPrice.text =  pro.oldprezzo;
+    cell.whereProd.text = pro.where;
     
     return cell;
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [filteredListContent removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
@@ -185,6 +206,11 @@
 
 #pragma mark - Table view delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80.;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
@@ -192,9 +218,52 @@
      ProdottoViewController *detailViewController = [[ProdottoViewController alloc] initWithNibName:@"ProdottoViewController" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.
-    detailViewController.prod = [ProdottiArray objectAtIndex:indexPath.row];
+    detailViewController.prod = [filteredListContent objectAtIndex:indexPath.row];
     
      [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
+    NSLog(@"primo");
+    [self filterContentForSearchText:searchString scope:
+	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
+    
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text] scope:
+	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)saearchBar {
+    [self.filteredListContent removeAllObjects];
+    [self.filteredListContent addObjectsFromArray: ProdottiArray];
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope{
+    
+	/*
+	 Update the filtered array based on the search text and scope.
+	 */
+	[self.filteredListContent removeAllObjects]; // First clear the filtered array.
+    NSLog(@"qui");
+	/*
+	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
+	 */
+    
+    for (int i = 0; i<[ProdottiArray count]; i++) {
+        Prodotto *prof = [ProdottiArray objectAtIndex:i];
+        NSComparisonResult result = [prof.name compare:searchText options:NSCaseInsensitiveSearch range:NSMakeRange(0, [searchText length])];
+		if (result == NSOrderedSame){
+			[filteredListContent addObject:prof];
+		}
+    }
+    
+}
 @end

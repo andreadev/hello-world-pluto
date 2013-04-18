@@ -59,7 +59,11 @@
     MYIntroductionPanel *panel = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage1"] description:@"Benvenuto in Elite Advice, il social che ti fa risparmiare!"];
     
     //You may also add in a title for each panel
-    MYIntroductionPanel *panel2 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Carica la foto!" description:@"Consiglia a tutti!"];
+    MYIntroductionPanel *panel2 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Registrati!" description:@"E' semplicissimo!"];
+    
+    MYIntroductionPanel *panel3 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Scatta una foto ad un prodotto!" description:@"Risparmia!"];
+    
+    MYIntroductionPanel *panel4 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Carica la foto!" description:@"Consiglia a tutti!"];
     
     //STEP 2 Create IntroductionView
     
@@ -71,7 +75,7 @@
     //MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) panels:@[panel, panel2]];
     
     /*A more customized version*/
-    MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) headerText:@"Elite Advice" panels:@[panel, panel2] languageDirection:MYLanguageDirectionLeftToRight];
+    MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) headerText:@"Elite Advice" panels:@[panel, panel2,panel3,panel4] languageDirection:MYLanguageDirectionLeftToRight];
     [introductionView setBackgroundImage:[UIImage imageNamed:@"SampleBackground"]];
     
     

@@ -59,6 +59,7 @@
 		F78EC38B170035A400E57078 /* ProdottoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EC389170035A300E57078 /* ProdottoViewController.m */; };
 		F78EC38C170035A400E57078 /* ProdottoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EC38A170035A300E57078 /* ProdottoViewController.xib */; };
 		F78EC38F1700364E00E57078 /* Prodotto.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EC38E1700364D00E57078 /* Prodotto.m */; };
+		F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A6699417198A6500CEFD39 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,7 @@
 		F78EC38A170035A300E57078 /* ProdottoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProdottoViewController.xib; sourceTree = "<group>"; };
 		F78EC38D1700364D00E57078 /* Prodotto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prodotto.h; sourceTree = "<group>"; };
 		F78EC38E1700364D00E57078 /* Prodotto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prodotto.m; sourceTree = "<group>"; };
+		F7A6699417198A6500CEFD39 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */,
 				F76855B61701A833001BE112 /* QuartzCore.framework in Frameworks */,
 				659A1D9D16F754C3007589FF /* Social.framework in Frameworks */,
 				659A1D9B16F754BB007589FF /* Accounts.framework in Frameworks */,
@@ -172,6 +175,7 @@
 		65B7FDC516E746A400F65710 = {
 			isa = PBXGroup;
 			children = (
+				F7A6699417198A6500CEFD39 /* CoreLocation.framework */,
 				F76855B51701A833001BE112 /* QuartzCore.framework */,
 				65B7FDDC16E746A400F65710 /* elite */,
 				65B7FDFE16E746A500F65710 /* eliteTests */,
@@ -542,7 +546,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: andrea barbieri (3T7N8T765Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Andrea Barbieri";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: andrea barbieri (3T7N8T765Y)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -551,7 +555,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "6300FBDD-F387-41E9-B156-FB0E9A4CD911";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6300FBDD-F387-41E9-B156-FB0E9A4CD911";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
