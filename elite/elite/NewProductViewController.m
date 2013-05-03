@@ -163,11 +163,11 @@
     
     
     
-    NSData *imageDatas = UIImageJPEGRepresentation(imageProd.image,0.2);     //change Image to NSData
-    
+    NSData *imageDatas = UIImageJPEGRepresentation(imageProd.image,0.1);     //change Image to NSData
+    NSString *ima = [nameProd.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     if (imageDatas != nil)
     {
-        filenames = [NSString stringWithFormat:nameProd.text];      //set name here
+        filenames = [NSString stringWithFormat:ima];      //set name here
         NSLog(@"%@", filenames);
         NSString *urlString = @"http://eliteitalia.altervista.org/webservice/Prodotti/upload_image.php";
         
@@ -202,13 +202,14 @@
     
          //change Image to NSData
     
-    NSString *ima = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/%@.jpg",nameProd.text ];
+
+    ima = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/%@.jpg",ima ];
     
     NSString *desc = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su Elite.",name.text,nameProd.text ];
     
     self.postParams =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-     @"http://eliteitalia.altervista.org", @"link",
+     @"www.eliteadvice.tk", @"link",
      ima, @"picture",
      desc, @"name",
      @"Il social Network che ti fa risparmiare.", @"caption",

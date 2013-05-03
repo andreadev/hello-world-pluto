@@ -36,6 +36,12 @@
 		F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27B916F612C20048694C /* NewProductViewController.xib */; };
 		F70B27BF16F656E50048694C /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27BD16F656E50048694C /* TutorialViewController.m */; };
 		F70B27C016F656E50048694C /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27BE16F656E50048694C /* TutorialViewController.xib */; };
+		F72F865A1726DA5000ECFA11 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F86581726DA5000ECFA11 /* menu.png */; };
+		F72F865B1726DA5000ECFA11 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F86591726DA5000ECFA11 /* menu@2x.png */; };
+		F72F865E1726DD3400ECFA11 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F865C1726DD3400ECFA11 /* 06-magnify.png */; };
+		F72F865F1726DD3400ECFA11 /* 06-magnify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F865D1726DD3400ECFA11 /* 06-magnify@2x.png */; };
+		F72F8662172F05DC00ECFA11 /* RemoteImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F72F8660172F05DC00ECFA11 /* RemoteImageView.m */; };
+		F72F86651732697D00ECFA11 /* GraphicalEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = F72F86641732697D00ECFA11 /* GraphicalEffects.m */; };
 		F76855B61701A833001BE112 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76855B51701A833001BE112 /* QuartzCore.framework */; };
 		F76855C41701A8A1001BE112 /* SampleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = F76855C01701A8A1001BE112 /* SampleBackground.png */; };
 		F76855C51701A8A1001BE112 /* SampleHeaderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F76855C11701A8A1001BE112 /* SampleHeaderImage.png */; };
@@ -45,6 +51,8 @@
 		F76855CD1701B89F001BE112 /* MYIntroductionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F76855C91701B89F001BE112 /* MYIntroductionView.m */; };
 		F76855CE1701B89F001BE112 /* MYIntroductionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76855CB1701B89F001BE112 /* MYIntroductionPanel.m */; };
 		F76855CF1701B89F001BE112 /* MYIntroductionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76855CB1701B89F001BE112 /* MYIntroductionPanel.m */; };
+		F7730DC417218EE800DA2F9D /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7730DC317218EE800DA2F9D /* AsyncImageView.m */; };
+		F7730DC517218EE800DA2F9D /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7730DC317218EE800DA2F9D /* AsyncImageView.m */; };
 		F78EC34716FCEE6000E57078 /* 28-star.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34616FCEE6000E57078 /* 28-star.png */; };
 		F78EC34916FCEE7800E57078 /* 53-house.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34816FCEE7800E57078 /* 53-house.png */; };
 		F78EC34B16FCEE8800E57078 /* 67-tshirt.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34A16FCEE8800E57078 /* 67-tshirt.png */; };
@@ -109,6 +117,14 @@
 		F70B27BC16F656E50048694C /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		F70B27BD16F656E50048694C /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		F70B27BE16F656E50048694C /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
+		F72F86581726DA5000ECFA11 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		F72F86591726DA5000ECFA11 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
+		F72F865C1726DD3400ECFA11 /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
+		F72F865D1726DD3400ECFA11 /* 06-magnify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify@2x.png"; sourceTree = "<group>"; };
+		F72F8660172F05DC00ECFA11 /* RemoteImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteImageView.m; sourceTree = "<group>"; };
+		F72F8661172F05DC00ECFA11 /* RemoteImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteImageView.h; sourceTree = "<group>"; };
+		F72F86631732697D00ECFA11 /* GraphicalEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicalEffects.h; sourceTree = "<group>"; };
+		F72F86641732697D00ECFA11 /* GraphicalEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphicalEffects.m; sourceTree = "<group>"; };
 		F76855B51701A833001BE112 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F76855C01701A8A1001BE112 /* SampleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleBackground.png; sourceTree = "<group>"; };
 		F76855C11701A8A1001BE112 /* SampleHeaderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleHeaderImage.png; sourceTree = "<group>"; };
@@ -118,6 +134,8 @@
 		F76855C91701B89F001BE112 /* MYIntroductionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYIntroductionView.m; sourceTree = "<group>"; };
 		F76855CA1701B89F001BE112 /* MYIntroductionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYIntroductionPanel.h; sourceTree = "<group>"; };
 		F76855CB1701B89F001BE112 /* MYIntroductionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYIntroductionPanel.m; sourceTree = "<group>"; };
+		F7730DC217218EE800DA2F9D /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		F7730DC317218EE800DA2F9D /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		F78EC34616FCEE6000E57078 /* 28-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "28-star.png"; sourceTree = "<group>"; };
 		F78EC34816FCEE7800E57078 /* 53-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house.png"; sourceTree = "<group>"; };
 		F78EC34A16FCEE8800E57078 /* 67-tshirt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "67-tshirt.png"; sourceTree = "<group>"; };
@@ -215,6 +233,7 @@
 			children = (
 				65B7FDE516E746A400F65710 /* AppDelegate.h */,
 				65B7FDE616E746A400F65710 /* AppDelegate.m */,
+				F7730DC617218EED00DA2F9D /* Async */,
 				F70B27BC16F656E50048694C /* TutorialViewController.h */,
 				F70B27BD16F656E50048694C /* TutorialViewController.m */,
 				F76855D01701B8A7001BE112 /* MYIntroductionView */,
@@ -306,9 +325,26 @@
 			name = MYIntroductionView;
 			sourceTree = "<group>";
 		};
+		F7730DC617218EED00DA2F9D /* Async */ = {
+			isa = PBXGroup;
+			children = (
+				F7730DC217218EE800DA2F9D /* AsyncImageView.h */,
+				F7730DC317218EE800DA2F9D /* AsyncImageView.m */,
+				F72F86631732697D00ECFA11 /* GraphicalEffects.h */,
+				F72F86641732697D00ECFA11 /* GraphicalEffects.m */,
+				F72F8660172F05DC00ECFA11 /* RemoteImageView.m */,
+				F72F8661172F05DC00ECFA11 /* RemoteImageView.h */,
+			);
+			name = Async;
+			sourceTree = "<group>";
+		};
 		F78EC34516FCEE3800E57078 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				F72F86581726DA5000ECFA11 /* menu.png */,
+				F72F86591726DA5000ECFA11 /* menu@2x.png */,
+				F72F865C1726DD3400ECFA11 /* 06-magnify.png */,
+				F72F865D1726DD3400ECFA11 /* 06-magnify@2x.png */,
 				F78EC34816FCEE7800E57078 /* 53-house.png */,
 				F78EC34A16FCEE8800E57078 /* 67-tshirt.png */,
 				F78EC34C16FCEE9600E57078 /* 74-location.png */,
@@ -416,6 +452,10 @@
 				F76855C51701A8A1001BE112 /* SampleHeaderImage.png in Resources */,
 				F76855C61701A8A1001BE112 /* SampleImage1.png in Resources */,
 				F76855C71701A8A1001BE112 /* SampleImage2.png in Resources */,
+				F72F865A1726DA5000ECFA11 /* menu.png in Resources */,
+				F72F865B1726DA5000ECFA11 /* menu@2x.png in Resources */,
+				F72F865E1726DD3400ECFA11 /* 06-magnify.png in Resources */,
+				F72F865F1726DD3400ECFA11 /* 06-magnify@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +503,7 @@
 				F78EC38F1700364E00E57078 /* Prodotto.m in Sources */,
 				F76855CC1701B89F001BE112 /* MYIntroductionView.m in Sources */,
 				F76855CE1701B89F001BE112 /* MYIntroductionPanel.m in Sources */,
+				F7730DC417218EE800DA2F9D /* AsyncImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +514,9 @@
 				65B7FE0616E746A500F65710 /* eliteTests.m in Sources */,
 				F76855CD1701B89F001BE112 /* MYIntroductionView.m in Sources */,
 				F76855CF1701B89F001BE112 /* MYIntroductionPanel.m in Sources */,
+				F7730DC517218EE800DA2F9D /* AsyncImageView.m in Sources */,
+				F72F8662172F05DC00ECFA11 /* RemoteImageView.m in Sources */,
+				F72F86651732697D00ECFA11 /* GraphicalEffects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Prodotto.h"
 
-@interface ProdottoViewController : UIViewController
+@interface ProdottoViewController : UIViewController{
+    IBOutlet UIScrollView *Scrollview;
+}
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageProd;
 @property (strong, nonatomic) Prodotto *prod;
@@ -20,5 +22,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *from;
 @property (weak, nonatomic) IBOutlet UITextView *descrizione;
 @property (weak, nonatomic) IBOutlet UILabel *codice;
+@property (nonatomic,retain)IBOutlet UIScrollView *Scrollview;
 
 @end

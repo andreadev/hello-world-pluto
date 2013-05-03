@@ -7,13 +7,14 @@
 //
 
 #import "ProdottoViewController.h"
+#import "AsyncImageView.h"
 
 @interface ProdottoViewController ()
 
 @end
 
 @implementation ProdottoViewController
-@synthesize prod,name,where,prezzo,oldprezzo,from,descrizione,codice,imageProd;
+@synthesize prod,name,where,prezzo,oldprezzo,from,descrizione,codice,imageProd,Scrollview;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,6 +28,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [Scrollview setScrollEnabled:YES];//Abilitiamo lo scroll
+    
+    [Scrollview setContentSize:(CGSizeMake(320,600))];/*queste sono<span id="more-1890"></span> le dimesione 320 larghezza e 900 la lunghezza*/
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -37,7 +41,16 @@
     self.oldprezzo.text = prod.oldprezzo;
     self.from.text = @"Andrea Barbieri";
     self.descrizione.text = prod.desc;
-    self.imageProd.image = [UIImage imageNamed:@"53-house"];
+    
+    //get image view
+	AsyncImageView *imageView;
+	
+    //cancel loading previous image for cell
+    [[AsyncImageLoader sharedLoader] cancelLoadingURL:imageView.imageURL];
+    
+    imageView.imageURL = [[NSURL alloc] initWithString:prod.url];
+    
+    self.imageProd.image = imageView.image ;
     
     
 }

@@ -9,10 +9,15 @@
 #import "HomeViewController.h"
 #import "ProdottoViewController.h"
 #import "Prodotto.h"
+#import "AsyncImageView.h"
+#import "RemoteImageView.h"
 
 @interface HomeViewController (){
     NSMutableArray *ProdottiArray;
     NSMutableArray *TmpTitle;
+    int scopeButtonPressedIndexNumber;
+    NSString *url;
+    int iol;
     
 }
 
@@ -40,6 +45,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
+    UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
+    btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
+    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
+    [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
+    iol=0;
+    
+    self.navigationItem.rightBarButtonItem = menuBarButton;
     ProdottiArray = [[NSMutableArray alloc] init];
     [self populateUserDetails];
 
@@ -98,6 +112,7 @@
         prod.prezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
+        prod.url = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
         [ProdottiArray  addObject:prod];
     }
     // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
@@ -111,13 +126,28 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+    //#define IMAGE_VIEW_TAG 99
     ProdCell *cell = (ProdCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         [[NSBundle mainBundle] loadNibNamed:@"ProdCell"
                                       owner:self options:NULL];
+        /*
+        //add AsyncImageView to cell
+		AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(5.0f, 5.0f, 70.0f, 70.0f)];
+		imageView.contentMode = UIViewContentModeScaleAspectFill;
+		imageView.clipsToBounds = YES;
+		imageView.tag = IMAGE_VIEW_TAG;
+		[itemCell addSubview:imageView];
+		//[imageView release];
+		
+		//common settings
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		cell.indentationWidth = 84.0f;
+		cell.indentationLevel = 1;*/
         cell = itemCell;
+        
     }
     NSLog(@"entro");
     NSLog(@"%@",[filteredListContent objectAtIndex:indexPath.row]);
@@ -125,8 +155,9 @@
     
     //NSURL *imageURL = [[NSURL alloc] initWithString:url];
     //NSURL *imageURL = [[NSURL alloc] initWithString:@"http://eliteitalia.altervista.org/webservice/product_images/mela.jpg"];
+   
     
-    cell.prodImage.image = [UIImage imageNamed:@"53-house"];
+    //cell.prodImage.image = [UIImage imageNamed:@"53-house"];
     /*dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
     dispatch_async(queue, ^{
         NSData *data = [NSData dataWithContentsOfURL:imageURL];
@@ -145,7 +176,51 @@
     cell.oldPrice.text =  pro.oldprezzo;
     cell.whereProd.text = pro.where;
     
+    //get image view
+	//AsyncImageView *imageView = (AsyncImageView *)[cell viewWithTag:IMAGE_VIEW_TAG];
+	
+    
+    
+    //cancel loading previous image for cell
+    //[[AsyncImageLoader sharedLoader] cancelLoadingURL:imageView.imageURL];
+    
+    NSLog(@"%@",pro.url);
+    if ([pro.url rangeOfString:@"http"].location == NSNotFound) {
+        
+        url = [[NSString alloc] initWithFormat:@"http://wwww.%@",pro.url ];
+    } else {
+        NSLog(@"string contains bla!");
+        url = [[NSString alloc] initWithString:pro.url];
+    }
+    
+    NSLog(@"%@",url);
+    [cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    //load the image
+    //imageView.imageURL = [[NSURL alloc] initWithString:url];
+    
     return cell;
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    self.tableView.contentOffset = CGPointMake(0.0, 90.0);
+}
+
+-(void)pressedLeftButton
+{
+    
+    if ( iol == 0 ){
+        NSLog(@"schiacciato");
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+        iol=1;
+    }
+    else{
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:YES];
+        self.tableView.contentOffset = CGPointMake(0.0, 90.0);
+        iol=0;
+    }
+    //self.tableView.contentOffset = CGPointMake(0.0, 0.0);
+        
+    
 }
 
 
@@ -153,7 +228,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 
@@ -246,6 +321,11 @@
     [self.filteredListContent addObjectsFromArray: ProdottiArray];
 }
 
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    scopeButtonPressedIndexNumber = [NSNumber numberWithInt:selectedScope];
+    NSLog(@"scope %d",scopeButtonPressedIndexNumber);
+}
+
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope{
     
 	/*
@@ -253,6 +333,7 @@
 	 */
 	[self.filteredListContent removeAllObjects]; // First clear the filtered array.
     NSLog(@"qui");
+
 	/*
 	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
 	 */

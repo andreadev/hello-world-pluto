@@ -16,6 +16,8 @@
     NSString *codice;
     NSString *categoria;
     NSString *desc;
+    NSString *url;
+    NSString *consigliato;
     
 }
 
@@ -27,6 +29,9 @@
 @property (strong, nonatomic) NSString *codice;
 @property (strong, nonatomic) NSString *categoria;
 @property (strong, nonatomic) NSString *desc;
+@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSString *consigliato;
+
 
 
 
