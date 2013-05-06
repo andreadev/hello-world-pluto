@@ -85,13 +85,17 @@
     [self setImageFromUrl:url defaultImage:nil];
 }
 
-- (void)setImageFromUrl:(NSURL *)url defaultImage: (UIImage*)defaultImage
+//- (void)setImageFromUrl:(NSURL *)url defaultImage: (UIImage*)defaultImage
+- (void)setImageFromUrl:(NSURL *)url defaultImage: (NSString*)defaultImage
+
 {
     
     /*self.layer.cornerRadius = 10.0;
     self.layer.masksToBounds = YES;
     self.layer.frame = CGRectMake(5, 5, 70, 70);*/
-    [self setImage: defaultImage];
+    NSLog(@"provo a scaricare");
+    //[self setImage: defaultImage];
+    [self setImage:[UIImage imageNamed:defaultImage]];
     
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
@@ -158,6 +162,8 @@
 
 - (void)setImageFromUrl:(NSURL *)url defaultImage: (UIImage*)defaultImage  completionBlock: (BOOL (^)(UIImage *image)) block
 {
+    
+    
     [self setImage: defaultImage];
     
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

@@ -13,7 +13,8 @@
 
 - (void)setImageFromUrl: (NSURL*)url;
 
-- (void)setImageFromUrl: (NSURL*)url defaultImage: (UIImage*)defaultImage;
+//- (void)setImageFromUrl: (NSURL*)url defaultImage: (UIImage*)defaultImage;
+- (void)setImageFromUrl: (NSURL*)url defaultImage: (NSString*)defaultImage;
 
 //imposta l'immagine da un url eseguendo ad operazione conclusa un blocco di codice. L'immagine viene
 //impostata solo se il blocco ritorna TRUE
@@ -22,7 +23,7 @@
 - (void)setImageFromUrl:(NSURL *)url defaultImage: (UIImage*)defaultImage forceSize:(CGSize)size;
 
 //Imposta un'immagine a partire dal preview id, usando e aggiornando la cache
-- (void)setImageFromPreviewId:(NSString*)previewId defaultImage: (UIImage*)defaultImage  completionBlock: (BOOL (^)(UIImage *image)) block;
+//- (void)setImageFromPreviewId:(NSString*)previewId defaultImage: (UIImage*)defaultImage  completionBlock: (BOOL (^)(UIImage *image)) block;
 
 //fa apparire l'immagine con una dissolvenza
 - (void)setImageWithDissolve:(UIImage*)_image;

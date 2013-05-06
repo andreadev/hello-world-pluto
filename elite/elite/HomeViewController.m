@@ -33,7 +33,7 @@
         // Custom initialization
         UITabBarItem *tabBarItem =[[UITabBarItem alloc]
                                    initWithTitle:@"Home"
-                                   image:[UIImage imageNamed:@"53-house.png"]
+                                   image:[UIImage imageNamed:@"53-house"]
                                    tag:0];
         self.tabBarItem=tabBarItem;
         
@@ -150,7 +150,7 @@
         
     }
     NSLog(@"entro");
-    NSLog(@"%@",[filteredListContent objectAtIndex:indexPath.row]);
+    //NSLog(@"%@",[filteredListContent objectAtIndex:indexPath.row]);
     //NSString *url = [[NSString alloc] initWithFormat:@"http://%@",[[filteredListContent objectAtIndex:indexPath.row] objectForKey:@"ImageUrl"]] ;
     
     //NSURL *imageURL = [[NSURL alloc] initWithString:url];
@@ -184,7 +184,8 @@
     //cancel loading previous image for cell
     //[[AsyncImageLoader sharedLoader] cancelLoadingURL:imageView.imageURL];
     
-    NSLog(@"%@",pro.url);
+    //NSLog(@"%@",pro.url);
+    /*
     if ([pro.url rangeOfString:@"http"].location == NSNotFound) {
         
         url = [[NSString alloc] initWithFormat:@"http://wwww.%@",pro.url ];
@@ -192,9 +193,14 @@
         NSLog(@"string contains bla!");
         url = [[NSString alloc] initWithString:pro.url];
     }
-    
+    */
     NSLog(@"%@",url);
-    [cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    //UIImageView *im;
+    //[im setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    //cell.imageView.image = im.image;
+    
+    //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
     //load the image
     //imageView.imageURL = [[NSURL alloc] initWithString:url];
     

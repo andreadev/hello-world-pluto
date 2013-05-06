@@ -40,6 +40,7 @@
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         [self openSession];
+        
         NSLog(@"apro sessione");
         [appDelegate presentTabBarController];
         
@@ -58,6 +59,8 @@
         // Yes, so just open the session (this won't display any UX).
         [self openSession];
         NSLog(@"apro sessione");
+        
+        
         [appDelegate presentTabBarController];
         
     }
@@ -85,8 +88,10 @@
         
         [appDelegate.session openWithCompletionHandler:^(FBSession *session,FBSessionState state, NSError *error) {
             [self sessionStateChanged:session state:state error:error];
+            
         }];
         [self openSession];
+        
     }
 
     
@@ -142,7 +147,15 @@
        FBSessionState state, NSError *error) {
          [self sessionStateChanged:session state:state error:error];
      }];
+    NSString * token = [[FBSession activeSession] accessToken];
+    
     [self populateUserDetails];
+}
+
+- (void)fbDialogLogin:(NSString *)token expirationDate:(NSDate *)expirationDate {
+    NSLog(@"%@",token);
+    
+    
 }
 
 - (void)sessionStateChanged:(FBSession *)session

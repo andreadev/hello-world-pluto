@@ -12,6 +12,8 @@
 #import "NewProductViewController.h"
 #import "TutorialViewController.h"
 #import "HomeViewController.h"
+#import "PreferitiView.h"
+
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -25,6 +27,7 @@
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) LoginViewController *loginController;
+@property (strong, nonatomic) PreferitiView *preferitiView;
 @property (strong, nonatomic) HomeViewController *homeController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) FBSession *session;

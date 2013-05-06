@@ -28,7 +28,7 @@
         // Custom initialization
         UITabBarItem *tabBarItem =[[UITabBarItem alloc]
                                    initWithTitle:@"Nuovo Prodotto"
-                                   image:[UIImage imageNamed:@"67-tshirt.png"]
+                                   image:[UIImage imageNamed:@"67-tshirt"]
                                    tag:0];
         self.tabBarItem=tabBarItem;
         
