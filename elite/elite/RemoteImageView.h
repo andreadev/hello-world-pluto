@@ -13,8 +13,7 @@
 
 - (void)setImageFromUrl: (NSURL*)url;
 
-//- (void)setImageFromUrl: (NSURL*)url defaultImage: (UIImage*)defaultImage;
-- (void)setImageFromUrl: (NSURL*)url defaultImage: (NSString*)defaultImage;
+- (void)setImageFromUrl: (NSURL*)url defaultImage: (UIImage*)defaultImage;
 
 //imposta l'immagine da un url eseguendo ad operazione conclusa un blocco di codice. L'immagine viene
 //impostata solo se il blocco ritorna TRUE

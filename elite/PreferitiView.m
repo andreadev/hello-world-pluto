@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     [self populateUserDetails];
-    //[self getFriends];
+    [self getFriends];
     UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
@@ -111,6 +111,9 @@
 (FBFriendPickerViewController *)friendPicker
 {
     NSLog(@"Current friend selections: %@", friendPicker.selection);
+    NSLog(@"%@",[friendPicker.selection objectAtIndex:0]);
+    //NSLog(@"%@",[friendPicker.selection objectAtIndex:1]);
+    //NSLog(@"%@",[friendPicker.selection objectAtIndex:2]);
 }
 
 /*
@@ -121,6 +124,7 @@
     (FBFriendPickerViewController*)sender;
     NSLog(@"Selected friends: %@", friendPickerControllera.selection);
     // Dismiss the friend picker
+    
     [[sender presentingViewController] dismissModalViewControllerAnimated:YES];
 }
 
@@ -138,6 +142,7 @@
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
     NSLog(@" TOKEN %@", tokenData.accessToken);
     NSString *url = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/me/friends?access_token=%@",tokenData.accessToken ];
+    NSLog(@"%@",url);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
@@ -179,9 +184,12 @@
 
 - (void) loadFriends{
     NSLog(@"qui ci sono");
+    NSLog(@"%d",[friends count]);
+    
     for (int i = 0; i<[friends count]; i++) {
         //NSString *name  = [[friends objectAtIndex:i] objectForKey:@"Name"];
-        NSLog(@"%@", [friends objectAtIndex:i]);
+        //NSLog(@"%@", [friends objectAtIndex:i]);
+        NSLog(@"a");
     }
     // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
 	//filteredListContent = [[NSMutableArray alloc] initWithCapacity: [ProdottiArray count]];

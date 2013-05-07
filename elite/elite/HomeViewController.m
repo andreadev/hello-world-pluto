@@ -199,7 +199,7 @@
     //[im setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //cell.imageView.image = im.image;
     
-    //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    [cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
     //load the image
     //imageView.imageURL = [[NSURL alloc] initWithString:url];
