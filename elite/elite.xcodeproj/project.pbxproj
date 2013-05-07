@@ -14,6 +14,8 @@
 		659A1D9B16F754BB007589FF /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659A1D9A16F754BB007589FF /* Accounts.framework */; };
 		659A1D9D16F754C3007589FF /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659A1D9C16F754C3007589FF /* Social.framework */; };
 		659A1DA816F7563E007589FF /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 659A1DA716F7563E007589FF /* FacebookSDKResources.bundle */; };
+		65B7D1001738F8A100286775 /* back_nav.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B7D0FF1738F8A100286775 /* back_nav.png */; };
+		65B7D1021738FA3500286775 /* OPT_alone.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B7D1011738FA3500286775 /* OPT_alone.png */; };
 		65B7FDD516E746A400F65710 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B7FDD416E746A400F65710 /* UIKit.framework */; };
 		65B7FDD716E746A400F65710 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B7FDD616E746A400F65710 /* Foundation.framework */; };
 		65B7FDD916E746A400F65710 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B7FDD816E746A400F65710 /* CoreGraphics.framework */; };
@@ -95,6 +97,8 @@
 		659A1D9A16F754BB007589FF /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		659A1D9C16F754C3007589FF /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		659A1DA716F7563E007589FF /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		65B7D0FF1738F8A100286775 /* back_nav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_nav.png; sourceTree = "<group>"; };
+		65B7D1011738FA3500286775 /* OPT_alone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OPT_alone.png; sourceTree = "<group>"; };
 		65B7FDD016E746A400F65710 /* elite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = elite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B7FDD416E746A400F65710 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		65B7FDD616E746A400F65710 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -321,7 +325,9 @@
 			isa = PBXGroup;
 			children = (
 				65B7FE1616E7486800F65710 /* LG_FBConnect.png */,
+				65B7D0FF1738F8A100286775 /* back_nav.png */,
 				65B7FDE816E746A400F65710 /* Default.png */,
+				65B7D1011738FA3500286775 /* OPT_alone.png */,
 				65B7FDEA16E746A400F65710 /* Default@2x.png */,
 				65B7FDEC16E746A400F65710 /* Default-568h@2x.png */,
 			);
@@ -475,6 +481,8 @@
 				F7981D1D17368BA4006770F2 /* 29-heart.png in Resources */,
 				F7981D1E17368BA4006770F2 /* 29-heart@2x.png in Resources */,
 				F7981D231736939E006770F2 /* PreferitiView.xib in Resources */,
+				65B7D1001738F8A100286775 /* back_nav.png in Resources */,
+				65B7D1021738FA3500286775 /* OPT_alone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
