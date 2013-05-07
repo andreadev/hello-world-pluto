@@ -7,10 +7,13 @@
 //
 
 #import "PreferitiView.h"
+#import "FBFriend.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface PreferitiView (){
     NSArray *friends;
     FBFriendPickerViewController *friendPickerController;
+    NSMutableArray *amici;
 }
 
 @end
@@ -45,6 +48,8 @@
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = menuBarButton;
+    amici = [[NSMutableArray alloc] init];
+    
     self.title = @"Preferiti";
     friendPickerController =
     [[FBFriendPickerViewController alloc] init];
@@ -141,7 +146,8 @@
 - (void)getFriends{
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
     NSLog(@" TOKEN %@", tokenData.accessToken);
-    NSString *url = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/me/friends?access_token=%@",tokenData.accessToken ];
+    
+    NSString *url = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Preferiti/friendlist.php?acc=%@",tokenData.accessToken ];
     NSLog(@"%@",url);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -185,18 +191,26 @@
 - (void) loadFriends{
     NSLog(@"qui ci sono");
     NSLog(@"%d",[friends count]);
-    
-    for (int i = 0; i<[friends count]; i++) {
-        //NSString *name  = [[friends objectAtIndex:i] objectForKey:@"Name"];
-        //NSLog(@"%@", [friends objectAtIndex:i]);
-        NSLog(@"a");
-    }
+    if ([friends count] == 0)
+        [self getFriends];
+    else{
+        for (int i = 0; i<[friends count]; i++) {
+        
+            FBFriend *fb = [[FBFriend alloc] init];
+            fb.hasapp = [[friends objectAtIndex:i] objectForKey:@"hasapp"];
+            fb.name = [[friends objectAtIndex:i] objectForKey:@"name"];
+            fb.idfb= [[friends objectAtIndex:i] objectForKey:@"id"];
+            [amici addObject:fb];
+            NSLog(@"%@", fb.name);
+            NSLog(@"%@", fb.idfb);
+            //NSLog(@"a");
+        }
     // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
 	//filteredListContent = [[NSMutableArray alloc] initWithCapacity: [ProdottiArray count]];
 	//inserisce in questa  nuova lista gli elementi della lista originale
 	//[filteredListContent addObjectsFromArray:ProdottiArray];
     
-    
+    }
     
 }
 
@@ -219,7 +233,7 @@
 {
 
     // Return the number of rows in the section.
-    return 0;
+    return [amici count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -227,12 +241,57 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
+    FBFriend *amicofb = [amici objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = amicofb.name;
+    cell.detailTextLabel.text = amicofb.idfb;
+    NSLog(@"%@",amicofb.idfb);
+    NSString *hasapp = amicofb.hasapp;
+    NSString *fal = @"false";
+    
+    if (![fal isEqualToString:hasapp]) {
+        NSLog(@"NO APP");
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(inviteTo:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"Show View" forState:UIControlStateNormal];
+        button.frame = CGRectMake(270.0, 10.0, 30.0, 30.0);//width and height should be same value
+        button.clipsToBounds = YES;
+        
+        button.layer.cornerRadius = 20;//half of the width
+        button.layer.borderColor=[UIColor redColor].CGColor;
+        button.layer.borderWidth=2.0f;
+        
+        [cell.contentView addSubview:button];
+    }
+    else{
+        NSLog(@"SI APP");
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(addTo:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTag:indexPath.row];
+        [button setTitle:@"Show View" forState:UIControlStateNormal];
+        button.frame = CGRectMake(270.0, 10.0, 30.0, 30.0);//width and height should be same value
+        button.clipsToBounds = YES;
+        
+        button.layer.cornerRadius = 20;//half of the width
+        button.layer.borderColor=[UIColor greenColor].CGColor;
+        button.layer.borderWidth=2.0f;
+        
+        [cell.contentView addSubview:button];
+    }
     
     return cell;
+}
+
+- (void) inviteTo:(id) sender{
+    NSLog(@"%d",[sender tag]);
+    //[sender tag];
+    
 }
 
 /*
