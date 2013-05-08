@@ -53,6 +53,8 @@
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     iol=0;
     
+    self.title = @"Home";
+    
     self.navigationItem.rightBarButtonItem = menuBarButton;
     ProdottiArray = [[NSMutableArray alloc] init];
     [self populateUserDetails];
@@ -276,9 +278,9 @@
            NSDictionary<FBGraphUser> *user,
            NSError *error) {
              if (!error) {
-                 self.title = user.name;
-                 NSLog(@"%@", user.name);
-                 NSLog(@"%@", user.id);
+                 //self.title = user.name;
+                 //NSLog(@"%@", user.name);
+                 //NSLog(@"%@", user.id);
              }
          }];
     }

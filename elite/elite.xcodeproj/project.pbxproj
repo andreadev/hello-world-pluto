@@ -77,6 +77,8 @@
 		F7981D2F1738156C006770F2 /* RemoteImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D2B1738156C006770F2 /* RemoteImageView.m */; };
 		F7981D3217390461006770F2 /* FBFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3117390461006770F2 /* FBFriend.m */; };
 		F7981D3317390461006770F2 /* FBFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3117390461006770F2 /* FBFriend.m */; };
+		F7981D3617398DF5006770F2 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3517398DF5006770F2 /* FriendCell.m */; };
+		F7981D3817398E19006770F2 /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D3717398E19006770F2 /* FriendCell.xib */; };
 		F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A6699417198A6500CEFD39 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -174,6 +176,9 @@
 		F7981D2B1738156C006770F2 /* RemoteImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteImageView.m; sourceTree = "<group>"; };
 		F7981D3017390461006770F2 /* FBFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriend.h; sourceTree = "<group>"; };
 		F7981D3117390461006770F2 /* FBFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriend.m; sourceTree = "<group>"; };
+		F7981D3417398DF5006770F2 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
+		F7981D3517398DF5006770F2 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
+		F7981D3717398E19006770F2 /* FriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
 		F7A6699417198A6500CEFD39 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -278,6 +283,9 @@
 				65B7FDDD16E746A400F65710 /* Supporting Files */,
 				F78EC37E16FF975B00E57078 /* ProdCell.h */,
 				F78EC37F16FF975B00E57078 /* ProdCell.m */,
+				F7981D3417398DF5006770F2 /* FriendCell.h */,
+				F7981D3517398DF5006770F2 /* FriendCell.m */,
+				F7981D3717398E19006770F2 /* FriendCell.xib */,
 			);
 			path = elite;
 			sourceTree = "<group>";
@@ -489,6 +497,7 @@
 				F7981D231736939E006770F2 /* PreferitiView.xib in Resources */,
 				65B7D1001738F8A100286775 /* back_nav.png in Resources */,
 				65B7D1021738FA3500286775 /* OPT_alone.png in Resources */,
+				F7981D3817398E19006770F2 /* FriendCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +550,7 @@
 				F7981D2C1738156C006770F2 /* GraphicalEffects.m in Sources */,
 				F7981D2E1738156C006770F2 /* RemoteImageView.m in Sources */,
 				F7981D3217390461006770F2 /* FBFriend.m in Sources */,
+				F7981D3617398DF5006770F2 /* FriendCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

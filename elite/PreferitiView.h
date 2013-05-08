@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "FriendCell.h"
 
-@interface PreferitiView : UITableViewController<FBFriendPickerDelegate>
+@interface PreferitiView : UITableViewController<FBFriendPickerDelegate>{
+    FriendCell *itemCell;
+}
 
 @property (nonatomic, strong) FBSession * session;
+@property (strong, nonatomic) IBOutlet FriendCell *itemCell;
 
 @end

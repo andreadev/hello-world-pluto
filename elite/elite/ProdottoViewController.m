@@ -7,7 +7,8 @@
 //
 
 #import "ProdottoViewController.h"
-#import "AsyncImageView.h"
+#import "RemoteImageView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ProdottoViewController ()
 
@@ -41,18 +42,13 @@
     self.oldprezzo.text = prod.oldprezzo;
     self.from.text = @"Andrea Barbieri";
     self.descrizione.text = prod.desc;
-    
-    //get image view
-	AsyncImageView *imageView;
-	
-    //cancel loading previous image for cell
-    [[AsyncImageLoader sharedLoader] cancelLoadingURL:imageView.imageURL];
-    
-    imageView.imageURL = [[NSURL alloc] initWithString:prod.url];
-    
-    self.imageProd.image = imageView.image ;
-    
-    
+    self.title = prod.name;
+    self.imageProd.layer.cornerRadius = 9.0 ;
+    self.imageProd.layer.masksToBounds = YES ;
+    self.imageProd.layer.borderColor = [UIColor whiteColor].CGColor ;
+    self.imageProd.layer.borderWidth = 3.0 ;
+    //imageProd.image = image;
+    [self.imageProd setImageFromUrl:[[NSURL alloc] initWithString:prod.url] defaultImage:[UIImage imageNamed:@"53-house"]];
 }
 - (void)didReceiveMemoryWarning
 {

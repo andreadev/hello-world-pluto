@@ -8,6 +8,7 @@
 
 #import "NewProductViewController.h"
 #import "LoginViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 @interface NewProductViewController (){
@@ -45,6 +46,10 @@
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
     [locationManager startUpdatingLocation];
+    imageProd.layer.cornerRadius = 20;//half of the width
+    imageProd.layer.borderColor=[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f].CGColor;
+    imageProd.layer.borderWidth=3.0f;
+    self.title = @"Elite";
     
     //[self populateUserDetails];
     // Do any additional setup after loading the view from its nib.
@@ -124,7 +129,12 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
     
     // si - salviamo la foto appena scattata/scelta in un array
+    imageProd.layer.cornerRadius = 9.0 ;
+    imageProd.layer.masksToBounds = YES ;
+    //imageProd.layer.borderColor = [UIColor blackColor].CGColor ;
+    imageProd.layer.borderWidth = 3.0 ;
     imageProd.image = image;
+    
     
     //
     

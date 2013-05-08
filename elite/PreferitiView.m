@@ -19,7 +19,7 @@
 @end
 
 @implementation PreferitiView
-@synthesize session;
+@synthesize session,itemCell;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -239,22 +239,26 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    FriendCell *cell = (FriendCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        // carichiamo il nib della cella e assegniamolo alla
+        [[NSBundle mainBundle] loadNibNamed:@"FriendCell" owner:self options:NULL];
+        cell = itemCell;
     }
     
     // Configure the cell...
     FBFriend *amicofb = [amici objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = amicofb.name;
-    cell.detailTextLabel.text = amicofb.idfb;
+    cell.labelNome.text = amicofb.name;
+    //cell.detailTextLabel.text = amicofb.idfb;
     NSLog(@"%@",amicofb.idfb);
     NSString *hasapp = amicofb.hasapp;
     NSString *fal = @"false";
     
     if (![fal isEqualToString:hasapp]) {
         NSLog(@"NO APP");
+        cell.follow.titleLabel.text = @"INVITA";
+        [cell.follow addTarget:self action:@selector(inviteTo:) forControlEvents:UIControlEventTouchUpInside];        /*
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(inviteTo:) forControlEvents:UIControlEventTouchUpInside];
@@ -266,10 +270,13 @@
         button.layer.borderColor=[UIColor redColor].CGColor;
         button.layer.borderWidth=2.0f;
         
-        [cell.contentView addSubview:button];
+        [cell.contentView addSubview:button];*/
     }
     else{
         NSLog(@"SI APP");
+        cell.follow.titleLabel.text = @"SEGUI";
+        [cell.follow addTarget:self action:@selector(seguiTo:) forControlEvents:UIControlEventTouchUpInside];
+        /*
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(addTo:) forControlEvents:UIControlEventTouchUpInside];
@@ -282,13 +289,18 @@
         button.layer.borderColor=[UIColor greenColor].CGColor;
         button.layer.borderWidth=2.0f;
         
-        [cell.contentView addSubview:button];
+        [cell.contentView addSubview:button];*/
     }
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
 - (void) inviteTo:(id) sender{
+    NSLog(@"%d",[sender tag]);
+    //[sender tag];
+    
+}
+- (void) seguiTo:(id) sender{
     NSLog(@"%d",[sender tag]);
     //[sender tag];
     

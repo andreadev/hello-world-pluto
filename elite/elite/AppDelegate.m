@@ -25,6 +25,15 @@
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:0.725 green:0.161 blue:0.169 alpha:1]];
+    [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                UITextAttributeTextColor: [UIColor whiteColor],
+                          UITextAttributeTextShadowColor: [UIColor clearColor],
+                         UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
+                                     UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:20.0f]
+     }];
+     
+     
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
