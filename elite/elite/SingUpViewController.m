@@ -8,7 +8,12 @@
 
 #import "SingUpViewController.h"
 
-@interface SingUpViewController ()
+@interface SingUpViewController (){
+    UITextField *mail;
+    UITextField *pass;
+    UITextField *nick;
+    
+}
 
 @end
 
@@ -26,6 +31,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
+    UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
+    btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
+    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
+    [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = menuBarButton;
+    
     //self.navigationController.navigationBarHidden = NO;
 
     // Uncomment the following line to preserve selection between presentations.
@@ -41,6 +54,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) pressedLeftButton{
+    
+    NSLog(@"PRESSED: %@ -- %@ -- %@",mail.text,pass.text,nick.text );
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -53,7 +71,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,12 +80,70 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
     }
     
-    // Configure the cell...
     
+    if (indexPath.row==0) {
+        //cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor= [UIColor redColor];
+        cell.textLabel.text = @"Email";
+        cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        mail = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
+        mail.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        mail.textColor = [UIColor blackColor];
+        mail.backgroundColor = [UIColor clearColor];
+        mail.delegate =self;
+        mail.textAlignment = UITextAlignmentLeft;
+        mail.highlighted = YES;
+        mail.placeholder = @"example@example.com";
+        mail.keyboardType = UIKeyboardTypeEmailAddress;
+        mail.returnKeyType = UIReturnKeyNext;
+        [cell.contentView addSubview:mail];
+    }
+    if (indexPath.row==1){
+        
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.text = @"Password";
+        cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        pass = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
+        pass.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        pass.textColor = [UIColor blackColor];
+        pass.backgroundColor = [UIColor clearColor];
+        pass.delegate =self;
+        pass.textAlignment = UITextAlignmentLeft;
+        pass.highlighted = YES;
+        pass.placeholder = @"Required";
+        pass.keyboardType = UIKeyboardTypeDefault;
+        pass.returnKeyType = UIReturnKeyDone;
+        pass.secureTextEntry = YES;
+        [cell.contentView addSubview:pass];
+    }
+    if (indexPath.row==2){
+        
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.text = @"Nickname";
+        cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        nick = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
+        nick.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        nick.textColor = [UIColor blackColor];
+        nick.backgroundColor = [UIColor clearColor];
+        nick.delegate =self;
+        nick.textAlignment = UITextAlignmentLeft;
+        nick.highlighted = YES;
+        nick.placeholder = @"Nickname";
+        nick.keyboardType = UIKeyboardTypeDefault;
+        nick.returnKeyType = UIReturnKeyDone;
+        [cell.contentView addSubview:nick];
+    }
+    
+    
+    // Configure the cell...
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
+
+
 
 /*
 // Override to support conditional editing of the table view.

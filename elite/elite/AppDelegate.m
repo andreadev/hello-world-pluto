@@ -24,12 +24,12 @@
 {
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setTintColor:[UIColor colorWithRed:0.725 green:0.161 blue:0.169 alpha:1]];
+    [[UIBarButtonItem appearance] setTintColor:[UIColor grayColor]];
     [[UINavigationBar appearance] setTitleTextAttributes: @{
                                 UITextAttributeTextColor: [UIColor whiteColor],
                           UITextAttributeTextShadowColor: [UIColor clearColor],
                          UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
-                                     UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:20.0f]
+                                     UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:23.0f]
      }];
      
      

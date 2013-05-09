@@ -103,21 +103,19 @@
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];*/
      // ...
-    NSLog(@"test");
-    NSLog(@"%d",indexPath.row);
-    if (indexPath.row == 0){
-        NSLog(@"zero");
-    SingUpViewController *singUP = [[SingUpViewController alloc] initWithNibName:@"SingUpViewController" bundle:nil];
     
-     // Pass the selected object to the new view controller.
-    [self.navigationController pushViewController:singUP animated:YES];
-    }
-    if (indexPath.row == 1 ){
-        NSLog(@"UNO");
-       LoginSiteViewController *loginSite = [[LoginSiteViewController alloc] initWithNibName:@"LoginSiteViewController" bundle:nil];
+    if (indexPath.row == 0){
         
+        LoginSiteViewController *loginSite = [[LoginSiteViewController alloc] initWithNibName:@"LoginSiteViewController" bundle:nil];
         // Pass the selected object to the new view controller.
         [self.navigationController pushViewController:loginSite animated:YES];
+    
+    }
+    if (indexPath.row == 1 ){
+        SingUpViewController *singUP = [[SingUpViewController alloc] initWithNibName:@"SingUpViewController" bundle:nil];
+        // Pass the selected object to the new view controller.
+        [self.navigationController pushViewController:singUP animated:YES];
+       
         
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

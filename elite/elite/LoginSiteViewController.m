@@ -8,7 +8,11 @@
 
 #import "LoginSiteViewController.h"
 
-@interface LoginSiteViewController ()
+@interface LoginSiteViewController (){
+    UITextField *mail;
+    UITextField *pass;
+    
+}
 
 @end
 
@@ -26,6 +30,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
+    UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
+    btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
+    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
+    [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = menuBarButton;
     //self.navigationController.navigationBarHidden = NO;
 
     // Uncomment the following line to preserve selection between presentations.
@@ -41,6 +52,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) pressedLeftButton{
+    
+    NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -53,7 +69,7 @@
 {
 
     // Return the number of rows in the section.
-    return 0;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,12 +78,53 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
     }
     
-    // Configure the cell...
     
+    if (indexPath.row==0) {
+        //cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor= [UIColor blackColor];
+        cell.textLabel.text = @"Email";
+        cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        mail = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
+        mail.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        mail.textColor = [UIColor blackColor];
+        mail.backgroundColor = [UIColor clearColor];
+        mail.delegate =self;
+        mail.textAlignment = UITextAlignmentLeft;
+        mail.highlighted = YES;
+        mail.placeholder = @"example@example.com";
+        mail.keyboardType = UIKeyboardTypeEmailAddress;
+        mail.returnKeyType = UIReturnKeyNext;
+        [cell.contentView addSubview:mail];
+    }
+    if (indexPath.row==1){
+        
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.text = @"Password";
+        cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        pass = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
+        pass.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        pass.textColor = [UIColor blackColor];
+        pass.backgroundColor = [UIColor clearColor];
+        pass.delegate =self;
+        pass.textAlignment = UITextAlignmentLeft;
+        pass.highlighted = YES;
+        pass.placeholder = @"Required";
+        pass.keyboardType = UIKeyboardTypeDefault;
+        pass.returnKeyType = UIReturnKeyDone;
+        pass.secureTextEntry = YES;
+        [cell.contentView addSubview:pass];
+    }
+    
+    
+    
+    // Configure the cell...
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
+
 
 /*
 // Override to support conditional editing of the table view.

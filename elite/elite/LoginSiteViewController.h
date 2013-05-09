@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginSiteViewController : UITableViewController
+@interface LoginSiteViewController : UITableViewController <UITextFieldDelegate>
 
 @end
