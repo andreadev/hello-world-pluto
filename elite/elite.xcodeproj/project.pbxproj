@@ -34,6 +34,7 @@
 		65B7FE0316E746A500F65710 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE0116E746A500F65710 /* InfoPlist.strings */; };
 		65B7FE0616E746A500F65710 /* eliteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B7FE0516E746A500F65710 /* eliteTests.m */; };
 		65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1616E7486800F65710 /* LG_FBConnect.png */; };
+		65D48E3D173BF2F50025AB6F /* tab-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 65D48E3C173BF2F50025AB6F /* tab-back.png */; };
 		F70B27BA16F612C20048694C /* NewProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27B816F612C20048694C /* NewProductViewController.m */; };
 		F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27B916F612C20048694C /* NewProductViewController.xib */; };
 		F70B27BF16F656E50048694C /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27BD16F656E50048694C /* TutorialViewController.m */; };
@@ -129,6 +130,7 @@
 		65B7FE0416E746A500F65710 /* eliteTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = eliteTests.h; sourceTree = "<group>"; };
 		65B7FE0516E746A500F65710 /* eliteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eliteTests.m; sourceTree = "<group>"; };
 		65B7FE1616E7486800F65710 /* LG_FBConnect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LG_FBConnect.png; sourceTree = "<group>"; };
+		65D48E3C173BF2F50025AB6F /* tab-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-back.png"; sourceTree = "<group>"; };
 		F70B27B716F612C20048694C /* NewProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewProductViewController.h; sourceTree = "<group>"; };
 		F70B27B816F612C20048694C /* NewProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewProductViewController.m; sourceTree = "<group>"; };
 		F70B27B916F612C20048694C /* NewProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewProductViewController.xib; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				65B7FE1616E7486800F65710 /* LG_FBConnect.png */,
 				65B7D0FF1738F8A100286775 /* back_nav.png */,
 				65B7FDE816E746A400F65710 /* Default.png */,
+				65D48E3C173BF2F50025AB6F /* tab-back.png */,
 				65B7D1011738FA3500286775 /* OPT_alone.png */,
 				65B7FDEA16E746A400F65710 /* Default@2x.png */,
 				65B7FDEC16E746A400F65710 /* Default-568h@2x.png */,
@@ -516,6 +519,7 @@
 				F7981D3817398E19006770F2 /* FriendCell.xib in Resources */,
 				F7981D3D173BBEE9006770F2 /* SingUpViewController.xib in Resources */,
 				F7981D42173BBF8E006770F2 /* LoginSiteViewController.xib in Resources */,
+				65D48E3D173BF2F50025AB6F /* tab-back.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

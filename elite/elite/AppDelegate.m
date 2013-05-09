@@ -25,6 +25,7 @@
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTintColor:[UIColor grayColor]];
+    
     [[UINavigationBar appearance] setTitleTextAttributes: @{
                                 UITextAttributeTextColor: [UIColor whiteColor],
                           UITextAttributeTextShadowColor: [UIColor clearColor],
@@ -63,6 +64,8 @@
     loginController = [[LoginViewController alloc] init];
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+    
+    [self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"tab-back.png"]];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
         //proceed with app normally
