@@ -30,7 +30,7 @@
                                 UITextAttributeTextColor: [UIColor whiteColor],
                           UITextAttributeTextShadowColor: [UIColor clearColor],
                          UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
-                                     UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:23.0f]
+                                     UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:20.0f]
      }];
      
      
@@ -42,6 +42,8 @@
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]!=YES)
     {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Tutorial"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logged"];
+        
     }
     
     
