@@ -7,6 +7,7 @@
 //
 
 #import "ProdCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation ProdCell
 @synthesize prodImage,nameProd,Price,oldPrice,whereProd;
@@ -17,6 +18,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        
+        self.layer.cornerRadius = 15.0;
+        self.layer.masksToBounds = YES;
+
     }
     return self;
 }
