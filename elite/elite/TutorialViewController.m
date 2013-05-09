@@ -90,14 +90,20 @@
 -(void)introductionDidFinishWithType:(MYFinishType)finishType{
     if (finishType == MYFinishTypeSkipButton) {
         NSLog(@"Did Finish Introduction By Skipping It");
+        
         LoginViewController * login = [[LoginViewController alloc] init];
-        [self presentModalViewController:login animated:YES];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+        nav.navigationBarHidden = YES;
+        [self presentModalViewController:nav animated:YES];
         
     }
     else if (finishType == MYFinishTypeSwipeOut){
         NSLog(@"Did Finish Introduction By Swiping Out");
+        
         LoginViewController * login = [[LoginViewController alloc] init];
-        [self presentModalViewController:login animated:YES];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+        nav.navigationBarHidden = YES;
+        [self presentModalViewController:nav animated:YES];
         
     }
     

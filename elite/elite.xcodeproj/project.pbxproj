@@ -79,6 +79,10 @@
 		F7981D3317390461006770F2 /* FBFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3117390461006770F2 /* FBFriend.m */; };
 		F7981D3617398DF5006770F2 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3517398DF5006770F2 /* FriendCell.m */; };
 		F7981D3817398E19006770F2 /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D3717398E19006770F2 /* FriendCell.xib */; };
+		F7981D3C173BBEE9006770F2 /* SingUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3A173BBEE8006770F2 /* SingUpViewController.m */; };
+		F7981D3D173BBEE9006770F2 /* SingUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D3B173BBEE9006770F2 /* SingUpViewController.xib */; };
+		F7981D41173BBF8E006770F2 /* LoginSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3F173BBF8C006770F2 /* LoginSiteViewController.m */; };
+		F7981D42173BBF8E006770F2 /* LoginSiteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */; };
 		F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A6699417198A6500CEFD39 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -179,6 +183,12 @@
 		F7981D3417398DF5006770F2 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
 		F7981D3517398DF5006770F2 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
 		F7981D3717398E19006770F2 /* FriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
+		F7981D39173BBEE7006770F2 /* SingUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingUpViewController.h; sourceTree = "<group>"; };
+		F7981D3A173BBEE8006770F2 /* SingUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingUpViewController.m; sourceTree = "<group>"; };
+		F7981D3B173BBEE9006770F2 /* SingUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingUpViewController.xib; sourceTree = "<group>"; };
+		F7981D3E173BBF8C006770F2 /* LoginSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSiteViewController.h; sourceTree = "<group>"; };
+		F7981D3F173BBF8C006770F2 /* LoginSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSiteViewController.m; sourceTree = "<group>"; };
+		F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginSiteViewController.xib; sourceTree = "<group>"; };
 		F7A6699417198A6500CEFD39 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -267,6 +277,12 @@
 				F78EC35316FCF02700E57078 /* HomeViewController.m */,
 				659A1D9116F7296A007589FF /* LoginViewController.h */,
 				659A1D9216F7296A007589FF /* LoginViewController.m */,
+				F7981D3E173BBF8C006770F2 /* LoginSiteViewController.h */,
+				F7981D3F173BBF8C006770F2 /* LoginSiteViewController.m */,
+				F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */,
+				F7981D39173BBEE7006770F2 /* SingUpViewController.h */,
+				F7981D3A173BBEE8006770F2 /* SingUpViewController.m */,
+				F7981D3B173BBEE9006770F2 /* SingUpViewController.xib */,
 				F7981D1F1736939E006770F2 /* PreferitiView.h */,
 				F7981D201736939E006770F2 /* PreferitiView.m */,
 				F7981D3017390461006770F2 /* FBFriend.h */,
@@ -498,6 +514,8 @@
 				65B7D1001738F8A100286775 /* back_nav.png in Resources */,
 				65B7D1021738FA3500286775 /* OPT_alone.png in Resources */,
 				F7981D3817398E19006770F2 /* FriendCell.xib in Resources */,
+				F7981D3D173BBEE9006770F2 /* SingUpViewController.xib in Resources */,
+				F7981D42173BBF8E006770F2 /* LoginSiteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +569,8 @@
 				F7981D2E1738156C006770F2 /* RemoteImageView.m in Sources */,
 				F7981D3217390461006770F2 /* FBFriend.m in Sources */,
 				F7981D3617398DF5006770F2 /* FriendCell.m in Sources */,
+				F7981D3C173BBEE9006770F2 /* SingUpViewController.m in Sources */,
+				F7981D41173BBF8E006770F2 /* LoginSiteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,10 +12,11 @@
 
 
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 
+@property (weak, nonatomic) IBOutlet UITableView *tabellaView;
 - (IBAction)Login:(id)sender; 
 
 @end

@@ -9,19 +9,25 @@
 
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "SingUpViewController.h"
+#import "LoginSiteViewController.h"
 
 
-@interface LoginViewController ()
+@interface LoginViewController (){
+    NSArray *lista;
+}
 
 @end
 
 @implementation LoginViewController
+@synthesize tabellaView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.title= @"Login";
         
     }
     return self;
@@ -30,7 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
+    lista = [[NSArray alloc] initWithObjects:@"Accedi",@"Registrati", nil];
     
     //Fai il login
     //check tutorial
@@ -51,6 +59,70 @@
     
     
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    // Return the number of rows in the section.
+    return [lista count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+
+{
+    
+    static NSString *CellIdentifier = @"cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
+        
+    }
+    
+    // Configure the cell.
+    
+    cell.textLabel.text = [lista objectAtIndex:indexPath.row];
+    
+    return cell;
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];*/
+     // ...
+    NSLog(@"test");
+    NSLog(@"%d",indexPath.row);
+    if (indexPath.row == 0){
+        NSLog(@"zero");
+    SingUpViewController *singUP = [[SingUpViewController alloc] initWithNibName:@"SingUpViewController" bundle:nil];
+    
+     // Pass the selected object to the new view controller.
+    [self.navigationController pushViewController:singUP animated:YES];
+    }
+    if (indexPath.row == 1 ){
+        NSLog(@"UNO");
+       LoginSiteViewController *loginSite = [[LoginSiteViewController alloc] initWithNibName:@"LoginSiteViewController" bundle:nil];
+        
+        // Pass the selected object to the new view controller.
+        [self.navigationController pushViewController:loginSite animated:YES];
+        
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 
 - (void) viewWillAppear:(BOOL)animated{
     //[self loadTutorial];
@@ -147,7 +219,7 @@
        FBSessionState state, NSError *error) {
          [self sessionStateChanged:session state:state error:error];
      }];
-    NSString * token = [[FBSession activeSession] accessToken];
+    //NSString * token = [[FBSession activeSession] accessToken];
     
     [self populateUserDetails];
 }
@@ -188,5 +260,9 @@
                                   otherButtonTitles:nil];
         [alertView show];
     }    
+}
+- (void)viewDidUnload {
+    [self setTabellaView:nil];
+    [super viewDidUnload];
 }
 @end

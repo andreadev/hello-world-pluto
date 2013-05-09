@@ -11,6 +11,7 @@
 #import "Prodotto.h"
 #import "AsyncImageView.h"
 #import "RemoteImageView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface HomeViewController (){
     NSMutableArray *ProdottiArray;
@@ -200,6 +201,10 @@
     //UIImageView *im;
     //[im setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //cell.imageView.image = im.image;
+    cell.prodImage.layer.cornerRadius = 9.0 ;
+    cell.prodImage.layer.masksToBounds = YES ;
+    cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
+    cell.prodImage.layer.borderWidth = 3.0 ;
     
     [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];

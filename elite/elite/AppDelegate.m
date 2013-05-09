@@ -62,10 +62,13 @@
     
     loginController = [[LoginViewController alloc] init];
     
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
         //proceed with app normally
         NSLog(@"accettato");
-        self.window.rootViewController = loginController;
+        nav.navigationBarHidden = NO;
+        self.window.rootViewController = nav;
         
     }
     else{
