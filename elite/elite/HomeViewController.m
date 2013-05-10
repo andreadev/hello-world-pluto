@@ -302,7 +302,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
      ProdottoViewController *detailViewController = [[ProdottoViewController alloc] initWithNibName:@"ProdottoViewController" bundle:nil];
      // ...
      // Pass the selected object to the new view controller.

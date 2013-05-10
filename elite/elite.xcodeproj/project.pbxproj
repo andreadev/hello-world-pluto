@@ -269,10 +269,10 @@
 			children = (
 				65B7FDE516E746A400F65710 /* AppDelegate.h */,
 				65B7FDE616E746A400F65710 /* AppDelegate.m */,
+				F76855D01701B8A7001BE112 /* MYIntroductionView */,
 				F7730DC617218EED00DA2F9D /* Async */,
 				F70B27BC16F656E50048694C /* TutorialViewController.h */,
 				F70B27BD16F656E50048694C /* TutorialViewController.m */,
-				F76855D01701B8A7001BE112 /* MYIntroductionView */,
 				F70B27B716F612C20048694C /* NewProductViewController.h */,
 				F70B27B816F612C20048694C /* NewProductViewController.m */,
 				F78EC35216FCF02700E57078 /* HomeViewController.h */,

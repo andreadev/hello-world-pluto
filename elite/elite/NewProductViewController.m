@@ -77,9 +77,13 @@
 - (IBAction)logout:(id)sender {
     
     [FBSession.activeSession closeAndClearTokenInformation];
-    LoginViewController *login= [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    LoginViewController *loginController = [[LoginViewController alloc] init];
     
-    [self presentModalViewController:login animated:NO];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+    [self presentModalViewController:nav animated:NO];
+    
+    
 }
 
 - (IBAction)seeNegozi:(id)sender {
@@ -314,7 +318,7 @@ didReceiveData:(NSData*)data{
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"entrooooooooo");
+    NSLog(@"Location");
     
     lat =[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
     

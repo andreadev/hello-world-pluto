@@ -60,9 +60,7 @@
     NSArray *viewControllerArray =[NSArray arrayWithObjects:navProd, navHome, navPref, nil];
     
     tabBarController = [[UITabBarController alloc] init];
-    
     tabBarController.viewControllers = viewControllerArray;
-    
     loginController = [[LoginViewController alloc] init];
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];

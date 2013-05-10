@@ -7,6 +7,7 @@
 //
 
 #import "LoginSiteViewController.h"
+#import "AppDelegate.h"
 
 @interface LoginSiteViewController (){
     UITextField *mail;
@@ -17,6 +18,7 @@
 @end
 
 @implementation LoginSiteViewController
+@synthesize postParams;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -55,6 +57,44 @@
 - (void) pressedLeftButton{
     
     NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              mail.text, @"username",
+                              pass.text, @"password",
+                              nil];
+    
+    
+    NSError *error;
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSLog(@"%@",postData);
+    
+    
+    NSString *postLength = [NSString stringWithFormat:@"12321443"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Utenti/login_user_iphone.php"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLResponse *response;
+    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    //NSLog(@"Reply: %@", theReply);
+    NSLog(@"%@",theReply);
+    
+    if ([theReply rangeOfString:@"user_id"].location == NSNotFound) {
+        NSLog(@"LOGIN NON RIUSCITO");
+    } else {
+        NSLog(@"LOGIN RIUSCITO");
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate presentTabBarController];
+        
+    }
+    //NSLog(@"%d",[json count]);
+    
 }
 
 #pragma mark - Table view data source

@@ -10,4 +10,6 @@
 
 @interface SingUpViewController : UITableViewController<UITextFieldDelegate>
 
+@property (strong, nonatomic) NSMutableDictionary *postParams;
+
 @end

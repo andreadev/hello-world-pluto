@@ -39,22 +39,27 @@
     
     // Do any additional setup after loading the view from its nib.
     lista = [[NSArray alloc] initWithObjects:@"Accedi",@"Registrati", nil];
-    
-    //Fai il login
-    //check tutorial
-    NSLog(@"Tutorial?");
-    //[self loadTutorial];
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    /*
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
+        NSLog(@"LOGIN DID LOAD");
         [self openSession];
-        
-        NSLog(@"apro sessione");
         [appDelegate presentTabBarController];
+     
+    }*/
+    
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        // Yes, so just open the session (this won't display any UX).
+        
+        NSLog(@"LOGIN did LOAD");
+        [self openSession];
+        //[appDelegate presentTabBarController];
         
     }
     
     
+        
 
     
     
@@ -99,11 +104,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];*/
-     // ...
-    
     if (indexPath.row == 0){
         
         LoginSiteViewController *loginSite = [[LoginSiteViewController alloc] initWithNibName:@"LoginSiteViewController" bundle:nil];
@@ -124,16 +124,17 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     //[self loadTutorial];
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+    //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    /*if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
-        [self openSession];
-        NSLog(@"apro sessione");
-        
-        
+        NSLog(@"appear");
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate presentTabBarController];
         
-    }
+        //[appDelegate presentTabBarController];
+        
+    }*/
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -148,43 +149,49 @@
     
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
-        [self openSession];
-        NSLog(@"apro sessione");
+        //[self openSession];
+        NSLog(@"LOGIN BOTTONE");
         
     } else {
         // No, display the login page.
+        NSLog(@"LOGIN BOTTONE ELSE");
         [appDelegate.session closeAndClearTokenInformation];
         appDelegate.session = [[FBSession alloc] init];
         
         [appDelegate.session openWithCompletionHandler:^(FBSession *session,FBSessionState state, NSError *error) {
-            [self sessionStateChanged:session state:state error:error];
-            
+            [self openSession];
+            //[self sessionStateChanged:session state:state error:error];
+         
         }];
-        [self openSession];
+        //[self openSession];
         
     }
 
     
-    
-    /*if (appDelegate.session.isOpen) {
+    /*
+    if (appDelegate.session.isOpen) {
         // if a user logs out explicitly, we delete any cached token information, and next
         // time they run the applicaiton they will be presented with log in UX again; most
         // users will simply close the app or switch away, without logging out; this will
         // cause the implicit cached-token login to occur on next launch of the application
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate presentTabBarController];
+        //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        NSLog(@"ifffffff");
+        //[appDelegate presentTabBarController];
+        //[self.view addSubview:appDelegate.tabBarController.view];
         
         ///////AUTOLOGIN////////
         //sessione aperta quindi autologin: ovviamente poi va visto anche dal lato server elite
         
     } else {
+        NSLog(@"LOGIN BOTTONE ELSE");
         [appDelegate.session closeAndClearTokenInformation];
         appDelegate.session = [[FBSession alloc] init];
+        
  
         [appDelegate.session openWithCompletionHandler:^(FBSession *session,FBSessionState state, NSError *error) {
              [self sessionStateChanged:session state:state error:error];
          }];
-     
+        [self openSession];
         
     }*/
 
@@ -210,6 +217,7 @@
 
 - (void)openSession
 {
+    
     [FBSession openActiveSessionWithReadPermissions:nil
                                        allowLoginUI:YES
                                   completionHandler:
@@ -217,27 +225,19 @@
        FBSessionState state, NSError *error) {
          [self sessionStateChanged:session state:state error:error];
      }];
-    //NSString * token = [[FBSession activeSession] accessToken];
-    
-    [self populateUserDetails];
-}
-
-- (void)fbDialogLogin:(NSString *)token expirationDate:(NSDate *)expirationDate {
-    NSLog(@"%@",token);
-    
-    
 }
 
 - (void)sessionStateChanged:(FBSession *)session
                       state:(FBSessionState) state
                       error:(NSError *)error
 {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     switch (state) {
         case FBSessionStateOpen: {
-                NSLog(@"testo");
-                //[self openSession];
+                NSLog(@"OPEN SESSION");
+                AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 [appDelegate presentTabBarController];
+            
+            
             }
             break;
         case FBSessionStateClosed:
