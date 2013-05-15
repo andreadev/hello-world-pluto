@@ -9,12 +9,17 @@
 #import "NewProductViewController.h"
 #import "LoginViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "User.h"
 
 
 @interface NewProductViewController (){
     NSString *filenames;
     NSArray *negozi;
     NSString *lat,*lon;
+    UIPickerView *category;
+    UIToolbar *toolBar;
+    NSMutableArray *categorie;
+    User *Currentuser;
     
 }
 @end
@@ -41,20 +46,42 @@
 {
     [super viewDidLoad];
     
+    categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Audio",@"Audio",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
+    
+    category = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 205, 320, 20)];
+    category.showsSelectionIndicator = YES;
+    category.delegate = self;
+    [category setHidden:YES];
+    toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 163, 320, 44)];
+    toolBar.barStyle = UIBarStyleBlackOpaque;
+    [toolBar setHidden:YES];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
+    
+    [toolBar setItems:[NSArray arrayWithObjects:btn,nil]];
+    [self.view addSubview:toolBar];
+    
+    [self.view addSubview:category];
+    
     [self setLocationManager:[[CLLocationManager alloc] init]];
     [locationManager setDelegate:self];
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
     [locationManager startUpdatingLocation];
+    
     imageProd.layer.cornerRadius = 20;//half of the width
     imageProd.layer.borderColor=[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f].CGColor;
     imageProd.layer.borderWidth=3.0f;
-    self.title = @"Elite";
+    //self.title = @"Elite";
     
     //[self populateUserDetails];
     // Do any additional setup after loading the view from its nib.
 }
 
+- (IBAction)viewCategory:(id)sender {
+    NSLog(@"category");
+    [toolBar setHidden:NO];
+    [category setHidden:NO];
+}
 - (void) viewWillAppear:(BOOL)animated{
     [self populateUserDetails];
 }
@@ -72,8 +99,15 @@
     [self setShopProd:nil];
     [self setDescProd:nil];
     [self setName:nil];
+    [self setMoreCate:nil];
     [super viewDidUnload];
 }
+- (IBAction)seeCategory:(id)sender {
+    NSLog(@"category");
+    [toolBar setHidden:NO];
+    [category setHidden:NO];
+}
+
 - (IBAction)logout:(id)sender {
     
     [FBSession.activeSession closeAndClearTokenInformation];
@@ -84,6 +118,12 @@
     [self presentModalViewController:nav animated:NO];
     
     
+}
+
+- (IBAction)done:(id)sender {
+    NSLog(@"done");
+    [toolBar setHidden:YES];
+    [category setHidden:YES];
 }
 
 - (IBAction)seeNegozi:(id)sender {
@@ -162,6 +202,7 @@
            NSError *error) {
              if (!error) {
                  name.text = user.name;
+                 Currentuser.name= user.name;
                  NSLog(@"%@", user.name);
                  NSLog(@"%@", user.id);
              }
@@ -173,6 +214,7 @@
 - (IBAction)consiglia:(id)sender {
     
     //UPLOAD IMMAGINE
+    
     NSLog(@"Immagine");
     
     
@@ -238,6 +280,8 @@
                                categoryProd.text, @"category_id",
                                @"Dummy", @"insertion_code",
                                ima, @"imageurl",
+                              name.text,@"username",
+                              descProd.text,@"desc",
                                nil];
     
     
@@ -326,5 +370,25 @@ didReceiveData:(NSData*)data{
     
 }
 
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
 
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
+{
+    return [categorie count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    id str=[categorie objectAtIndex:row];
+    return str;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSLog(@"selectedRowInPicker >> %d",row);
+    categoryProd.text = [categorie objectAtIndex:row];
+}
 @end

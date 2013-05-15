@@ -84,6 +84,10 @@
 		F7981D3D173BBEE9006770F2 /* SingUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D3B173BBEE9006770F2 /* SingUpViewController.xib */; };
 		F7981D41173BBF8E006770F2 /* LoginSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3F173BBF8C006770F2 /* LoginSiteViewController.m */; };
 		F7981D42173BBF8E006770F2 /* LoginSiteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */; };
+		F7981D44173E8568006770F2 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7981D43173E8567006770F2 /* icon@2x.png */; };
+		F7981D46173E8602006770F2 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F7981D45173E8601006770F2 /* icon.png */; };
+		F7981D4A1742C7D2006770F2 /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D481742C7D2006770F2 /* SearchView.m */; };
+		F7981D4B1742C7D2006770F2 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D491742C7D2006770F2 /* SearchView.xib */; };
 		F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A6699417198A6500CEFD39 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -191,6 +195,11 @@
 		F7981D3E173BBF8C006770F2 /* LoginSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSiteViewController.h; sourceTree = "<group>"; };
 		F7981D3F173BBF8C006770F2 /* LoginSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSiteViewController.m; sourceTree = "<group>"; };
 		F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginSiteViewController.xib; sourceTree = "<group>"; };
+		F7981D43173E8567006770F2 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		F7981D45173E8601006770F2 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		F7981D471742C7D1006770F2 /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
+		F7981D481742C7D2006770F2 /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
+		F7981D491742C7D2006770F2 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		F7A6699417198A6500CEFD39 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -229,6 +238,8 @@
 		65B7FDC516E746A400F65710 = {
 			isa = PBXGroup;
 			children = (
+				F7981D45173E8601006770F2 /* icon.png */,
+				F7981D43173E8567006770F2 /* icon@2x.png */,
 				F7A6699417198A6500CEFD39 /* CoreLocation.framework */,
 				F76855B51701A833001BE112 /* QuartzCore.framework */,
 				65B7FDDC16E746A400F65710 /* elite */,
@@ -294,6 +305,8 @@
 				65B7FDEE16E746A500F65710 /* elite.xcdatamodeld */,
 				F78EC388170035A300E57078 /* ProdottoViewController.h */,
 				F78EC389170035A300E57078 /* ProdottoViewController.m */,
+				F7981D471742C7D1006770F2 /* SearchView.h */,
+				F7981D481742C7D2006770F2 /* SearchView.m */,
 				F78EC38D1700364D00E57078 /* Prodotto.h */,
 				F78EC38E1700364D00E57078 /* Prodotto.m */,
 				F78EC34516FCEE3800E57078 /* resources */,
@@ -303,7 +316,6 @@
 				F78EC37F16FF975B00E57078 /* ProdCell.m */,
 				F7981D3417398DF5006770F2 /* FriendCell.h */,
 				F7981D3517398DF5006770F2 /* FriendCell.m */,
-				F7981D3717398E19006770F2 /* FriendCell.xib */,
 			);
 			path = elite;
 			sourceTree = "<group>";
@@ -348,6 +360,8 @@
 				659A1D9316F7296A007589FF /* LoginViewController.xib */,
 				F70B27BE16F656E50048694C /* TutorialViewController.xib */,
 				F70B27B916F612C20048694C /* NewProductViewController.xib */,
+				F7981D491742C7D2006770F2 /* SearchView.xib */,
+				F7981D3717398E19006770F2 /* FriendCell.xib */,
 				F78EC38116FF977A00E57078 /* ProdCell.xib */,
 			);
 			name = XIB;
@@ -520,6 +534,9 @@
 				F7981D3D173BBEE9006770F2 /* SingUpViewController.xib in Resources */,
 				F7981D42173BBF8E006770F2 /* LoginSiteViewController.xib in Resources */,
 				65D48E3D173BF2F50025AB6F /* tab-back.png in Resources */,
+				F7981D44173E8568006770F2 /* icon@2x.png in Resources */,
+				F7981D46173E8602006770F2 /* icon.png in Resources */,
+				F7981D4B1742C7D2006770F2 /* SearchView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +592,7 @@
 				F7981D3617398DF5006770F2 /* FriendCell.m in Sources */,
 				F7981D3C173BBEE9006770F2 /* SingUpViewController.m in Sources */,
 				F7981D41173BBF8E006770F2 /* LoginSiteViewController.m in Sources */,
+				F7981D4A1742C7D2006770F2 /* SearchView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

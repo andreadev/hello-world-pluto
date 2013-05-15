@@ -12,6 +12,7 @@
 #import "AsyncImageView.h"
 #import "RemoteImageView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SearchView.h"
 
 @interface HomeViewController (){
     NSMutableArray *ProdottiArray;
@@ -215,12 +216,18 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-    self.tableView.contentOffset = CGPointMake(0.0, 90.0);
+    //self.tableView.contentOffset = CGPointMake(0.0, 90.0);
 }
 
 -(void)pressedLeftButton
 {
     
+    SearchView *search = [[SearchView alloc] initWithNibName:@"SearchView" bundle:nil];
+    
+    [self.navigationController pushViewController:search animated:YES];
+    
+    
+    /*
     if ( iol == 0 ){
         NSLog(@"schiacciato");
         [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
@@ -230,7 +237,7 @@
         [self.tableView scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:YES];
         self.tableView.contentOffset = CGPointMake(0.0, 90.0);
         iol=0;
-    }
+    }*/
     //self.tableView.contentOffset = CGPointMake(0.0, 0.0);
         
     

@@ -12,7 +12,7 @@
 
 
 
-@interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate , UITextFieldDelegate, CLLocationManagerDelegate>
+@interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate , UITextFieldDelegate, CLLocationManagerDelegate, UIPickerViewDelegate,UIPickerViewDataSource>
 {
     CLLocationManager *locationManager;
 
@@ -29,12 +29,14 @@
 @property (strong, nonatomic) NSMutableDictionary *postParams;
 @property (strong, nonatomic) NSMutableData *imageData;
 @property (strong, nonatomic) NSURLConnection *imageConnection;
+@property (weak, nonatomic) IBOutlet UIButton *moreCate;
+- (IBAction)seeCategory:(id)sender;
 
 - (IBAction)logout:(id)sender;
 - (IBAction)seeNegozi:(id)sender;
-
+- (IBAction)viewCategory:(id)sender;
 
 - (IBAction)photo:(id)sender;
-
+- (void) done;
 - (IBAction)consiglia:(id)sender;
 @end
