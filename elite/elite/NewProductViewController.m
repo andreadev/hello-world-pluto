@@ -20,12 +20,13 @@
     UIToolbar *toolBar;
     NSMutableArray *categorie;
     User *Currentuser;
+    int category_id;
     
 }
 @end
 
 @implementation NewProductViewController
-@synthesize imageProd,nameProd,priceProd,categoryProd,shopProd,descProd,name,postParams,imageConnection,imageData,locationManager;
+@synthesize imageProd,nameProd,priceProd,categoryProd,shopProd,descProd,name,postParams,imageConnection,imageData,locationManager,session,moreCate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,7 +47,7 @@
 {
     [super viewDidLoad];
     
-    categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Audio",@"Audio",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
+    categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
     
     category = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 205, 320, 20)];
     category.showsSelectionIndicator = YES;
@@ -252,7 +253,7 @@
         // now lets make the connection to the web
         NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-        NSLog(returnString);
+        //NSLog(returnString);
         NSLog(@"finish");
     }
     
@@ -272,12 +273,12 @@
      @"Scopri Elite Advice e risparmia su ogni acquisto.", @"description",
      nil];
     
-    
+    NSString *cat = [[NSString alloc] initWithFormat:@"%d",category_id ];
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                nameProd.text, @"name",
                                shopProd.text, @"store_id",
                                priceProd.text, @"price",
-                               categoryProd.text, @"category_id",
+                               cat, @"category_id",
                                @"Dummy", @"insertion_code",
                                ima, @"imageurl",
                               name.text,@"username",
@@ -390,5 +391,6 @@ didReceiveData:(NSData*)data{
 {
     NSLog(@"selectedRowInPicker >> %d",row);
     categoryProd.text = [categorie objectAtIndex:row];
+    category_id = row;
 }
 @end

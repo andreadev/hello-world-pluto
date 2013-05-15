@@ -12,12 +12,13 @@
     UIPickerView *category;
     UIToolbar *toolBar;
     NSMutableArray *categorie;
+    int category_id;
 }
 
 @end
 
 @implementation SearchView
-@synthesize searchBotton,searchText,segment,categoryText,categoryView;
+@synthesize searchBotton,searchText,segment,categoryText,categoryView,rootController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,7 +33,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Audio",@"Audio",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
+    categorie = [[NSMutableArray alloc] initWithObjects:@"Tutte",@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
     
     category = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 205, 320, 20)];
     category.showsSelectionIndicator = YES;
@@ -67,6 +68,10 @@
     NSLog(@"%@",searchText.text);
     
     NSLog(@"%d",segment.selectedSegmentIndex);
+    
+    NSString *searchString = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_products.php?words=%@&?category=%d&?or=%d", searchText.text,category_id,segment.selectedSegmentIndex ];
+    
+    rootController.urlProdotti = searchString;
     
 }
 - (IBAction)valueChange:(id)sender {
@@ -104,6 +109,7 @@
 {
     NSLog(@"selectedRowInPicker >> %d",row);
     categoryText.text = [categorie objectAtIndex:row];
+    category_id = row;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

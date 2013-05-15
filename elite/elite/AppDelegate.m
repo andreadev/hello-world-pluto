@@ -223,6 +223,11 @@
 -(void)presentTabBarController{
     self.window.rootViewController = tabBarController;
 }
+-(void)addTabBarController{
+    
+    [self.window removeFromSuperview];
+    self.window.rootViewController = tabBarController;
+}
 
 #pragma mark - Application's Documents directory
 

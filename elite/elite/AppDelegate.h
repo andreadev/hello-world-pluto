@@ -36,5 +36,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 -(void)presentTabBarController;
+-(void)addTabBarController;
 
 @end

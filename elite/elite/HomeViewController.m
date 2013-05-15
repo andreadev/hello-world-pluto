@@ -26,7 +26,7 @@
 @end
 
 @implementation HomeViewController
-@synthesize prodotti,itemCell,filteredListContent;
+@synthesize prodotti,itemCell,filteredListContent,urlProdotti;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -54,23 +54,28 @@
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     iol=0;
-    
-    self.title = @"Home";
+    urlProdotti = @"http://eliteitalia.altervista.org/webservice/Prodotti/get_all_products.php";
+    //self.title = @"Home";
     
     self.navigationItem.rightBarButtonItem = menuBarButton;
     ProdottiArray = [[NSMutableArray alloc] init];
-    [self populateUserDetails];
+    //[self populateUserDetails];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_all_products.php"]];
-        [self performSelectorOnMainThread:@selector(fetchedData:)
-                               withObject:data waitUntilDone:YES]; });
+    
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+- (void) loadProducts{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlProdotti]];
+        [self performSelectorOnMainThread:@selector(fetchedData:)
+                               withObject:data waitUntilDone:YES]; });
+}
+
 
 - (void)fetchedData:(NSData *)responseData {
     NSArray* json = [NSJSONSerialization
@@ -154,24 +159,6 @@
         
     }
     NSLog(@"entro");
-    //NSLog(@"%@",[filteredListContent objectAtIndex:indexPath.row]);
-    //NSString *url = [[NSString alloc] initWithFormat:@"http://%@",[[filteredListContent objectAtIndex:indexPath.row] objectForKey:@"ImageUrl"]] ;
-    
-    //NSURL *imageURL = [[NSURL alloc] initWithString:url];
-    //NSURL *imageURL = [[NSURL alloc] initWithString:@"http://eliteitalia.altervista.org/webservice/product_images/mela.jpg"];
-   
-    
-    //cell.prodImage.image = [UIImage imageNamed:@"53-house"];
-    /*dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
-    dispatch_async(queue, ^{
-        NSData *data = [NSData dataWithContentsOfURL:imageURL];
-        UIImage *image = [UIImage imageWithData:data];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.prodImage.image = image;
-        });
-    });
-    */
-    
     Prodotto *pro = [filteredListContent objectAtIndex:indexPath.row];
     
         
@@ -180,28 +167,7 @@
     cell.oldPrice.text =  pro.oldprezzo;
     cell.whereProd.text = pro.where;
     
-    //get image view
-	//AsyncImageView *imageView = (AsyncImageView *)[cell viewWithTag:IMAGE_VIEW_TAG];
-	
-    
-    
-    //cancel loading previous image for cell
-    //[[AsyncImageLoader sharedLoader] cancelLoadingURL:imageView.imageURL];
-    
-    //NSLog(@"%@",pro.url);
-    /*
-    if ([pro.url rangeOfString:@"http"].location == NSNotFound) {
-        
-        url = [[NSString alloc] initWithFormat:@"http://wwww.%@",pro.url ];
-    } else {
-        NSLog(@"string contains bla!");
-        url = [[NSString alloc] initWithString:pro.url];
-    }
-    */
     NSLog(@"%@",url);
-    //UIImageView *im;
-    //[im setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
-    //cell.imageView.image = im.image;
     cell.prodImage.layer.cornerRadius = 9.0 ;
     cell.prodImage.layer.masksToBounds = YES ;
     cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
@@ -217,30 +183,23 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     //self.tableView.contentOffset = CGPointMake(0.0, 90.0);
+    NSLog(@"%@", urlProdotti);
+    prodotti = nil;
+    [ProdottiArray removeAllObjects];
+    [self loadProducts];
+    
+    [self.tableView reloadData];
+    
 }
 
 -(void)pressedLeftButton
 {
     
     SearchView *search = [[SearchView alloc] initWithNibName:@"SearchView" bundle:nil];
+    search.rootController = self;
     
     [self.navigationController pushViewController:search animated:YES];
-    
-    
-    /*
-    if ( iol == 0 ){
-        NSLog(@"schiacciato");
-        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
-        iol=1;
-    }
-    else{
-        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:YES];
-        self.tableView.contentOffset = CGPointMake(0.0, 90.0);
-        iol=0;
-    }*/
-    //self.tableView.contentOffset = CGPointMake(0.0, 0.0);
-        
-    
+       
 }
 
 

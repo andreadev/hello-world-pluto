@@ -20,5 +20,6 @@
 @property (nonatomic, strong) FBSession * session;
 @property (nonatomic, strong) IBOutlet ProdCell *itemCell;
 @property (nonatomic, retain) NSMutableArray *filteredListContent;
+@property (nonatomic, retain) NSString *urlProdotti;
 
 @end
