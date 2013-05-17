@@ -13,7 +13,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize tabBarController,loginController,homeController,tutorial,preferitiView;
+@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product;
 @synthesize session;
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -23,7 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav"] forBarMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTintColor:[UIColor grayColor]];
     
     [[UINavigationBar appearance] setTitleTextAttributes: @{
@@ -48,23 +48,19 @@
     
     
     
-    NewProductViewController *newprod = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
-    
+    Product = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
     homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
     homeController.session = session;
-    
     preferitiView = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
     UINavigationController *navPref = [[UINavigationController alloc] initWithRootViewController:preferitiView];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
-    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:newprod];
+    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:Product];
     NSArray *viewControllerArray =[NSArray arrayWithObjects:navProd, navHome, navPref, nil];
     
     tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = viewControllerArray;
     loginController = [[LoginViewController alloc] init];
-    
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
-    
     [self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"tab-back.png"]];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){

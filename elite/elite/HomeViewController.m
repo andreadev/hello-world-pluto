@@ -173,6 +173,13 @@
     cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
     cell.prodImage.layer.borderWidth = 3.0 ;
     
+    NSArray * array = [pro.url componentsSeparatedByString:@":"];
+    int i = [array count];
+    
+    
+    NSLog(@"%@",[array objectAtIndex:i--]);
+    
+    
     [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
     //load the image
@@ -326,4 +333,5 @@
     }
     
 }
+
 @end
