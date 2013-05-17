@@ -32,10 +32,13 @@
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) FBSession *session;
 
++(AppDelegate *) getApplicationDelegate;
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
 -(void)presentTabBarController;
+-(void)presentLoginController;
 -(void)addTabBarController;
 
 @end

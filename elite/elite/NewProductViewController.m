@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "User.h"
+#import "AppDelegate.h"
 
 
 @interface NewProductViewController (){
@@ -112,11 +113,8 @@
 - (IBAction)logout:(id)sender {
     
     [FBSession.activeSession closeAndClearTokenInformation];
-    LoginViewController *loginController = [[LoginViewController alloc] init];
     
-    
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
-    [self presentModalViewController:nav animated:NO];
+    [[AppDelegate getApplicationDelegate] presentLoginController];
     
     
 }

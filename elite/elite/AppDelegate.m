@@ -223,6 +223,18 @@
 -(void)presentTabBarController{
     self.window.rootViewController = tabBarController;
 }
+
+-(void)presentLoginController{
+    
+    loginController = [[LoginViewController alloc] init];
+    self.window.rootViewController = loginController;
+}
+
++(AppDelegate *) getApplicationDelegate{
+    
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 -(void)addTabBarController{
     
     [self.window removeFromSuperview];
