@@ -71,7 +71,7 @@
         //proceed with app normally
         NSLog(@"accettato");
         nav.navigationBarHidden = NO;
-        self.window.rootViewController = nav;
+        self.window.rootViewController = loginController;
         
     }
     else{
