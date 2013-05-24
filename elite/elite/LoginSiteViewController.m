@@ -32,13 +32,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
-    UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
-    btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
-    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
-    [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = menuBarButton;
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Accedi" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton:)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    //UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
+    //UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
+    //btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
+    
+    
+    //UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
+    //[btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
+    //self.navigationItem.rightBarButtonItem.title=@"Fine";
+    //self.navigationItem.rightBarButtonItem = menuBarButton;
     //self.navigationController.navigationBarHidden = NO;
 
     // Uncomment the following line to preserve selection between presentations.
@@ -83,12 +88,15 @@
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
     //NSLog(@"Reply: %@", theReply);
-    NSLog(@"%@",theReply);
+    //NSLog(@"%@",theReply);
     
     if ([theReply rangeOfString:@"user_id"].location == NSNotFound) {
         NSLog(@"LOGIN NON RIUSCITO");
     } else {
         NSLog(@"LOGIN RIUSCITO");
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
+         
+        [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"User"];
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate presentTabBarController];
         

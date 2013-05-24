@@ -13,6 +13,7 @@
 #import "TutorialViewController.h"
 #import "HomeViewController.h"
 #import "PreferitiView.h"
+#import "PreferitiListView.h"
 
 
 
@@ -27,9 +28,11 @@
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) LoginViewController *loginController;
+@property (strong, nonatomic) NewProductViewController *Product;
 @property (strong, nonatomic) PreferitiView *preferitiView;
 @property (strong, nonatomic) HomeViewController *homeController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
+@property (strong, nonatomic) PreferitiListView *preferitiList;
 @property (strong, nonatomic) FBSession *session;
 
 +(AppDelegate *) getApplicationDelegate;

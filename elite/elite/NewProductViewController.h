@@ -15,22 +15,32 @@
 @interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate , UITextFieldDelegate, CLLocationManagerDelegate, UIPickerViewDelegate,UIPickerViewDataSource >
 {
     CLLocationManager *locationManager;
+    IBOutlet UIScrollView *scrollView;
 
 }
+@property (nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UIImageView *imageProd;
 @property (weak, nonatomic) IBOutlet UITextField *nameProd;
 @property (weak, nonatomic) IBOutlet UITextField *priceProd;
-@property (weak, nonatomic) IBOutlet UITextField *categoryProd;
-@property (weak, nonatomic) IBOutlet UITextField *shopProd;
 @property (weak, nonatomic) IBOutlet UITextField *descProd;
 @property (nonatomic, strong) FBSession * session;
 @property (strong, nonatomic) NSMutableDictionary *postParams;
 @property (strong, nonatomic) NSMutableData *imageData;
 @property (strong, nonatomic) NSURLConnection *imageConnection;
+
+//BUTTON
 @property (weak, nonatomic) IBOutlet UIButton *moreCate;
 
+@property (weak, nonatomic) IBOutlet UIButton *moreShop;
+@property (weak, nonatomic) IBOutlet UIButton *takePhoto;
+@property (weak, nonatomic) IBOutlet UIButton *consiglia;
+@property (weak, nonatomic) IBOutlet UIButton *consigliaTutti;
+
+
+
+- (IBAction)consigliaPreferiti:(id)sender;
 - (IBAction)seeCategory:(id)sender;
 - (IBAction)logout:(id)sender;
 - (IBAction)seeNegozi:(id)sender;
@@ -38,4 +48,6 @@
 - (IBAction)photo:(id)sender;
 - (IBAction)done:(id)sender;
 - (IBAction)consiglia:(id)sender;
+- (IBAction)descrizione:(id)sender;
+
 @end

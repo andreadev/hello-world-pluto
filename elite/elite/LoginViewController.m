@@ -27,7 +27,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title= @"Login";
+        UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"SampleBackground.png"]];
+        self.view.backgroundColor = background;
+        self.tabellaView.backgroundColor = [UIColor clearColor];
         
     }
     return self;
@@ -39,6 +41,7 @@
     
     // Do any additional setup after loading the view from its nib.
     lista = [[NSArray alloc] initWithObjects:@"Accedi",@"Registrati", nil];
+    
     //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     /*
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
@@ -95,6 +98,7 @@
     }
     
     // Configure the cell.
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     cell.textLabel.text = [lista objectAtIndex:indexPath.row];
     
@@ -235,8 +239,8 @@
         case FBSessionStateOpen: {
                 NSLog(@"OPEN SESSION");
                 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                //[appDelegate presentTabBarController];
-                [appDelegate  addTabBarController];
+                [appDelegate  presentTabBarController];
+            
             
             }
             break;

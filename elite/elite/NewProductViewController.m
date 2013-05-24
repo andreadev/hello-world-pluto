@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "User.h"
 #import "AppDelegate.h"
+#import "LocationViewController.h"
 
 
 @interface NewProductViewController (){
@@ -27,7 +28,7 @@
 @end
 
 @implementation NewProductViewController
-@synthesize imageProd,nameProd,priceProd,categoryProd,shopProd,descProd,name,postParams,imageConnection,imageData,locationManager,session,moreCate;
+@synthesize imageProd,nameProd,priceProd,descProd,name,postParams,imageConnection,imageData,locationManager,session,moreCate,scrollView,moreShop,consiglia,consigliaTutti,takePhoto;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,7 +37,7 @@
         // Custom initialization
         UITabBarItem *tabBarItem =[[UITabBarItem alloc]
                                    initWithTitle:@"Nuovo Prodotto"
-                                   image:[UIImage imageNamed:@"67-tshirt"]
+                                   image:[UIImage imageNamed:@"13-plus"]
                                    tag:0];
         self.tabBarItem=tabBarItem;
         
@@ -47,7 +48,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliabianco"] forState:UIControlStateNormal];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliablue"] forState:UIControlStateHighlighted];
     
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefbianco"] forState:UIControlStateNormal];
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefblue"] forState:UIControlStateHighlighted];
+    [takePhoto setBackgroundColor:[UIColor clearColor]];
+    imageProd.image = [UIImage imageNamed:@"camerabianca"];
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"camerablu"] forState:UIControlStateHighlighted];
+     
+    
+    
+    
+    [scrollView setScrollEnabled:NO];//Abilitiamo lo scroll
+    
+    [scrollView setContentSize:(CGSizeMake(320,600))];
     categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
     
     category = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 205, 320, 20)];
@@ -70,9 +85,9 @@
     [locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
     [locationManager startUpdatingLocation];
     
-    imageProd.layer.cornerRadius = 20;//half of the width
-    imageProd.layer.borderColor=[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f].CGColor;
-    imageProd.layer.borderWidth=3.0f;
+    //imageProd.layer.cornerRadius = 20;//half of the width
+    //imageProd.layer.borderColor=[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f].CGColor;
+    //imageProd.layer.borderWidth=3.0f;
     //self.title = @"Elite";
     
     //[self populateUserDetails];
@@ -85,7 +100,7 @@
     [category setHidden:NO];
 }
 - (void) viewWillAppear:(BOOL)animated{
-    [self populateUserDetails];
+    //[self populateUserDetails];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -93,17 +108,30 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)descrizione:(id)sender{
+    [scrollView setScrollEnabled:YES];
+    self.scrollView.contentOffset = CGPointMake(0.0, 90.0);
+
+    
+}
+
 - (void)viewDidUnload {
     [self setImageProd:nil];
     [self setNameProd:nil];
     [self setPriceProd:nil];
-    [self setCategoryProd:nil];
-    [self setShopProd:nil];
     [self setDescProd:nil];
     [self setName:nil];
     [self setMoreCate:nil];
+    [self setScrollView:nil];
+    [self setMoreShop:nil];
+    [self setTakePhoto:nil];
+    [self setConsiglia:nil];
+    [self setConsigliaTutti:nil];
     [super viewDidUnload];
 }
+- (IBAction)consigliaPreferiti:(id)sender {
+}
+
 - (IBAction)seeCategory:(id)sender {
     NSLog(@"category");
     [toolBar setHidden:NO];
@@ -126,6 +154,12 @@
 }
 
 - (IBAction)seeNegozi:(id)sender {
+    LocationViewController *location = [[LocationViewController alloc] initWithNibName:@"LocationViewController" bundle:nil];
+    UINavigationController *navLoc = [[UINavigationController alloc] initWithRootViewController:location];
+    location.latitudine = lat;
+    location.longitudine = lon;
+    [self presentModalViewController:navLoc animated:YES];
+    /*
     NSString * url = [[NSString alloc] initWithFormat:@"http://cosapensidime.ilbello.com/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", lat, lon];
     
     
@@ -133,7 +167,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         [self performSelectorOnMainThread:@selector(fetchedData:)
-                               withObject:data waitUntilDone:YES]; });
+                               withObject:data waitUntilDone:YES]; });*/
     
 }
 
@@ -153,6 +187,7 @@
 - (void) loadNegozi{
     for (int i =0 ; i< [negozi count]; i++) {
         NSString *nome = [[negozi objectAtIndex:i] objectForKey:@"Name"];
+        NSLog(@"NEGOZIO");
         NSLog(@"%@",nome);
     }
 
@@ -274,7 +309,7 @@
     NSString *cat = [[NSString alloc] initWithFormat:@"%d",category_id ];
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                nameProd.text, @"name",
-                               shopProd.text, @"store_id",
+                               moreShop.titleLabel.text, @"store_id",
                                priceProd.text, @"price",
                                cat, @"category_id",
                                @"Dummy", @"insertion_code",
@@ -388,7 +423,7 @@ didReceiveData:(NSData*)data{
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSLog(@"selectedRowInPicker >> %d",row);
-    categoryProd.text = [categorie objectAtIndex:row];
+    moreCate.titleLabel.text = [categorie objectAtIndex:row];
     category_id = row;
 }
 @end
