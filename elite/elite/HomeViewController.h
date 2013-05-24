@@ -21,5 +21,6 @@
 @property (nonatomic, strong) IBOutlet ProdCell *itemCell;
 @property (nonatomic, retain) NSMutableArray *filteredListContent;
 @property (nonatomic, retain) NSString *urlProdotti;
+@property (weak, nonatomic) IBOutlet UIImageView *redLine;
 
 @end

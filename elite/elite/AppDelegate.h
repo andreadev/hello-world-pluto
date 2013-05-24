@@ -13,6 +13,7 @@
 #import "TutorialViewController.h"
 #import "HomeViewController.h"
 #import "PreferitiView.h"
+#import "PreferitiListView.h"
 
 
 
@@ -31,6 +32,7 @@
 @property (strong, nonatomic) PreferitiView *preferitiView;
 @property (strong, nonatomic) HomeViewController *homeController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
+@property (strong, nonatomic) PreferitiListView *preferitiList;
 @property (strong, nonatomic) FBSession *session;
 
 +(AppDelegate *) getApplicationDelegate;

@@ -49,10 +49,13 @@
     [super viewDidLoad];
     UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    
     [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
     btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
+    [btnToggle showsTouchWhenHighlighted];
     iol=0;
     urlProdotti = @"http://eliteitalia.altervista.org/webservice/Prodotti/get_all_products.php";
     //self.title = @"Home";
@@ -122,6 +125,10 @@
         prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
         prod.url = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
+        //prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
+        //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
+        //prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
+        //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
         [ProdottiArray  addObject:prod];
     }
     // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
@@ -173,14 +180,15 @@
     cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
     cell.prodImage.layer.borderWidth = 3.0 ;
     
-    NSArray * array = [pro.url componentsSeparatedByString:@":"];
-    int i = [array count];
+    NSArray * array = [pro.url componentsSeparatedByString:@"/"];
+    //int i = [array count];
+    //i--;
+    NSString *image_url= [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/thumb/%@",[array objectAtIndex:[array count]-1] ];
     
+    //NSLog(@"%@",[array objectAtIndex:i]);
+    NSLog(@"%@",pro.url);
     
-    NSLog(@"%@",[array objectAtIndex:i--]);
-    
-    
-    [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
     //load the image
     //imageView.imageURL = [[NSURL alloc] initWithString:url];
@@ -334,4 +342,8 @@
     
 }
 
+- (void)viewDidUnload {
+    [self setRedLine:nil];
+    [super viewDidUnload];
+}
 @end

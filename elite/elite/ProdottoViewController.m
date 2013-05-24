@@ -42,13 +42,18 @@
     self.oldprezzo.text = prod.oldprezzo;
     self.from.text = @"Andrea Barbieri";
     self.descrizione.text = prod.desc;
-    self.title = prod.name;
+    //self.title = prod.name;
     self.imageProd.layer.cornerRadius = 9.0 ;
     self.imageProd.layer.masksToBounds = YES ;
     self.imageProd.layer.borderColor = [UIColor whiteColor].CGColor ;
     self.imageProd.layer.borderWidth = 3.0 ;
     //imageProd.image = image;
-    [self.imageProd setImageFromUrl:[[NSURL alloc] initWithString:prod.url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    NSArray * array = [prod.url componentsSeparatedByString:@"/"];
+    //int i = [array count];
+    //i--;
+    NSString *image_url= [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/thumb/%@",[array objectAtIndex:[array count]-1] ];
+    
+    [imageProd setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
 }
 - (void)didReceiveMemoryWarning
 {

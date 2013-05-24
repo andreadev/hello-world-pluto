@@ -31,13 +31,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
-    UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
-    btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
-    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
-    [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = menuBarButton;
+    //UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
+    //UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
+    //[btnToggle setTitle:@"Fine" forState:UIControlStateNormal];
+    //btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
+    //UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
+    //[btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
+    //self.navigationItem.rightBarButtonItem = menuBarButton;
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Registrati" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton:)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
     
     //self.navigationController.navigationBarHidden = NO;
 
@@ -121,7 +124,7 @@
     
     if (indexPath.row==0) {
         //cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.textLabel.textColor= [UIColor redColor];
+        cell.textLabel.textColor= [UIColor blackColor];
         cell.textLabel.text = @"Email";
         cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
         mail = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];

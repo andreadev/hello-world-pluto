@@ -50,7 +50,7 @@
     self.navigationItem.rightBarButtonItem = menuBarButton;
     amici = [[NSMutableArray alloc] init];
     
-    self.title = @"Preferiti";
+    //self.title = @"Preferiti";
     friendPickerController =
     [[FBFriendPickerViewController alloc] init];
     // Set the friend picker title

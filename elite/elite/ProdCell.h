@@ -14,6 +14,7 @@
     UILabel *whereProd;
     UILabel *nameProd;
     UIImageView *prodImage;
+    UIImageView *redLine;
 }
 
 
@@ -23,4 +24,5 @@
 @property (nonatomic, strong) IBOutlet UILabel *whereProd;
 @property (nonatomic, strong) IBOutlet UIImageView *prodImage;
 @property (nonatomic, strong) IBOutlet UILabel *nameProd;
+@property (nonatomic, strong) IBOutlet UIImageView *redLine;
 @end

@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation ProdCell
-@synthesize prodImage,nameProd,Price,oldPrice,whereProd;
+@synthesize prodImage,nameProd,Price,oldPrice,whereProd,redLine;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
