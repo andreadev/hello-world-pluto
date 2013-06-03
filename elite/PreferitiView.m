@@ -297,6 +297,8 @@
 
 - (void) inviteTo:(id) sender{
     NSLog(@"%d",[sender tag]);
+    [self sendRequest];
+    
     //[sender tag];
     
 }
@@ -304,6 +306,69 @@
     NSLog(@"%d",[sender tag]);
     //[sender tag];
     
+}
+
+- (void)sendRequest {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization
+                            dataWithJSONObject:@{
+                            @"social_karma": @"5",
+                            @"badge_of_awesomeness": @"1"}
+                            options:0
+                            error:&error];
+        if (!jsonData) {
+            NSLog(@"JSON error: %@", error);
+            return;
+        }
+        NSString *giftStr = [[NSString alloc]
+                             initWithData:jsonData
+                             encoding:NSUTF8StringEncoding];
+        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       giftStr, @"data",
+                                       nil];
+        
+        // Display the requests dialog
+        [FBWebDialogs
+         presentRequestsDialogModallyWithSession:nil
+         message:@"Learn how to make your iOS apps social."
+         title:nil
+         parameters:params
+         handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+             if (error) {
+                 // Error launching the dialog or sending the request.
+                 NSLog(@"Error sending request.");
+             } else {
+                 if (result == FBWebDialogResultDialogNotCompleted) {
+                     // User clicked the "x" icon
+                     NSLog(@"User canceled request.");
+                 } else {
+                     // Handle the send request callback
+                     NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                     if (![urlParams valueForKey:@"request"]) {
+                         // User clicked the Cancel button
+                         NSLog(@"User canceled request.");
+                     } else {
+                         // User clicked the Send button
+                         NSString *requestID = [urlParams valueForKey:@"request"];
+                         NSLog(@"Request ID: %@", requestID);
+                     }
+                 }
+             }
+         }];
+    }
+
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [[kv objectAtIndex:1]
+         stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [params setObject:val forKey:[kv objectAtIndex:0]];
+    }
+    return params;
 }
 
 /*

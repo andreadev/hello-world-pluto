@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import "User.h"
+#import "JGProgressView.h"
 
 
 @interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate , UITextFieldDelegate, CLLocationManagerDelegate, UIPickerViewDelegate,UIPickerViewDataSource >
@@ -18,6 +19,11 @@
     IBOutlet UIScrollView *scrollView;
 
 }
+@property (strong, nonatomic) User *CurrentUser;
+@property (strong, nonatomic) NSString *negozio;
+@property (nonatomic, strong) FBSession * session;
+
+
 @property (nonatomic,retain) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -25,14 +31,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameProd;
 @property (weak, nonatomic) IBOutlet UITextField *priceProd;
 @property (weak, nonatomic) IBOutlet UITextField *descProd;
-@property (nonatomic, strong) FBSession * session;
+
 @property (strong, nonatomic) NSMutableDictionary *postParams;
 @property (strong, nonatomic) NSMutableData *imageData;
 @property (strong, nonatomic) NSURLConnection *imageConnection;
 
 //BUTTON
 @property (weak, nonatomic) IBOutlet UIButton *moreCate;
-
 @property (weak, nonatomic) IBOutlet UIButton *moreShop;
 @property (weak, nonatomic) IBOutlet UIButton *takePhoto;
 @property (weak, nonatomic) IBOutlet UIButton *consiglia;
@@ -49,5 +54,7 @@
 - (IBAction)done:(id)sender;
 - (IBAction)consiglia:(id)sender;
 - (IBAction)descrizione:(id)sender;
+- (IBAction)finisciDescrizione:(id)sender;
+- (void) setNegozio:(NSString *)negozio;
 
 @end

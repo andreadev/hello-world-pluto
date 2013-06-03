@@ -26,6 +26,8 @@
                                    image:[UIImage imageNamed:@"29-heart"]
                                    tag:0];
         self.tabBarItem=tabBarItem;
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
         
     }
     return self;
@@ -76,7 +78,7 @@
 
 - (void) loadPrefer{
     for (int i = 0; i<[preferiti count]; i++) {
-        User *prod = [[User alloc] init];
+        //User *prod = [[User alloc] init];
         //prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
         //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
         //prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];

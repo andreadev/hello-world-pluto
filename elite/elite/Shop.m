@@ -9,6 +9,6 @@
 #import "Shop.h"
 
 @implementation Shop
-@synthesize nome,distanza;
+@synthesize nome,distanza,indirizzo;
 
 @end

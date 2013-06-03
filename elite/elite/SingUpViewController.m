@@ -24,6 +24,8 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
     }
     return self;
 }
@@ -39,7 +41,7 @@
     //UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     //[btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     //self.navigationItem.rightBarButtonItem = menuBarButton;
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Registrati" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton:)];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Registrati" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
     self.navigationItem.rightBarButtonItem = anotherButton;
     
     //self.navigationController.navigationBarHidden = NO;
@@ -126,7 +128,7 @@
         //cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor= [UIColor blackColor];
         cell.textLabel.text = @"Email";
-        cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
         mail = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
         mail.font = [UIFont fontWithName:@"Gill Sans" size:18];
         mail.textColor = [UIColor blackColor];
@@ -145,7 +147,7 @@
         cell.textLabel.text = @"Password";
         cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
         pass = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
-        pass.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        pass.font = [UIFont fontWithName:@"Helvetica" size:18];
         pass.textColor = [UIColor blackColor];
         pass.backgroundColor = [UIColor clearColor];
         pass.delegate =self;

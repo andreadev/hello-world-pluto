@@ -9,6 +9,7 @@
 #import "TutorialViewController.h"
 #import "NewProductViewController.h"
 #import "LoginViewController.h"
+#import "AppDelegate.h"
 
 @interface TutorialViewController ()
 @end
@@ -91,19 +92,15 @@
     if (finishType == MYFinishTypeSkipButton) {
         NSLog(@"Did Finish Introduction By Skipping It");
         
-        LoginViewController * login = [[LoginViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-        nav.navigationBarHidden = YES;
-        [self presentModalViewController:nav animated:YES];
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate  presentLoginController];
         
     }
     else if (finishType == MYFinishTypeSwipeOut){
         NSLog(@"Did Finish Introduction By Swiping Out");
         
-        LoginViewController * login = [[LoginViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-        nav.navigationBarHidden = YES;
-        [self presentModalViewController:nav animated:YES];
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate  presentLoginController];
         
     }
     

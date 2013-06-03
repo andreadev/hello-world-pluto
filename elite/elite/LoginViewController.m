@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "SingUpViewController.h"
 #import "LoginSiteViewController.h"
+#import "NickViewController.h"
 
 
 @interface LoginViewController (){
@@ -30,6 +31,8 @@
         UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"SampleBackground.png"]];
         self.view.backgroundColor = background;
         self.tabellaView.backgroundColor = [UIColor clearColor];
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
         
     }
     return self;
@@ -60,11 +63,6 @@
         //[appDelegate presentTabBarController];
         
     }
-    
-    
-        
-
-    
     
 }
 
@@ -98,6 +96,8 @@
     }
     
     // Configure the cell.
+    cell.textLabel.textColor = [UIColor lightGrayColor];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     cell.textLabel.text = [lista objectAtIndex:indexPath.row];
@@ -238,8 +238,19 @@
     switch (state) {
         case FBSessionStateOpen: {
                 NSLog(@"OPEN SESSION");
+            if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
+                NSLog(@"Non Registrato");
+                NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
+                [self.navigationController pushViewController:nick animated:YES];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
+                
+                
+                
+            }
+            else{
                 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 [appDelegate  presentTabBarController];
+            }
             
             
             }

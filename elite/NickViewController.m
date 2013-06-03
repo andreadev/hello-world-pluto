@@ -7,6 +7,7 @@
 //
 
 #import "NickViewController.h"
+#import "AppDelegate.h"
 
 @interface NickViewController (){
     UITextField *nick;
@@ -21,6 +22,8 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
     }
     return self;
 }
@@ -34,13 +37,16 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Accedi" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    /*
     UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
     btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = menuBarButton;
+    self.navigationItem.rightBarButtonItem = menuBarButton;*/
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,13 +104,14 @@
 
 - (void) pressedLeftButton{
     
-    NSString *password;
-    NSString *mail;
-    //NSLog(@"PRESSED: %@ -- %@ -- %@",mail.text,pass.text,nick.text );
+    
+    
+    NSLog(@"PRESSED: %@",nick.text );
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                              mail, @"email",
-                              password, @"password",
                               nick.text, @"username",
+                              nick.text, @"facebook",
+                              nick.text, @"email",
+                              nick.text, @"token",
                               nil];
     
     
@@ -117,7 +124,7 @@
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Utenti/create_user_fb.php"]];
+    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Utenti/create_facebook_user.php"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
@@ -127,12 +134,27 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
-    if ([theReply rangeOfString:@"Utente creato"].location == NSNotFound) {
-        NSLog(@"Creo NON RIUSCITO");
+    NSLog(@"Reply: %@", theReply);
+    
+    //conrollo risposta
+    if ([theReply rangeOfString:@"1"].location == NSNotFound) {
+        NSLog(@"REGISTRAZIONE NON RIUSCITA");
     } else {
-        NSLog(@"Creo RIUSCITO");
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        NSLog(@"REGISTRAZIONE RIUSCITO");
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:nick.text forKey:@"User"];
+        [defaults synchronize];
+        NSLog(@"nick %@", nick.text );
+        
+        NSString *testoSalvato = [[NSUserDefaults standardUserDefaults] objectForKey:@"User"];
+        NSLog(@"nick2 %@", testoSalvato );
+        
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate presentTabBarController];
+        
         
     }
     

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Prodotto.h"
+#import "DetailViewController.h"
 
-@interface ProdottoViewController : UIViewController{
+@interface ProdottoViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
     IBOutlet UIScrollView *Scrollview;
 }
 
@@ -23,5 +24,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *descrizione;
 @property (weak, nonatomic) IBOutlet UILabel *codice;
 @property (nonatomic,retain)IBOutlet UIScrollView *Scrollview;
+@property (weak, nonatomic) IBOutlet UITableView *tabellaView;
 
 @end

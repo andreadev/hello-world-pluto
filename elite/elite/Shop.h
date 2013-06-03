@@ -10,7 +10,7 @@
 
 @interface Shop : NSObject
 @property (strong, nonatomic) NSString * nome;
-
+@property (strong, nonatomic) NSString * indirizzo;
 @property (strong, nonatomic) NSString * distanza;
 
 

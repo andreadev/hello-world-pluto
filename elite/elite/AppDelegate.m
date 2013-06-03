@@ -24,16 +24,18 @@
 {
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
-    UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_nav"]];
-    [[UINavigationBar appearance] setTitleView:navImage];
+    UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+
+    
+    //[[UINavigationBar appearance] set]
     [[UIBarButtonItem appearance] setTintColor:[UIColor grayColor]];
     
-    [[UINavigationBar appearance] setTitleTextAttributes: @{
+    /*[[UINavigationBar appearance] setTitleTextAttributes: @{
                                 UITextAttributeTextColor: [UIColor whiteColor],
                           UITextAttributeTextShadowColor: [UIColor clearColor],
                          UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
                                      UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:20.0f]
-     }];
+     }];*/
      
      
     
@@ -44,7 +46,9 @@
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]!=YES)
     {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Tutorial"];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logged"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Logged"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Registred"];
+        
         
     }
     
@@ -60,6 +64,9 @@
     UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:Product];
     NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navProd, navPref, nil];
     
+    
+    
+    
     tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = viewControllerArray;
     loginController = [[LoginViewController alloc] init];
@@ -71,7 +78,7 @@
         //proceed with app normally
         NSLog(@"accettato");
         nav.navigationBarHidden = NO;
-        self.window.rootViewController = loginController;
+        self.window.rootViewController = nav;
         
     }
     else{

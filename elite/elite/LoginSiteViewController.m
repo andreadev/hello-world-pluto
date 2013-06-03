@@ -25,6 +25,8 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
     }
     return self;
 }
@@ -32,7 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Accedi" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton:)];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Accedi" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
     self.navigationItem.rightBarButtonItem = anotherButton;
     //UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
     //UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -96,7 +98,7 @@
         NSLog(@"LOGIN RIUSCITO");
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
          
-        [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"User"];
+        [[NSUserDefaults standardUserDefaults] setValue:mail.text forKey:@"User"];
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate presentTabBarController];
         

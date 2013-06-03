@@ -38,6 +38,8 @@
                                    image:[UIImage imageNamed:@"53-house"]
                                    tag:0];
         self.tabBarItem=tabBarItem;
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
         
     }
     return self;
@@ -125,9 +127,9 @@
         prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
         prod.url = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
-        //prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
-        //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
-        //prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
+        prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
+        prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
+        prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
         //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
         [ProdottiArray  addObject:prod];
     }
@@ -170,7 +172,16 @@
     
         
     cell.nameProd.text = pro.name;
-    cell.Price.text = pro.prezzo;
+    float a = [pro.oldprezzo floatValue];
+    NSLog(@"%f",a);
+    a = a-(a*0.1);
+    NSLog(@"%f",a);
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setMaximumFractionDigits:2];
+    [formatter setRoundingMode: NSNumberFormatterRoundUp];
+    NSString *numberString = [formatter stringFromNumber:[NSNumber numberWithFloat:a]];
+    
+    cell.Price.text = numberString;
     cell.oldPrice.text =  pro.oldprezzo;
     cell.whereProd.text = pro.where;
     

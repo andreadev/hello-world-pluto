@@ -23,6 +23,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.navigationItem.title = @"Negozi";
     }
     return self;
 }
@@ -68,12 +69,13 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     Shop *detailShop = [negozi objectAtIndex:indexPath.row];
     
     cell.textLabel.text = detailShop.nome;
+    cell.detailTextLabel.text = detailShop.indirizzo;
     NSLog(@"%@",detailShop.nome);
     
     return cell;
@@ -81,7 +83,7 @@
 
 - (void)seeNegozi {
     NSString * url = [[NSString alloc] initWithFormat:@"http://cosapensidime.ilbello.com/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", latitudine, longitudine];
-    
+    NSLog(@"%@",url);
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -110,6 +112,7 @@
         Shop *nuovoShop = [[Shop alloc] init];
         
        nuovoShop.nome = [[shops objectAtIndex:i] objectForKey:@"Name"];
+        nuovoShop.indirizzo= [[shops objectAtIndex:i] objectForKey:@"Address"];
         NSLog(@"NEGOZIO");
         NSLog(@"%@",nuovoShop.nome);
         [negozi addObject:nuovoShop];
@@ -171,9 +174,14 @@
      */
     Shop *detailShop = [negozi objectAtIndex:indexPath.row];
     
+    NSString * nam = detailShop.nome;
+    NSLog(@"NOME %@",detailShop.nome);
+    NSLog(@"INDIRIZZO %@",detailShop.indirizzo);
+    [prodView setNegozio:nam];
+    //prodView.negozio = nam;
+    prodView.moreShop.titleLabel.text = nam;
+    //[prodView.moreShop setTitle:detailShop.nome forState:UIControlStateNormal];
     
-    [prodView.moreShop setTitle:detailShop.nome forState:UIControlStateNormal];
-    [prodView.moreShop reloadInputViews];
     
     
     [self dismissModalViewControllerAnimated:YES];

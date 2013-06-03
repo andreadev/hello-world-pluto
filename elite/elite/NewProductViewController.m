@@ -21,14 +21,14 @@
     UIPickerView *category;
     UIToolbar *toolBar;
     NSMutableArray *categorie;
-    User *Currentuser;
     int category_id;
+    JGProgressView *p;
     
 }
 @end
 
 @implementation NewProductViewController
-@synthesize imageProd,nameProd,priceProd,descProd,name,postParams,imageConnection,imageData,locationManager,session,moreCate,scrollView,moreShop,consiglia,consigliaTutti,takePhoto;
+@synthesize imageProd,nameProd,priceProd,descProd,name,postParams,imageConnection,imageData,locationManager,session,moreCate,scrollView,moreShop,consiglia,consigliaTutti,takePhoto,negozio,CurrentUser;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,6 +40,8 @@
                                    image:[UIImage imageNamed:@"13-plus"]
                                    tag:0];
         self.tabBarItem=tabBarItem;
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
         
     }
     return self;
@@ -48,16 +50,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliabianco"] forState:UIControlStateNormal];
-    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliablue"] forState:UIControlStateHighlighted];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliablue"] forState:UIControlStateNormal];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliabianco"] forState:UIControlStateHighlighted];
     
-    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefbianco"] forState:UIControlStateNormal];
-    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefblue"] forState:UIControlStateHighlighted];
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefblue"] forState:UIControlStateNormal];
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefbianco"] forState:UIControlStateHighlighted];
     [takePhoto setBackgroundColor:[UIColor clearColor]];
     imageProd.image = [UIImage imageNamed:@"camerabianca"];
-    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"camerablu"] forState:UIControlStateHighlighted];
-     
-    
+    [takePhoto setBackgroundImage:[UIImage imageNamed:@"camerablu"] forState:UIControlStateHighlighted];
+    [priceProd setBackground:[UIImage imageNamed:@"bianco80"]];
+    [descProd setBackground:[UIImage imageNamed:@"bianco140"]];
+    [nameProd setBackground:[UIImage imageNamed:@"bianco80"]];
     
     
     [scrollView setScrollEnabled:NO];//Abilitiamo lo scroll
@@ -84,6 +87,7 @@
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
     [locationManager startUpdatingLocation];
+    negozio = @"Negozio";
     
     //imageProd.layer.cornerRadius = 20;//half of the width
     //imageProd.layer.borderColor=[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f].CGColor;
@@ -101,6 +105,12 @@
 }
 - (void) viewWillAppear:(BOOL)animated{
     //[self populateUserDetails];
+    //self.moreShop.titleLabel.text = negozio;
+    NSLog(@"%@",negozio);
+    
+    [moreShop setTitle:negozio forState:UIControlStateNormal];
+    
+    
 }
 - (void)didReceiveMemoryWarning
 {
@@ -110,9 +120,16 @@
 
 - (IBAction)descrizione:(id)sender{
     [scrollView setScrollEnabled:YES];
-    self.scrollView.contentOffset = CGPointMake(0.0, 90.0);
+    [self.scrollView setContentOffset:CGPointMake(0.0, 70.0) animated:YES];
+    //self.scrollView.contentOffset = CGPointMake(0.0, 90.0);
 
     
+}
+
+- (IBAction)finisciDescrizione:(id)sender {
+    [scrollView setScrollEnabled:NO];
+    [self.scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:YES];
+    //self.scrollView.contentOffset = CGPointMake(0.0, 0.0);
 }
 
 - (void)viewDidUnload {
@@ -158,6 +175,8 @@
     UINavigationController *navLoc = [[UINavigationController alloc] initWithRootViewController:location];
     location.latitudine = lat;
     location.longitudine = lon;
+    location.prodView = self;
+    
     [self presentModalViewController:navLoc animated:YES];
     /*
     NSString * url = [[NSString alloc] initWithFormat:@"http://cosapensidime.ilbello.com/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", lat, lon];
@@ -236,7 +255,7 @@
            NSError *error) {
              if (!error) {
                  name.text = user.name;
-                 Currentuser.name= user.name;
+                 CurrentUser.name= user.name;
                  NSLog(@"%@", user.name);
                  NSLog(@"%@", user.id);
              }
@@ -248,6 +267,15 @@
 - (IBAction)consiglia:(id)sender {
     
     //UPLOAD IMMAGINE
+    
+    p = [[JGProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    [p setUseSharedImages:YES];
+    p.frame = CGRectMake(20, 5, 280, p.frame.size.height);
+    p.center = CGPointMake(CGRectGetMidX(self.view.bounds), p.center.y);
+    
+    [self.view addSubview:p];
+    p.animationSpeed = 1.0;
+    [p setIndeterminate:YES];
     
     NSLog(@"Immagine");
     
@@ -306,7 +334,14 @@
      @"Scopri Elite Advice e risparmia su ogni acquisto.", @"description",
      nil];
     
-    NSString *cat = [[NSString alloc] initWithFormat:@"%d",category_id ];
+    CurrentUser.user = [[NSUserDefaults standardUserDefaults] stringForKey:@"User"];
+    NSLog(@"USER %@",CurrentUser.user);
+    NSString *testoSalvato = [[NSUserDefaults standardUserDefaults] objectForKey:@"User"];
+	if (testoSalvato == nil) {
+		testoSalvato = @"NO NAME";
+	} 
+    
+        NSString *cat = [[NSString alloc] initWithFormat:@"%d",category_id ];
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                nameProd.text, @"name",
                                moreShop.titleLabel.text, @"store_id",
@@ -314,7 +349,7 @@
                                cat, @"category_id",
                                @"Dummy", @"insertion_code",
                                ima, @"imageurl",
-                              name.text,@"username",
+                              testoSalvato,@"username",
                               descProd.text,@"desc",
                                nil];
     
@@ -343,8 +378,6 @@
     
     [self publishStory];
     
-    
-    
 }
 -(void)connection:(NSURLConnection*)connection
 didReceiveData:(NSData*)data{
@@ -353,10 +386,12 @@ didReceiveData:(NSData*)data{
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
     // Load the image
+    NSLog(@"finisco");
     self.imageProd.image = [UIImage imageWithData:
                                 [NSData dataWithData:self.imageData]];
     self.imageConnection = nil;
     self.imageData = nil;
+    
 }
 
 - (void)connection:(NSURLConnection *)connection
@@ -391,6 +426,7 @@ didReceiveData:(NSData*)data{
                            cancelButtonTitle:@"OK!"
                            otherButtonTitles:nil]
           show];
+         [p removeFromSuperview];
      }];
 }
 
@@ -423,7 +459,9 @@ didReceiveData:(NSData*)data{
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSLog(@"selectedRowInPicker >> %d",row);
-    moreCate.titleLabel.text = [categorie objectAtIndex:row];
+    NSString *t = [categorie objectAtIndex:row];
+    [moreCate setTitle:t forState:UIControlStateNormal];
+    
     category_id = row;
 }
 @end
