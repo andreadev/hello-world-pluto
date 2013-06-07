@@ -13,7 +13,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList;
+@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList,loadProd;
 @synthesize session;
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -54,14 +54,15 @@
     
     
     
-    Product = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
+    //Product = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
+    loadProd = [[TakePhotoViewController alloc] initWithNibName:@"TakePhotoViewController" bundle:nil];
     homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
     homeController.session = session;
     //preferitiView = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
     preferitiList = [[PreferitiListView alloc] initWithNibName:@"PreferitiListView" bundle:nil];
     UINavigationController *navPref = [[UINavigationController alloc] initWithRootViewController:preferitiList];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
-    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:Product];
+    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
     NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navProd, navPref, nil];
     
     

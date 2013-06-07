@@ -34,6 +34,8 @@
         UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
         self.navigationItem.titleView = navImage;
         
+        
+        
     }
     return self;
 }
@@ -41,7 +43,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // Do any additional setup after loading the view from its nib.
     lista = [[NSArray alloc] initWithObjects:@"Accedi",@"Registrati", nil];
     
@@ -64,6 +65,18 @@
         
     }
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillDisappear:animated];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -97,7 +110,7 @@
     
     // Configure the cell.
     cell.textLabel.textColor = [UIColor lightGrayColor];
-    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     cell.textLabel.text = [lista objectAtIndex:indexPath.row];
@@ -123,22 +136,6 @@
         
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-
-- (void) viewWillAppear:(BOOL)animated{
-    //[self loadTutorial];
-    //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    /*if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-        // Yes, so just open the session (this won't display any UX).
-        NSLog(@"appear");
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate presentTabBarController];
-        
-        //[appDelegate presentTabBarController];
-        
-    }*/
-    
 }
 
 - (void)didReceiveMemoryWarning

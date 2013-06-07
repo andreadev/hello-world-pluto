@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "FriendCell.h"
+#import "TTAlertView.h"
 
 @interface PreferitiView : UITableViewController<FBFriendPickerDelegate>{
     FriendCell *itemCell;

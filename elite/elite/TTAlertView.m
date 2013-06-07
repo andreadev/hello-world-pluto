@@ -293,7 +293,8 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     self.buttons = [NSMutableArray array];
     
     UIButton *cancelButton = [[UIButton alloc] init];
-    [cancelButton setBackgroundColor:[UIColor blackColor]];
+    UIColor *blue = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f] ;
+    [cancelButton setBackgroundColor:blue];
     [cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [cancelButton setTitle:self.cancelButtonTitle forState:UIControlStateNormal];
     [self.containerView addSubview:cancelButton];
@@ -479,7 +480,9 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     
     UILabel *titleLabel = [[UILabel alloc] init];
     [titleLabel setBackgroundColor:[UIColor clearColor]];
-    [titleLabel setTextColor:[UIColor blackColor]];
+    //[titleLabel setTextColor:[UIColor blackColor]];
+    UIColor *blue = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f] ;
+    [titleLabel setTextColor:blue];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [titleLabel setText:self.title];
     [self.containerView addSubview:titleLabel];

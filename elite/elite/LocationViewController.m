@@ -33,7 +33,10 @@
     [super viewDidLoad];
     NSLog(@"qui");
     negozi = [[NSMutableArray alloc] init];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(pressedFinishButton)];
+    self.navigationItem.leftBarButtonItem = anotherButton;
     [self seeNegozi];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -189,6 +192,11 @@
 
 - (IBAction)done:(id)sender {
     
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+
+- (void) pressedFinishButton{
     [self dismissModalViewControllerAnimated:YES];
 }
 @end

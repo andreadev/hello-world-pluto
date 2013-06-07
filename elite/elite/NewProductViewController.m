@@ -277,6 +277,7 @@
     p.animationSpeed = 1.0;
     [p setIndeterminate:YES];
     
+    
     NSLog(@"Immagine");
     
     
@@ -285,7 +286,8 @@
     NSString *ima = [nameProd.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     if (imageDatas != nil)
     {
-        filenames = [NSString stringWithFormat:ima];      //set name here
+              //set name here
+        filenames = [NSString stringWithFormat:ima];
         NSLog(@"%@", filenames);
         NSString *urlString = @"http://eliteitalia.altervista.org/webservice/Prodotti/upload_image.php";
         
@@ -381,6 +383,7 @@
 }
 -(void)connection:(NSURLConnection*)connection
 didReceiveData:(NSData*)data{
+    NSLog(@"Carico");
     [self.imageData appendData:data];
 }
 
@@ -415,15 +418,16 @@ didReceiveData:(NSData*)data{
                           @"error: domain = %@, code = %d",
                           error.domain, error.code];
          } else {
-             alertText = [NSString stringWithFormat:
+             /*alertText = [NSString stringWithFormat:
                           @"Posted action, id: %@",
-                          [result objectForKey:@"id"]];
+                          [result objectForKey:@"id"]];*/
+             alertText = @"Hai consigliato correttamente \n il tuo prodotto";
          }
          // Show the result in an alert
-         [[[UIAlertView alloc] initWithTitle:@"Result"
+         [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
                                      message:alertText
                                     delegate:self
-                           cancelButtonTitle:@"OK!"
+                           cancelButtonTitle:@"Continua!"
                            otherButtonTitles:nil]
           show];
          [p removeFromSuperview];

@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface LoadDetailViewController : UIViewController
+@interface LoadDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
+@property (strong,nonatomic) UIImage *imageProd;
+
+@property (weak, nonatomic) IBOutlet UITableView *tabellaView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewProd;
 @end

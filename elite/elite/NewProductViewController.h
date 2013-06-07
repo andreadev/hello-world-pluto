@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "User.h"
 #import "JGProgressView.h"
+#import "TTAlertView.h"
 
 
 @interface NewProductViewController : UIViewController<UINavigationControllerDelegate , UIImagePickerControllerDelegate , UIActionSheetDelegate , UITextFieldDelegate, CLLocationManagerDelegate, UIPickerViewDelegate,UIPickerViewDataSource >

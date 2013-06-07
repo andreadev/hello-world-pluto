@@ -20,6 +20,7 @@
     int scopeButtonPressedIndexNumber;
     NSString *url;
     int iol;
+    ODRefreshControl *refreshControl;
     
 }
 
@@ -49,6 +50,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
+    
     UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
     
@@ -81,6 +86,13 @@
                                withObject:data waitUntilDone:YES]; });
 }
 
+- (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
+    NSLog(@"pull");
+    prodotti = nil;
+    [ProdottiArray removeAllObjects];
+    [self loadProducts];
+}
+
 
 - (void)fetchedData:(NSData *)responseData {
     NSArray* json = [NSJSONSerialization
@@ -90,6 +102,7 @@
     //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
     [self loadProdotti];
     [self.tableView reloadData];
+    [refreshControl endRefreshing];
     
     
 }

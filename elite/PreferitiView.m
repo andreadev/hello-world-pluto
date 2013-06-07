@@ -297,7 +297,7 @@
 
 - (void) inviteTo:(id) sender{
     NSLog(@"%d",[sender tag]);
-    [self sendRequest];
+    [self share];
     
     //[sender tag];
     
@@ -308,6 +308,45 @@
     
 }
 
+- (void)publishStory
+{
+    
+    NSMutableDictionary *postParams =
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+     @"www.eliteadvice.tk", @"link",
+     @"asd", @"picture",
+     @"asd", @"name",
+     @"Il social Network che ti fa risparmiare.", @"caption",
+     @"Scopri Elite Advice e risparmia su ogni acquisto.", @"description",
+     nil];
+    [FBRequestConnection
+     startWithGraphPath:@"me/feed"
+     parameters:postParams
+     HTTPMethod:@"POST"
+     completionHandler:^(FBRequestConnection *connection,
+                         id result,
+                         NSError *error) {
+         NSString *alertText;
+         if (error) {
+             alertText = [NSString stringWithFormat:
+                          @"error: domain = %@, code = %d",
+                          error.domain, error.code];
+         } else {
+             /*alertText = [NSString stringWithFormat:
+              @"Posted action, id: %@",
+              [result objectForKey:@"id"]];*/
+             alertText = @"Hai consigliato correttamente \n il tuo prodotto";
+         }
+         // Show the result in an alert
+         [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
+                                     message:alertText
+                                    delegate:self
+                           cancelButtonTitle:@"Continua!"
+                           otherButtonTitles:nil]
+          show];
+
+     }];
+}
 - (void)sendRequest {
         NSError *error;
         NSData *jsonData = [NSJSONSerialization
@@ -356,6 +395,45 @@
              }
          }];
     }
+
+- (void) share{
+    
+    id<FBOpenGraphAction> action = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
+    [action setObject:@"https://apps.notrepro.net/fbsdktoolkit/objects/book/Snow-Crash.html"forKey:@"book"];
+    
+    FBOpenGraphActionShareDialogParams* params = [[FBOpenGraphActionShareDialogParams alloc]init];
+    params.actionType = @"books.reads";
+    params.action = action;
+    params.previewPropertyName = @"book";
+    
+    // Show the Share dialog if available
+    if([FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]) {
+        
+        [FBDialogs presentShareDialogWithOpenGraphAction:[params action]
+                                              actionType:[params actionType]
+                                     previewPropertyName:[params previewPropertyName]
+                                                 handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                                     // handle response or error
+                                                 }];
+        
+    }
+    // If the Facebook app isn't available, show the Feed dialog as a fallback
+    else {
+        NSDictionary* params = @{@"name": @"Snow Crash",
+                                 @"caption": @"Classic cyberpunk",
+                                 @"description": @"In reality, Hiro Protagonist delivers pizza for Uncle Enzo's CosoNostra Pizza Inc., but in the Metaverse he's a warrior prince. ",
+                                 @"link": @"https://apps.notrepro.net/fbsdktoolkit/objects/book/Snow-Crash.html",
+                                 @"image": @"http://upload.wikimedia.org/wikipedia/en/d/d5/Snowcrash.jpg"};
+        
+        [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      // handle response or error
+                                                  }];
+    }
+   
+}
+
 
 - (NSDictionary*)parseURLParams:(NSString *)query {
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
