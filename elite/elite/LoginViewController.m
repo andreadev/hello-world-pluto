@@ -245,6 +245,7 @@
                 
             }
             else{
+                NSLog(@"Else");
                 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 [appDelegate  presentTabBarController];
             }

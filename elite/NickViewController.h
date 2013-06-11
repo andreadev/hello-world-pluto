@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface NickViewController : UITableViewController<UITextFieldDelegate>
 
+@property (nonatomic, strong) FBSession * session;
 @end

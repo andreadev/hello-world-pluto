@@ -11,7 +11,7 @@
 #import "FriendCell.h"
 #import "TTAlertView.h"
 
-@interface PreferitiView : UITableViewController<FBFriendPickerDelegate>{
+@interface PreferitiView : UITableViewController{
     FriendCell *itemCell;
 }
 

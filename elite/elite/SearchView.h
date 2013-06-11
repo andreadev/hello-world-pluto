@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HomeViewController.h"
+#import "ResultViewController.h"
 
 @interface SearchView : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate>
 

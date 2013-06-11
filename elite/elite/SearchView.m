@@ -7,7 +7,7 @@
 //
 
 #import "SearchView.h"
-
+#import "ResultViewController.h"
 @interface SearchView (){
     UIPickerView *category;
     UIToolbar *toolBar;
@@ -42,6 +42,9 @@
     toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 163, 320, 44)];
     toolBar.barStyle = UIBarStyleBlackOpaque;
     [toolBar setHidden:YES];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Fine" style:UIBarButtonItemStylePlain target:self action:@selector(cerca)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
     
     [toolBar setItems:[NSArray arrayWithObjects:btn,nil]];
@@ -69,12 +72,23 @@
     
     NSLog(@"%d",segment.selectedSegmentIndex);
     
-    NSString *searchString = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_products.php?words=%@&?category=%d&?or=%d", searchText.text,category_id,segment.selectedSegmentIndex ];
+    //NSString *searchString = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_products.php?words=%@&?category=%d&?or=%d", searchText.text,category_id,segment.selectedSegmentIndex ];
     
-    rootController.urlProdotti = searchString;
+    //result.urlProdotti = searchString;
     
 }
 - (IBAction)valueChange:(id)sender {
+    
+}
+
+- (void) cerca{
+    NSString *searchString = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_products.php?words=%@&?category=%d&?or=%d", searchText.text,category_id,segment.selectedSegmentIndex ];
+    
+    ResultViewController *result = [[ResultViewController alloc] initWithNibName:@"ResultViewController" bundle:nil];
+    result.urlProdotti = searchString;
+    
+    [self.navigationController pushViewController:result animated:YES];
+    
     
 }
 

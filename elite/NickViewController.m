@@ -7,10 +7,12 @@
 //
 
 #import "NickViewController.h"
+#import "User.h"
 #import "AppDelegate.h"
 
 @interface NickViewController (){
     UITextField *nick;
+    User *utente;
 }
 
 @end
@@ -39,6 +41,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Accedi" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
     self.navigationItem.rightBarButtonItem = anotherButton;
+    [self populateUserDetails];
     /*
     UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -109,9 +112,9 @@
     NSLog(@"PRESSED: %@",nick.text );
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               nick.text, @"username",
-                              nick.text, @"facebook",
-                              nick.text, @"email",
-                              nick.text, @"token",
+                              utente.idfacebook, @"facebook",
+                              utente.email, @"email",
+                              utente.token, @"token",
                               nil];
     
     
@@ -158,6 +161,32 @@
         
     }
     
+}
+
+- (void)populateUserDetails
+{
+    if (FBSession.activeSession.isOpen) {
+        [[FBRequest requestForMe] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary<FBGraphUser> *user,
+           NSError *error) {
+             if (!error) {
+                 //self.title = user.name;
+                 NSLog(@"%@", user.name);
+                 NSLog(@"%@", user.id);
+                 utente = [[User alloc] init];
+                 utente.name = user.name;
+                 utente.idfacebook = user.id;
+                 utente.email= [user objectForKey:@"email"];
+                 FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
+                 utente.token = tokenData.accessToken;
+                 
+                 NSLog(@" TOKEN %@", tokenData.accessToken);
+                 NSLog(@"USER: %@,ID %@, MAIL %@",utente.user,utente.idfacebook,utente.email);
+        
+             }
+         }];
+    }
 }
 
 /*

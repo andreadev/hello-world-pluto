@@ -9,14 +9,29 @@
 #import "LoadDetailViewController.h"
 
 @interface LoadDetailViewController (){
-    NSArray *list;
+    NSMutableArray *list;
     NSMutableArray *listLoad;
+    JGProgressView *p;
+    NSString *filenames;
+    NSMutableDictionary *postParams;
+    NSString *lat,*lon;
+    UIPickerView *categoryPicker;
+    NSMutableArray *categorie;
+    NSString *whereload;
+    int category_id;
+    int doit;
+    LocalizeViewController *location;
+    BOOL settedCategory;
+    BOOL settedShop;
+    BOOL settedName;
+    BOOL settedPrice;
+    BOOL settedDesc;
 }
 
 @end
 
 @implementation LoadDetailViewController
-@synthesize tabellaView,imageProd,imageViewProd;
+@synthesize tabellaView,imageProd,imageViewProd,name,price,where,category,desc,consiglia,consigliaTutti,negozio;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,16 +47,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Consiglia" style:UIBarButtonItemStylePlain target:self action:@selector(pressedFinishButton)];
-    [anotherButton setTintColor:[UIColor greenColor]];
-    self.navigationItem.rightBarButtonItem = anotherButton;
-    
+    negozio = @"negozio";
+    location = [[LocalizeViewController alloc] initWithNibName:@"LocalizeViewController" bundle:nil];
+    doit = 0;
+    // Do any additional setup after loading the view from its nib.    
     CGRect tbFrame = [tabellaView frame];
     tbFrame.size.height = 500;
     [tabellaView setFrame:tbFrame];
     
-    list = [[NSArray alloc] initWithObjects:@"Nome",@"Foto",@"Prezzo",@"Categoria",@"Negozio",@"Descrizione", nil];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliablue"] forState:UIControlStateNormal];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliabianco"] forState:UIControlStateHighlighted];
+    
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefblue"] forState:UIControlStateNormal];
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefbianco"] forState:UIControlStateHighlighted];
+    
+    categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
+    
+    categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 205, 320, 20)];
+    categoryPicker.showsSelectionIndicator = YES;
+    categoryPicker.delegate = self;
+
+    
+    list = [[NSMutableArray alloc] initWithObjects:@"Nome",@"Categoria",@"Negozio",@"Descrizione", nil];
     listLoad = [[NSMutableArray alloc] initWithObjects:@"Inserisci",@"Ok!",@"Seleziona",@"Seleziona",@"Seleziona",@"", nil];
 }
 
@@ -52,11 +79,12 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-    imageViewProd.image = imageProd;
-    //imageProd.layer.cornerRadius = 20;//half of the width
-    //imageViewProd.layer.borderColor=[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f].CGColor;
-    imageViewProd.layer.borderColor = [UIColor whiteColor].CGColor;
-    imageViewProd.layer.borderWidth=1.0f;
+    if(location.shopSelected.nome != nil){
+        
+        [list replaceObjectAtIndex:2 withObject:location.shopSelected.nome];
+    }
+    [self.tabellaView reloadData];
+    
     
 }
 
@@ -78,29 +106,158 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSLog(@"sono al tre");
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [list objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text = [listLoad objectAtIndex:indexPath.row];
-    if(indexPath.row == 1){
-        cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+    //cell.textLabel.text = [list objectAtIndex:indexPath.row];
+    //cell.detailTextLabel.text = [listLoad objectAtIndex:indexPath.row];
+    if (doit == 0){
+        if(indexPath.row == 0){
+            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+            
+            name = [[UITextField alloc]initWithFrame:CGRectMake(30, 10, 110, 30)];
+            name.font = [UIFont fontWithName:@"Helvetica" size:18];
+            name.textColor = [UIColor blackColor];
+            name.backgroundColor = [UIColor clearColor];
+            name.delegate =self;
+            name.highlighted = YES;
+            name.placeholder = [list objectAtIndex:indexPath.row];
+            name.keyboardType = UIKeyboardTypeDefault;
+            name.returnKeyType = UIReturnKeyDone;
+            name.tag = 0;
+            [cell.contentView addSubview:name];
+            
+            price = [[UITextField alloc]initWithFrame:CGRectMake(150, 10, 110, 30)];
+            price.font = [UIFont fontWithName:@"Helvetica" size:18];
+            price.textColor = [UIColor blackColor];
+            price.backgroundColor = [UIColor clearColor];
+            price.delegate =self;
+            price.highlighted = YES;
+            price.placeholder = @"Prezzo";
+            price.keyboardType = UIKeyboardTypeDefault;
+            price.returnKeyType = UIReturnKeyDone;
+            price.tag = 1;
+            [cell.contentView addSubview:price];
+            
+            UILabel *euro = [[UILabel alloc]initWithFrame:CGRectMake(270, 5, 110, 30)];
+            euro.font = [UIFont fontWithName:@"Helvetica" size:18];
+            euro.textColor = [UIColor blackColor];
+            euro.backgroundColor = [UIColor clearColor];
+            euro.highlighted = YES;
+            euro.text = @"€";
+            [cell.contentView addSubview:euro];
+        }
+        else if(indexPath.row == 1){
+            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+            cell.textLabel.text = [list objectAtIndex:indexPath.row];
+        }
+        else if(indexPath.row == 2){
+            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+            cell.textLabel.text = [list objectAtIndex:indexPath.row];
+        }
+        else if(indexPath.row == 3){
+            NSLog(@"tre");
+            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+            desc = [[UITextField alloc]initWithFrame:CGRectMake(30, 10, 200, 30)];
+            desc.font = [UIFont fontWithName:@"Helvetica" size:18];
+            desc.textColor = [UIColor blackColor];
+            desc.backgroundColor = [UIColor clearColor];
+            desc.delegate =self;
+            desc.highlighted = YES;
+            desc.placeholder = [list objectAtIndex:indexPath.row];
+            desc.keyboardType = UIKeyboardTypeDefault;
+            desc.returnKeyType = UIReturnKeyDone;
+            desc.tag = 2;
+            [cell.contentView addSubview:desc];
+            doit=1;
+        }
+        
+    /*else if(indexPath.row == 1){
+        cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+        
+        price = [[UITextField alloc]initWithFrame:CGRectMake(30, 10, 120, 30)];
+        price.font = [UIFont fontWithName:@"Helvetica" size:18];
+        price.textColor = [UIColor blackColor];
+        price.backgroundColor = [UIColor clearColor];
+        price.delegate =self;
+        price.highlighted = YES;
+        price.placeholder = [list objectAtIndex:indexPath.row];
+        price.keyboardType = UIKeyboardTypeDefault;
+        price.returnKeyType = UIReturnKeyDone;
+        price.secureTextEntry = YES;
+        [cell.contentView addSubview:price];
+        
+    }*//*
+    else if(indexPath.row == 1){
+        cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+        
+        cell.textLabel.text = [list objectAtIndex:indexPath.row];
+        where = [[UITextField alloc]initWithFrame:CGRectMake(30, 10, 200, 30)];
+        where.font = [UIFont fontWithName:@"Helvetica" size:18];
+        where.textColor = [UIColor blackColor];
+        where.backgroundColor = [UIColor clearColor];
+        where.delegate =self;
+        where.highlighted = YES;
+        where.placeholder = [list objectAtIndex:indexPath.row];
+        where.keyboardType = UIKeyboardTypeDefault;
+        where.returnKeyType = UIReturnKeyDone;
+        [cell.contentView addSubview:where];
+
+    }
+    else if(indexPath.row == 2){
+        cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+        cell.textLabel.text = [list objectAtIndex:indexPath.row];
+        category = [[UITextField alloc]initWithFrame:CGRectMake(30, 10, 200, 30)];
+        category.font = [UIFont fontWithName:@"Helvetica" size:18];
+        category.textColor = [UIColor blackColor];
+        category.backgroundColor = [UIColor clearColor];
+        category.delegate =self;
+        category.highlighted = YES;
+        category.placeholder = [list objectAtIndex:indexPath.row];
+        category.keyboardType = UIKeyboardTypeDefault;
+        category.returnKeyType = UIReturnKeyDone;
+        [cell.contentView addSubview:category];
+    }*/
+    
     }
     else{
-        cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (indexPath.row == 0) {
+            if (settedName == YES) {
+            cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+            }
+        }
+        else if(indexPath.row == 1){
+            if (settedCategory == YES){
+                cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            }
+        }
+        else if(indexPath.row == 2){
+            if (location.shopSelected != nil){
+                cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            }
+        }
+        else if(indexPath.row == 3){
+            NSLog(@"sono al tre");
+            if (settedDesc == YES) {
+                cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                NSLog(@"sono al tre");
+            }
+        }
     }
+    
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-    
-    
-    
+
     return cell;
 }
 
@@ -142,24 +299,274 @@
  return YES;
  }
  */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (indexPath.row == 1) {
+        [name resignFirstResponder];
+        [price resignFirstResponder];
+        [desc resignFirstResponder];
+        /*[UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:1.0];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown
+                               forView:categoryPicker
+                                 cache:YES];
+        [[self view] addSubview:categoryPicker];
+        [UIView commitAnimations];*/
+        [self.view addSubview:categoryPicker];
+        categoryPicker.frame = CGRectMake(0, 440, 320, 20);
+ // somewhere offscreen, in the direction you want it to appear from
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             categoryPicker.frame = CGRectMake(0, 205, 320, 20);
+ // its final location
+                         }];
+        //[self.view addSubview:categoryPicker];
+        
+    }
+    if (indexPath.row == 2) {
+        
+        categoryPicker.frame = CGRectMake(0, 205, 320, 20);
+        // somewhere offscreen, in the direction you want it to appear from
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             categoryPicker.frame =CGRectMake(0, 440, 320, 20);
+                             // its final location
+                         }];
+        [categoryPicker removeFromSuperview];
+        [name resignFirstResponder];
+        [price resignFirstResponder];
+        [desc resignFirstResponder];
+        
+        UINavigationController *navLoc = [[UINavigationController alloc] initWithRootViewController:location];
+        location.latitudine = lat;
+        location.longitudine = lon;
+        //location.loadDetail = self;
+        
+        [self presentViewController:navLoc animated:YES completion:NO];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
 - (void)viewDidUnload {
     [self setTabellaView:nil];
     [self setImageViewProd:nil];
+    [self setConsiglia:nil];
+    [self setConsigliaTutti:nil];
     [super viewDidUnload];
 }
+- (IBAction)seeConsiglia:(id)sender {
+    
+    //UPLOAD IMMAGINE
+    
+    p = [[JGProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    [p setUseSharedImages:YES];
+    p.frame = CGRectMake(20, 5, 280, p.frame.size.height);
+    p.center = CGPointMake(CGRectGetMidX(self.view.bounds), p.center.y);
+    
+    [self.view addSubview:p];
+    p.animationSpeed = 1.0;
+    [p setIndeterminate:YES];
+    
+    NSLog(@"Immagine");
+    
+    NSData *imageDatas = UIImageJPEGRepresentation(imageProd,0.1);     //change Image to NSData
+    NSString *ima = [name.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    if (imageDatas != nil)
+    {
+        //set name here
+        filenames = [NSString stringWithFormat:ima];
+        NSLog(@"%@", filenames);
+        NSString *urlString = @"http://eliteitalia.altervista.org/webservice/Prodotti/upload_image.php";
+        
+        NSMutableURLRequest *requestimage = [[NSMutableURLRequest alloc] init];
+        [requestimage setURL:[NSURL URLWithString:urlString]];
+        [requestimage setHTTPMethod:@"POST"];
+        
+        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+        [requestimage addValue:contentType forHTTPHeaderField: @"Content-Type"];
+        
+        NSMutableData *body = [NSMutableData data];
+        
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"filenames\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[@"Content-Disposition: form-data; name=\"file\"; filename=\"provav.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[NSData dataWithData:imageDatas]];
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        // setting the body of the post to the reqeust
+        [requestimage setHTTPBody:body];
+        // now lets make the connection to the web
+        NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
+        NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+        //NSLog(returnString);
+        NSLog(@"finish");
+    }
+    
+    //change Image to NSData
+    
+    
+    ima = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/%@.jpg",ima ];
+    
+    NSString *slogan = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su Elite.",@"Utente",name.text ];
+    
+    postParams =
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+     @"www.eliteadvice.it", @"link",
+     ima, @"picture",
+     slogan, @"name",
+     @"Il social Network che ti fa risparmiare.", @"caption",
+     @"Scopri Elite Advice e risparmia su ogni acquisto.", @"description",
+     nil];
+    
+    NSString *cat = [[NSString alloc] initWithFormat:@"%d",category_id ];
+    
+    NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
+
+    NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              name.text, @"name",
+                              location.shopSelected.nome, @"store_id",
+                              price.text, @"price",
+                              cat, @"category_id",
+                              @"Dummy", @"insertion_code",
+                              ima, @"imageurl",
+                              @"Test",@"username",
+                              desc.text,@"desc",
+                              nil];
+    
+    
+    NSError *error;
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSLog(@"%@",postData);
+    
+    
+    NSString *postLength = [NSString stringWithFormat:@"12321443"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Prodotti/create_product.php"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLResponse *response;
+    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    NSLog(@"Reply: %@", theReply);
+    
+    
+    [self publishStory];
+
+}
+
+- (void)publishStory
+{
+    [FBRequestConnection
+     startWithGraphPath:@"me/feed"
+     parameters:postParams
+     HTTPMethod:@"POST"
+     completionHandler:^(FBRequestConnection *connection,
+                         id result,
+                         NSError *error) {
+         NSString *alertText;
+         if (error) {
+             alertText = [NSString stringWithFormat:
+                          @"error: domain = %@, code = %d",
+                          error.domain, error.code];
+         } else {
+             /*alertText = [NSString stringWithFormat:
+              @"Posted action, id: %@",
+              [result objectForKey:@"id"]];*/
+             alertText = @"Hai consigliato correttamente \n il tuo prodotto";
+         }
+         // Show the result in an alert
+         [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
+                                     message:alertText
+                                    delegate:self
+                           cancelButtonTitle:@"Continua"
+                           otherButtonTitles:nil]
+          show];
+         [p removeFromSuperview];
+     }];
+}
+
+
+- (IBAction)seeConsigliaTutti:(id)sender {
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    NSLog(@"Location");
+    
+    lat =[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
+    
+    lon = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
+    
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
+{
+    return [categorie count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    id str=[categorie objectAtIndex:row];
+    return str;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSLog(@"selectedRowInPicker >> %d",row);
+    NSString *t = [categorie objectAtIndex:row];
+    [list replaceObjectAtIndex:1 withObject:t];
+    settedCategory = YES;
+    [self.tabellaView reloadData];
+    category_id = row;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    NSLog(@"finito editing");
+    
+    if(textField.tag == 0){
+        NSLog(@"lol");
+        settedName = YES;
+        //[self reloadTabella];
+        [self performSelectorOnMainThread:@selector(reloadTabella) withObject:nil waitUntilDone:YES];
+    }
+    else if (textField.tag == 1){
+        settedPrice = YES;
+       [self reloadTabella];
+    }
+    else if (textField.tag == 2){
+        settedDesc = YES;
+        [self reloadTabella];
+    }
+    [self reloadTabella];
+    return YES;
+}
+- (void) reloadTabella{
+    NSLog(@"ricarico");
+    [self.tabellaView reloadData];
+}
+
 @end

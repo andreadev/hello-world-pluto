@@ -175,7 +175,7 @@
     UINavigationController *navLoc = [[UINavigationController alloc] initWithRootViewController:location];
     location.latitudine = lat;
     location.longitudine = lon;
-    location.prodView = self;
+    //location. = self;
     
     [self presentModalViewController:navLoc animated:YES];
     /*

@@ -24,10 +24,6 @@
 {
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
-    UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
-
-    
-    //[[UINavigationBar appearance] set]
     [[UIBarButtonItem appearance] setTintColor:[UIColor grayColor]];
     
     /*[[UINavigationBar appearance] setTitleTextAttributes: @{
@@ -36,9 +32,6 @@
                          UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
                                      UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:20.0f]
      }];*/
-     
-     
-    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -52,8 +45,6 @@
         
     }
     
-    
-    
     //Product = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
     loadProd = [[TakePhotoViewController alloc] initWithNibName:@"TakePhotoViewController" bundle:nil];
     homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
@@ -64,9 +55,6 @@
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
     UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
     NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navProd, navPref, nil];
-    
-    
-    
     
     tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = viewControllerArray;
@@ -79,8 +67,7 @@
         //proceed with app normally
         NSLog(@"accettato");
         nav.navigationBarHidden = NO;
-        self.window.rootViewController = nav;
-        
+        //self.window.rootViewController = nav;
     }
     else{
         //show terms

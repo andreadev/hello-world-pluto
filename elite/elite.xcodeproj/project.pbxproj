@@ -127,6 +127,15 @@
 		F77720CD1760D9BD000B0E3F /* FBUserSettingsViewResources.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = F77720CC1760D9BC000B0E3F /* FBUserSettingsViewResources.bundle */; };
 		F77720CF1760DA74000B0E3F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F77720CE1760DA74000B0E3F /* libsqlite3.dylib */; };
 		F77720D11760DC0A000B0E3F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77720D01760DC09000B0E3F /* Security.framework */; };
+		F77720D21761E4BF000B0E3F /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F74BA882174D0DED007654DE /* LocationViewController.m */; };
+		F77720D617621E49000B0E3F /* LocalizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F77720D417621E45000B0E3F /* LocalizeViewController.m */; };
+		F77720D717621E49000B0E3F /* LocalizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F77720D417621E45000B0E3F /* LocalizeViewController.m */; };
+		F77720D817621E49000B0E3F /* LocalizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77720D517621E47000B0E3F /* LocalizeViewController.xib */; };
+		F77720D917621E49000B0E3F /* LocalizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77720D517621E47000B0E3F /* LocalizeViewController.xib */; };
+		F77720DD17622801000B0E3F /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F77720DB176227FD000B0E3F /* ResultViewController.m */; };
+		F77720DE17622801000B0E3F /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F77720DB176227FD000B0E3F /* ResultViewController.m */; };
+		F77720DF17622801000B0E3F /* ResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77720DC176227FF000B0E3F /* ResultViewController.xib */; };
+		F77720E017622801000B0E3F /* ResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77720DC176227FF000B0E3F /* ResultViewController.xib */; };
 		F78EC34716FCEE6000E57078 /* 28-star.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34616FCEE6000E57078 /* 28-star.png */; };
 		F78EC34916FCEE7800E57078 /* 53-house.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34816FCEE7800E57078 /* 53-house.png */; };
 		F78EC34B16FCEE8800E57078 /* 67-tshirt.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34A16FCEE8800E57078 /* 67-tshirt.png */; };
@@ -162,6 +171,9 @@
 		F7981D4A1742C7D2006770F2 /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D481742C7D2006770F2 /* SearchView.m */; };
 		F7981D4B1742C7D2006770F2 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D491742C7D2006770F2 /* SearchView.xib */; };
 		F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A6699417198A6500CEFD39 /* CoreLocation.framework */; };
+		F7F4FAAE176370CB001E516C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAD176370CB001E516C /* Default.png */; };
+		F7F4FAB017637332001E516C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAF17637332001E516C /* Default@2x.png */; };
+		F7F4FAB11763749B001E516C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAB17636A72001E516C /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +310,12 @@
 		F77720CC1760D9BC000B0E3F /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBUserSettingsViewResources.bundle; path = ../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
 		F77720CE1760DA74000B0E3F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F77720D01760DC09000B0E3F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F77720D317621E43000B0E3F /* LocalizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizeViewController.h; sourceTree = "<group>"; };
+		F77720D417621E45000B0E3F /* LocalizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizeViewController.m; sourceTree = "<group>"; };
+		F77720D517621E47000B0E3F /* LocalizeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizeViewController.xib; sourceTree = "<group>"; };
+		F77720DA176227FC000B0E3F /* ResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultViewController.h; sourceTree = "<group>"; };
+		F77720DB176227FD000B0E3F /* ResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultViewController.m; sourceTree = "<group>"; };
+		F77720DC176227FF000B0E3F /* ResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultViewController.xib; sourceTree = "<group>"; };
 		F78EC34616FCEE6000E57078 /* 28-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "28-star.png"; sourceTree = "<group>"; };
 		F78EC34816FCEE7800E57078 /* 53-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house.png"; sourceTree = "<group>"; };
 		F78EC34A16FCEE8800E57078 /* 67-tshirt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "67-tshirt.png"; sourceTree = "<group>"; };
@@ -343,6 +361,9 @@
 		F7981D481742C7D2006770F2 /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
 		F7981D491742C7D2006770F2 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		F7A6699417198A6500CEFD39 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F7F4FAAB17636A72001E516C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F7F4FAAD176370CB001E516C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		F7F4FAAF17637332001E516C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,6 +405,9 @@
 		65B7FDC516E746A400F65710 = {
 			isa = PBXGroup;
 			children = (
+				F7F4FAAF17637332001E516C /* Default@2x.png */,
+				F7F4FAAD176370CB001E516C /* Default.png */,
+				F7F4FAAB17636A72001E516C /* Default-568h@2x.png */,
 				F77720D01760DC09000B0E3F /* Security.framework */,
 				F7981D45173E8601006770F2 /* icon.png */,
 				F7981D43173E8567006770F2 /* icon@2x.png */,
@@ -436,8 +460,12 @@
 				F70B27B816F612C20048694C /* NewProductViewController.m */,
 				F74BA881174D0DEC007654DE /* LocationViewController.h */,
 				F74BA882174D0DED007654DE /* LocationViewController.m */,
+				F77720D317621E43000B0E3F /* LocalizeViewController.h */,
+				F77720D417621E45000B0E3F /* LocalizeViewController.m */,
 				F78EC35216FCF02700E57078 /* HomeViewController.h */,
 				F78EC35316FCF02700E57078 /* HomeViewController.m */,
+				F77720DA176227FC000B0E3F /* ResultViewController.h */,
+				F77720DB176227FD000B0E3F /* ResultViewController.m */,
 				659A1D9116F7296A007589FF /* LoginViewController.h */,
 				659A1D9216F7296A007589FF /* LoginViewController.m */,
 				F7981D3E173BBF8C006770F2 /* LoginSiteViewController.h */,
@@ -515,7 +543,9 @@
 			isa = PBXGroup;
 			children = (
 				F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */,
+				F77720DC176227FF000B0E3F /* ResultViewController.xib */,
 				F777207A175CC660000B0E3F /* DetailViewController.xib */,
+				F77720D517621E47000B0E3F /* LocalizeViewController.xib */,
 				F7772086175F6E99000B0E3F /* TakePhotoViewController.xib */,
 				F7981D3B173BBEE9006770F2 /* SingUpViewController.xib */,
 				F74BA883174D0DEE007654DE /* LocationViewController.xib */,
@@ -798,6 +828,11 @@
 				F77720B0175F7BB1000B0E3F /* bollasok@2x.png in Resources */,
 				F77720B3175F892E000B0E3F /* wall-elite.png in Resources */,
 				F77720B6175F8CCC000B0E3F /* wall.png in Resources */,
+				F77720D817621E49000B0E3F /* LocalizeViewController.xib in Resources */,
+				F77720DF17622801000B0E3F /* ResultViewController.xib in Resources */,
+				F7F4FAAE176370CB001E516C /* Default.png in Resources */,
+				F7F4FAB017637332001E516C /* Default@2x.png in Resources */,
+				F7F4FAB11763749B001E516C /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -816,6 +851,8 @@
 				F77720B1175F7BB1000B0E3F /* bollasok@2x.png in Resources */,
 				F77720B4175F892E000B0E3F /* wall-elite.png in Resources */,
 				F77720B7175F8CCC000B0E3F /* wall.png in Resources */,
+				F77720D917621E49000B0E3F /* LocalizeViewController.xib in Resources */,
+				F77720E017622801000B0E3F /* ResultViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -874,6 +911,8 @@
 				F7772082175CEF88000B0E3F /* TTAlertView.m in Sources */,
 				F7772087175F6E9B000B0E3F /* TakePhotoViewController.m in Sources */,
 				F777209C175F72D3000B0E3F /* LoadDetailViewController.m in Sources */,
+				F77720D617621E49000B0E3F /* LocalizeViewController.m in Sources */,
+				F77720DD17622801000B0E3F /* ResultViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -891,6 +930,9 @@
 				F7772083175CEF88000B0E3F /* TTAlertView.m in Sources */,
 				F7772088175F6E9B000B0E3F /* TakePhotoViewController.m in Sources */,
 				F777209D175F72D3000B0E3F /* LoadDetailViewController.m in Sources */,
+				F77720D21761E4BF000B0E3F /* LocationViewController.m in Sources */,
+				F77720D717621E49000B0E3F /* LocalizeViewController.m in Sources */,
+				F77720DE17622801000B0E3F /* ResultViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,8 +990,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PROVISIONING_PROFILE = "6300FBDD-F387-41E9-B156-FB0E9A4CD911";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6300FBDD-F387-41E9-B156-FB0E9A4CD911";
+				PROVISIONING_PROFILE = "FA653EB9-6627-453C-9843-E74DC5A4A5E8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA653EB9-6627-453C-9843-E74DC5A4A5E8";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -972,8 +1014,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "6300FBDD-F387-41E9-B156-FB0E9A4CD911";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6300FBDD-F387-41E9-B156-FB0E9A4CD911";
+				PROVISIONING_PROFILE = "FA653EB9-6627-453C-9843-E74DC5A4A5E8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA653EB9-6627-453C-9843-E74DC5A4A5E8";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

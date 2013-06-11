@@ -14,6 +14,8 @@
     NSArray *friends;
     FBFriendPickerViewController *friendPickerController;
     NSMutableArray *amici;
+    NSMutableDictionary *postPara;
+    NSString *idialog;
 }
 
 @end
@@ -41,107 +43,24 @@
     [super viewDidLoad];
     [self populateUserDetails];
     [self getFriends];
-    UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
+    
+    /*UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
     btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = menuBarButton;
+    self.navigationItem.rightBarButtonItem = menuBarButton;*/
+    
     amici = [[NSMutableArray alloc] init];
     
     //self.title = @"Preferiti";
-    friendPickerController =
-    [[FBFriendPickerViewController alloc] init];
-    // Set the friend picker title
-    friendPickerController.title = @"Pick Friends";
-    friendPickerController.delegate = self;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
-- (void) pressedLeftButton{
-    // Initialize the friend picker
-    // TODO: Set up the delegate to handle picker callbacks, ex: Done/Cancel button
-    
-    // Load the friend data
-    [friendPickerController loadData];
-    // Show the picker modally
-    [friendPickerController presentModallyFromViewController:self animated:YES handler:nil];
-    
-}
-
-/*
- * Event: Error during data fetch
- */
-- (void)friendPickerViewController:(FBFriendPickerViewController *)friendPicker
-                       handleError:(NSError *)error
-{
-    NSLog(@"Error during data fetch.");
-}
-
-/*
- * Event: Data loaded
- */
-- (void)friendPickerViewControllerDataDidChange:(FBFriendPickerViewController *)friendPicker
-{
-    NSLog(@"Friend data loaded.");
-}
-
-/*
- * Event: Decide if a given user should be displayed
- */
-- (BOOL)friendPickerViewController:(FBFriendPickerViewController *)friendPicker
-                 shouldIncludeUser:(id <FBGraphUser>)user
-{
-    // Filtering example: only show users who have
-    // "ch" in their names
-    NSRange result = [user.name rangeOfString:@"ch"
-                                      options:NSCaseInsensitiveSearch];
-    if (result.location != NSNotFound) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-
-/*
- * Event: Selection changed
- */
-- (void)friendPickerViewControllerSelectionDidChange:
-(FBFriendPickerViewController *)friendPicker
-{
-    NSLog(@"Current friend selections: %@", friendPicker.selection);
-    NSLog(@"%@",[friendPicker.selection objectAtIndex:0]);
-    //NSLog(@"%@",[friendPicker.selection objectAtIndex:1]);
-    //NSLog(@"%@",[friendPicker.selection objectAtIndex:2]);
-}
-
-/*
- * Event: Done button clicked
- */
-- (void)facebookViewControllerDoneWasPressed:(id)sender {
-    FBFriendPickerViewController *friendPickerControllera =
-    (FBFriendPickerViewController*)sender;
-    NSLog(@"Selected friends: %@", friendPickerControllera.selection);
-    // Dismiss the friend picker
-    
-    [[sender presentingViewController] dismissModalViewControllerAnimated:YES];
-}
-
-/*
- * Event: Cancel button clicked
- */
-- (void)facebookViewControllerCancelWasPressed:(id)sender {
-    NSLog(@"Canceled");
-    // Dismiss the friend picker
-    [[sender presentingViewController] dismissModalViewControllerAnimated:YES];
-}
-
 
 - (void)getFriends{
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
@@ -203,6 +122,7 @@
             [amici addObject:fb];
             NSLog(@"%@", fb.name);
             NSLog(@"%@", fb.idfb);
+            NSLog(@"%@", fb.hasapp);
             //NSLog(@"a");
         }
     // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
@@ -252,13 +172,18 @@
     cell.labelNome.text = amicofb.name;
     //cell.detailTextLabel.text = amicofb.idfb;
     NSLog(@"%@",amicofb.idfb);
-    NSString *hasapp = amicofb.hasapp;
-    NSString *fal = @"false";
+    NSLog(@"%@",amicofb.hasapp);
+    BOOL hasapp = amicofb.hasapp;
+    //NSLog(hasapp ? @"Yes" : @"No");
+    NSLog(@"%d",hasapp);
     
-    if (![fal isEqualToString:hasapp]) {
+    if (hasapp==56) {
         NSLog(@"NO APP");
         cell.follow.titleLabel.text = @"INVITA";
-        [cell.follow addTarget:self action:@selector(inviteTo:) forControlEvents:UIControlEventTouchUpInside];        /*
+        [cell.follow setTitle:@"INVITA" forState:UIControlStateNormal];
+        [cell.follow setTag:amicofb.idfb];
+        [cell.follow addTarget:self action:@selector(inviteTo:) forControlEvents:UIControlEventTouchUpInside];
+        /*
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(inviteTo:) forControlEvents:UIControlEventTouchUpInside];
@@ -272,9 +197,11 @@
         
         [cell.contentView addSubview:button];*/
     }
-    else{
+    else if (hasapp==48){
         NSLog(@"SI APP");
-        cell.follow.titleLabel.text = @"SEGUI";
+        [cell.follow setTitle:@"SEGUI" forState:UIControlStateNormal];
+        [cell.follow setTag:amicofb.idfb];
+        cell.follow.titleLabel.textAlignment = UITextAlignmentCenter;
         [cell.follow addTarget:self action:@selector(seguiTo:) forControlEvents:UIControlEventTouchUpInside];
         /*
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -298,15 +225,29 @@
 - (void) inviteTo:(id) sender{
     NSLog(@"%d",[sender tag]);
     [self share];
-    
-    //[sender tag];
+    idialog = [[NSString alloc] initWithFormat:@"%d",[sender tag] ];
     
 }
 - (void) seguiTo:(id) sender{
     NSLog(@"%d",[sender tag]);
-    //[sender tag];
+    NSLog(@"Segui");
+    idialog = [[NSString alloc] initWithFormat:@"%d",[sender tag] ];
     
 }
+
+- (void) test1{
+    postPara =
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+     @"https://developers.facebook.com/ios", @"link",
+     @"https://developers.facebook.com/attachment/iossdk_logo.png", @"picture",
+     @"Facebook SDK for iOS", @"name",
+     @"build apps.", @"caption",
+     @"testing for my app.", @"description",
+     nil];
+    
+    [postPara setObject:@"hgshsghhgsls" forKey:@"message"];
+}
+
 
 - (void)publishStory
 {
@@ -398,42 +339,53 @@
 
 - (void) share{
     
-    id<FBOpenGraphAction> action = (id<FBOpenGraphAction>)[FBGraphObject graphObject];
-    [action setObject:@"https://apps.notrepro.net/fbsdktoolkit/objects/book/Snow-Crash.html"forKey:@"book"];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   idialog, @"to",
+                                   @"Say Hello",  @"message",
+                                   @"Funziona", @"description",
+                                   @"www.eliteadvice.it", @"link",
+                                   @"http://www.eliteadvice.it/style/images/home_users.jpg", @"picture",
+                                   @"107955302711336",@"app_id",
+                                   @"feed",@"method",
+                                   @"EliteAdvice.it",@"name",
+                                   nil];
     
-    FBOpenGraphActionShareDialogParams* params = [[FBOpenGraphActionShareDialogParams alloc]init];
-    params.actionType = @"books.reads";
-    params.action = action;
-    params.previewPropertyName = @"book";
+    [FBWebDialogs presentFeedDialogModallyWithSession:session//[FBSession activeSession]
+                                           parameters:params
+                                              handler:
+     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error){
+     }];
     
-    // Show the Share dialog if available
-    if([FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]) {
-        
-        [FBDialogs presentShareDialogWithOpenGraphAction:[params action]
-                                              actionType:[params actionType]
-                                     previewPropertyName:[params previewPropertyName]
-                                                 handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-                                                     // handle response or error
-                                                 }];
-        
-    }
-    // If the Facebook app isn't available, show the Feed dialog as a fallback
-    else {
-        NSDictionary* params = @{@"name": @"Snow Crash",
-                                 @"caption": @"Classic cyberpunk",
-                                 @"description": @"In reality, Hiro Protagonist delivers pizza for Uncle Enzo's CosoNostra Pizza Inc., but in the Metaverse he's a warrior prince. ",
-                                 @"link": @"https://apps.notrepro.net/fbsdktoolkit/objects/book/Snow-Crash.html",
-                                 @"image": @"http://upload.wikimedia.org/wikipedia/en/d/d5/Snowcrash.jpg"};
-        
-        [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                               parameters:params
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                      // handle response or error
-                                                  }];
-    }
-   
 }
 
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    switch (state) {
+        case FBSessionStateOpen: {
+            
+        }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            
+            
+            break;
+        default:
+            break;
+    }
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
 
 - (NSDictionary*)parseURLParams:(NSString *)query {
     NSArray *pairs = [query componentsSeparatedByString:@"&"];

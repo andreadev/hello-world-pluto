@@ -7,16 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewProductViewController.h"
+#import "LoadDetailViewController.h"
 
 @interface LocationViewController : UITableViewController
 
 @property (strong, nonatomic) NSArray *shops;
-@property (strong,nonatomic) NSString *latitudine;
-@property (strong,nonatomic) NSString *longitudine;
-@property (strong,nonatomic) NewProductViewController *prodView;
-
-
-
+@property (strong, nonatomic) NSString *latitudine;
+@property (strong, nonatomic) NSString *longitudine;
 
 @end

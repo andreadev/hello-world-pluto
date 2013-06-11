@@ -36,13 +36,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    lista = [[NSArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consiliato da:", @"Codice Sconto:",@"Descrizione" ,nil];
+    //lista = [[NSArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consiliato da:", @"Codice Sconto:",@"Descrizione" ,nil];
     datiList = [[NSMutableArray alloc] init];
     //lista = [[NSMutableArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consigliato da:",@"Codice Sconto:","Descrizione:", nil];
     
     [Scrollview setScrollEnabled:YES];//Abilitiamo lo scroll
     
-    [Scrollview setContentSize:(CGSizeMake(320,600))];
+    [Scrollview setContentSize:(CGSizeMake(320,440))];
     
     CGRect tbFrame = [tabellaView frame];
     tbFrame.size.height = 500;
@@ -96,8 +96,22 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
     // Usually the number of items in your array (the one that holds your list)
-    return [lista count];
+    return 3;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 0){
+        return 70.;
+    }
+    else if (indexPath.row == 1){
+        return 70.;
+    }
+    else {
+        return 44.;
+    }
+    return 44.;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     //Where we configure the cell in each row
@@ -107,29 +121,95 @@
     
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     // Configure the cell... setting the text of our cell's label
     //lista = [[NSArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consiliato da:", @"Codice Sconto:",@"Descrizione" ,nil];
-    cell.textLabel.text = [lista objectAtIndex:indexPath.row];
+    //cell.textLabel.text = [lista objectAtIndex:indexPath.row];
     if (indexPath.row == 0) {
-        cell.detailTextLabel.text = prod.where;
+        UILabel *prices = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, 30)];
+        prices.font = [UIFont fontWithName:@"Helvetica" size:15];
+        prices.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
+        prices.backgroundColor = [UIColor clearColor];
+        prices.text = @"Prezzo:";
+        prices.textAlignment = UITextAlignmentLeft;
+        [cell.contentView addSubview:prices];
+        
+        UILabel *pricesVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 5, 50, 30)];
+        pricesVal.font = [UIFont fontWithName:@"Helvetica" size:15];
+        pricesVal.textColor = [UIColor blackColor];
+        pricesVal.backgroundColor = [UIColor clearColor];
+        pricesVal.text = [prod.prezzo stringByAppendingString:@"  €"];
+        pricesVal.textAlignment = UITextAlignmentRight;
+        [cell.contentView addSubview:pricesVal];
+        
+        UILabel *newpricesVal = [[UILabel alloc]initWithFrame:CGRectMake(200, 5, 50, 30)];
+        newpricesVal.font = [UIFont fontWithName:@"Helvetica" size:15];
+        newpricesVal.textColor = [UIColor blackColor];
+        newpricesVal.backgroundColor = [UIColor clearColor];
+        newpricesVal.text = [prod.prezzo stringByAppendingString:@"  €"];
+        newpricesVal.textAlignment = UITextAlignmentRight;
+        [cell.contentView addSubview:newpricesVal];
+        
+        UIImageView *sbarra = [[UIImageView alloc] initWithFrame:CGRectMake(125, 15, 51, 15)];
+        sbarra.image = [UIImage imageNamed:@"sbarra"];
+        [cell.contentView addSubview:sbarra];
+        
+        UILabel *wheres = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 100, 30)];
+        wheres.font = [UIFont fontWithName:@"Helvetica" size:15];
+        wheres.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
+        wheres.backgroundColor = [UIColor clearColor];
+        wheres.text = @"Dove:";
+        wheres.textAlignment = UITextAlignmentLeft;
+        [cell.contentView addSubview:wheres];
+        
+        UILabel *wheresVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 200, 30)];
+        wheresVal.font = [UIFont fontWithName:@"Helvetica" size:15];
+        wheresVal.textColor = [UIColor blackColor];
+        wheresVal.backgroundColor = [UIColor clearColor];
+        wheresVal.text = prod.where;
+        [cell.contentView addSubview:wheresVal];
+        
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     else if (indexPath.row == 1){
-        cell.detailTextLabel.text = prod.prezzo;
+        
+        UILabel *consigliatos = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, 30)];
+        consigliatos.font = [UIFont fontWithName:@"Helvetica" size:15];
+        consigliatos.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
+        consigliatos.backgroundColor = [UIColor clearColor];
+        consigliatos.text = @"Consigliato da:";
+        consigliatos.textAlignment = UITextAlignmentLeft;
+        [cell.contentView addSubview:consigliatos];
+        
+        UILabel *consigliatosVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 5, 200, 30)];
+        consigliatosVal.font = [UIFont fontWithName:@"Helvetica" size:15];
+        consigliatosVal.textColor = [UIColor blackColor];
+        consigliatosVal.backgroundColor = [UIColor clearColor];
+        consigliatosVal.text = prod.consigliato;
+        [cell.contentView addSubview:consigliatosVal];
+        
+        
+        UILabel *codicesconto = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 200, 30)];
+        codicesconto.font = [UIFont fontWithName:@"Helvetica" size:15];
+        codicesconto.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
+        codicesconto.backgroundColor = [UIColor clearColor];
+        codicesconto.text = @"Codice Sconto:";
+        codicesconto.textAlignment = UITextAlignmentLeft;
+        [cell.contentView addSubview:codicesconto];
+        
+        UILabel *codicescontoVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 200, 30)];
+        codicescontoVal.font = [UIFont fontWithName:@"Helvetica" size:15];
+        codicescontoVal.textColor = [UIColor blackColor];
+        codicescontoVal.backgroundColor = [UIColor clearColor];
+        codicescontoVal.text = prod.codice;
+        [cell.contentView addSubview:codicescontoVal];
+        
     }
     else if (indexPath.row == 2){
-        cell.detailTextLabel.text = numberString;
-    }
-    else if (indexPath.row == 3){
-        cell.detailTextLabel.text = prod.consigliato;
-    }
-    else if (indexPath.row == 4){
-        cell.detailTextLabel.text = @"NONE";
-    }
-    else if (indexPath.row == 5){
-        cell.detailTextLabel.text = prod.desc;
+        cell.textLabel.text = @"Descrizione";
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
+        cell.textLabel.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return cell;
@@ -176,7 +256,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == 5){
+    if (indexPath.row == 2){
         
         DetailViewController *detail = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
         UINavigationController *navDet = [[UINavigationController alloc] initWithRootViewController:detail];
