@@ -9,6 +9,7 @@
 #import "ProdottoViewController.h"
 #import "RemoteImageView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 @interface ProdottoViewController (){
     NSArray *lista;
@@ -79,7 +80,7 @@
     NSArray * array = [prod.url componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
-    NSString *image_url= [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/thumb/%@",[array objectAtIndex:[array count]-1] ];
+    NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@", WEBSERVICEURL, [array objectAtIndex:[array count]-1] ];
     
     [imageProd setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
 }
@@ -113,7 +114,8 @@
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Wishlist/add_prod.php"]];
+    NSString *urlwish = [[NSString alloc] initWithFormat:@"%@Wishlist/add_prod.php", WEBSERVICEURL ];
+    [request setURL:[NSURL URLWithString:urlwish]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];

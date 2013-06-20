@@ -44,24 +44,23 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSLog(@"did");
+    
     lista = [[NSArray alloc] initWithObjects:@"Accedi",@"Registrati", nil];
-    NSString *const FBSessionStateChangedNotification =
-    @"it.plutodev.Elite:FBSessionStateChangedNotification";
-    //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    /*
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (FBSession.activeSession.isOpen){
+        NSLog(@"login");
         // Yes, so just open the session (this won't display any UX).
         NSLog(@"LOGIN DID LOAD");
-        [self openSession];
         [appDelegate presentTabBarController];
      
-    }*/
+    }
     
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         
         NSLog(@"LOGIN did LOAD");
-        [self openSession];
+        //[self openSession];
         //[appDelegate presentTabBarController];
         
     }
@@ -72,6 +71,15 @@
 {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    if (FBSession.activeSession.isOpen){
+        NSLog(@"login");
+        // Yes, so just open the session (this won't display any UX).
+        NSLog(@"LOGIN will LOAD");
+        [appDelegate presentTabBarController];
+        
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -145,6 +153,7 @@
     // Dispose of any resources that can be recreated.
 }
 - (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    NSLog(@"open session");
     NSArray *permissions = @[
                              @"basic_info",
                              @"email",
@@ -154,19 +163,19 @@
                                          completionHandler:^(FBSession *session,
                                                              FBSessionState state,
                                                              NSError *error) {
-                                             [self sessionStateChanged:session
-                                                                 state:state
-                                                                 error:error];
+                                             NSLog(@"qua");
+                                             [self sessionStateChanged:session state:state error:error];
                                          }];
 }
 
 - (IBAction)Login:(id)sender {
     
-    [self openSessionWithAllowLoginUI:YES];
+    
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate openSessionWithAllowLoginUI:YES];
+    
     
     /*
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         //[self openSession];
@@ -235,7 +244,7 @@
     }
 }
 
-- (void)openSession
+/*- (void)openSession
 {
     
     NSArray *permissions = [[NSArray alloc] initWithObjects:@"email", nil];
@@ -251,7 +260,7 @@
     NSLog(@"test");
     
 }
-
+*/
 /*
  * Callback for session changes.
  */
@@ -259,8 +268,10 @@
                       state:(FBSessionState) state
                       error:(NSError *)error
 {
+    NSLog(@"apro aa");
     switch (state) {
         case FBSessionStateOpen:
+            NSLog(@"apro");
             if (!error) {
                 // We have a valid session
                 NSLog(@"User session found");
@@ -271,8 +282,6 @@
                     [self.navigationController pushViewController:nick animated:YES];
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
                     
-                    
-                    
                 }
                 else{
                     NSLog(@"Else");
@@ -281,11 +290,12 @@
                 }
             }
             break;
-        case FBSessionStateClosed:
-        case FBSessionStateClosedLoginFailed:
+        case FBSessionStateClosed:{ NSLog(@"Chiusa"); }
+        case FBSessionStateClosedLoginFailed:{ NSLog(@"Fail"); }
             [FBSession.activeSession closeAndClearTokenInformation];
             break;
         default:
+            { NSLog(@"Niente"); }
             break;
     }
     

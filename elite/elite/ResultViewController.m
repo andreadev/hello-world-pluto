@@ -7,6 +7,7 @@
 //
 
 #import "ResultViewController.h"
+#import "AppDelegate.h"
 
 @interface ResultViewController (){
     ODRefreshControl *refreshControl;
@@ -185,7 +186,7 @@
     NSArray * array = [pro.url componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
-    NSString *image_url= [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/thumb/%@",[array objectAtIndex:[array count]-1] ];
+    NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@",WEBSERVICEURL ,[array objectAtIndex:[array count]-1] ];
     
     //NSLog(@"%@",[array objectAtIndex:i]);
     NSLog(@"%@",pro.url);

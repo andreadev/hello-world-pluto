@@ -79,7 +79,8 @@
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Utenti/login_user_iphone.php"]];
+    NSString *urlogin = [[NSString alloc] initWithFormat:@"%@Utenti/login_user_iphone.php", WEBSERVICEURL ];
+    [request setURL:[NSURL URLWithString:urlogin]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];

@@ -129,7 +129,8 @@
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Utenti/create_facebook_user.php"]];
+    NSString *urlnick = [[NSString alloc] initWithFormat:@"%@Utenti/create_facebook_user.php", WEBSERVICEURL ];
+    [request setURL:[NSURL URLWithString:urlnick]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];

@@ -17,8 +17,10 @@
 #import "TakePhotoViewController.h"
 #import "ProfileViewController.h"
 #import "WishlistView.h"
+#import "NickViewController.h"
 
 extern NSString *const FBSessionStateChangedNotification;
+extern NSString *const WEBSERVICEURL;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -39,7 +41,6 @@ extern NSString *const FBSessionStateChangedNotification;
 @property (strong, nonatomic) TakePhotoViewController *loadProd;
 @property (strong, nonatomic) ProfileViewController *profile;
 @property (strong, nonatomic) WishlistView *wishlist;
-@property (strong, nonatomic) FBSession *session;
 
 +(AppDelegate *) getApplicationDelegate;
 
@@ -49,5 +50,6 @@ extern NSString *const FBSessionStateChangedNotification;
 -(void)presentTabBarController;
 -(void)presentLoginController;
 -(void)addTabBarController;
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 
 @end

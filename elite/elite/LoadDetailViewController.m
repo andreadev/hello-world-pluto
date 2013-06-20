@@ -7,6 +7,7 @@
 //
 
 #import "LoadDetailViewController.h"
+#import "AppDelegate.h"
 
 @interface LoadDetailViewController (){
     NSMutableArray *list;
@@ -393,7 +394,8 @@
         //set name here
         filenames = [NSString stringWithFormat:ima];
         NSLog(@"%@", filenames);
-        NSString *urlString = @"http://eliteitalia.altervista.org/webservice/Prodotti/upload_image.php";
+        
+        NSString *urlString = [[NSString alloc] initWithFormat:@"%@Prodotti/upload_image.php", WEBSERVICEURL ];
         
         NSMutableURLRequest *requestimage = [[NSMutableURLRequest alloc] init];
         [requestimage setURL:[NSURL URLWithString:urlString]];
@@ -428,9 +430,9 @@
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
     NSLog(@"USERNAME: %@",valUser);
     
-    ima = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/%@.jpg",ima ];
+    ima = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, ima ];
     
-    NSString *slogan = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su Elite.",valUser,name.text ];
+    NSString *slogan = [[NSString alloc] initWithFormat:@"Ha appena consigliato: %@ su Elite.",name.text ];
     
     postParams =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -466,7 +468,8 @@
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Prodotti/create_product.php"]];
+    NSString *urluploadprod = [[NSString alloc] initWithFormat:@"%@Prodotti/create_product.php", WEBSERVICEURL ];
+    [request setURL:[NSURL URLWithString:urluploadprod]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
@@ -478,8 +481,37 @@
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
     NSLog(@"Reply: %@", theReply);
     
+    if ([[FBSession activeSession]isOpen]) {
+        /*
+         * if the current session has no publish permission we need to reauthorize
+         */
+        if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
+            
+            [[FBSession activeSession] requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_action"] defaultAudience:FBSessionDefaultAudienceFriends
+                                                  completionHandler:^(FBSession *session,NSError *error){
+                                                      [self publishStory];
+                                                  }];
+            
+        }else{
+            [self publishStory];
+        }
+    }else{
+        /*
+         * open a new session with publish permission
+         */
+        [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                           defaultAudience:FBSessionDefaultAudienceOnlyMe
+                                              allowLoginUI:YES
+                                         completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                             if (!error && status == FBSessionStateOpen) {
+                                                 [self publishStory];
+                                             }else{
+                                                 NSLog(@"error");
+                                             }
+                                         }];
+    }
     
-    [self publishStory];
+    //[self publishStory];
 
 }
 

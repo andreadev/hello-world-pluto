@@ -10,6 +10,7 @@
 #import "ProdottoViewController.h"
 #import "Prodotto.h"
 #import "RemoteImageView.h"
+#import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface WishlistView (){
@@ -51,7 +52,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
-    urlProdotti = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Wishlist/get_wish_prod.php?user=%@",valUser ];
+    urlProdotti = [[NSString alloc] initWithFormat:@"%@Wishlist/get_wish_prod.php?user=%@", WEBSERVICEURL,valUser ];
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
@@ -185,7 +186,7 @@
     NSArray * array = [pro.url componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
-    NSString *image_url= [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/thumb/%@",[array objectAtIndex:[array count]-1] ];
+    NSString *image_url= [[NSString alloc] initWithFormat:@"%@webservice/product_images/thumb/%@", WEBSERVICEURL,[array objectAtIndex:[array count]-1] ];
     
     //NSLog(@"%@",[array objectAtIndex:i]);
     NSLog(@"%@",pro.url);

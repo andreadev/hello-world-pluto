@@ -9,6 +9,7 @@
 #import "PreferitiListView.h"
 #import "User.h"
 #import "PreferitiView.h"
+#import "AppDelegate.h"
 
 @interface PreferitiListView (){
     NSMutableArray *AmiciArray;
@@ -58,9 +59,11 @@
 }
 
 - (void) loadPreferiti{
+   
     
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
-    NSString *urlPref = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Preferiti/getpreferiti.php?nick=%@",valUser ];
+    
+    NSString *urlPref = [[NSString alloc] initWithFormat:@"%@Preferiti/getpreferiti.php?nick=%@",WEBSERVICEURL, valUser];
     NSLog(@"%@",urlPref);
     
     //NSError *error = nil;
@@ -96,21 +99,26 @@
         [self.navigationController pushViewController:pre animated:YES];
     }
     //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
+    
+    NSLog(@"%@",preferiti);
     [self loadPrefer];
+    
     [self.tableView reloadData];
     
     
 }
 
 - (void) loadPrefer{
+    
     for (int i = 0; i<[preferiti count]; i++) {
+        
         User *amico = [[User alloc] init];
         NSLog(@"ecco");
         amico.name = [[preferiti objectAtIndex:i] objectForKey:@"name_f"];
         amico.idfacebook = [[preferiti objectAtIndex:i] objectForKey:@"id_f"];
         //prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
         //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
-        [AmiciArray  addObject:amico];
+            [AmiciArray  addObject:amico];
     }
 }
 

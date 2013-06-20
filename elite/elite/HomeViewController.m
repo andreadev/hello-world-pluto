@@ -13,6 +13,7 @@
 #import "RemoteImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SearchView.h"
+#import "AppDelegate.h"
 
 @interface HomeViewController (){
     NSMutableArray *ProdottiArray;
@@ -64,7 +65,9 @@
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     [btnToggle showsTouchWhenHighlighted];
     iol=0;
-    urlProdotti = @"http://eliteitalia.altervista.org/webservice/Prodotti/get_all_products.php";
+    //urlProdotti = @"http://eliteitalia.altervista.org/webservice/Prodotti/get_all_products.php";
+    urlProdotti = [[NSString alloc] initWithFormat:@"%@Prodotti/get_all_products.php", WEBSERVICEURL ];
+    
     //self.title = @"Home";
     
     self.navigationItem.rightBarButtonItem = menuBarButton;
@@ -207,7 +210,7 @@
     NSArray * array = [pro.url componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
-    NSString *image_url= [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/thumb/%@",[array objectAtIndex:[array count]-1] ];
+    NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@",WEBSERVICEURL,[array objectAtIndex:[array count]-1] ];
     
     //NSLog(@"%@",[array objectAtIndex:i]);
     NSLog(@"%@",pro.url);

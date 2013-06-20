@@ -9,6 +9,7 @@
 #import "PreferitiView.h"
 #import "FBFriend.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 @interface PreferitiView (){
     NSArray *friends;
@@ -63,7 +64,7 @@
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
     NSLog(@" TOKEN %@", tokenData.accessToken);
     
-    NSString *url = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Preferiti/friendlist.php?acc=%@",tokenData.accessToken ];
+    NSString *url = [[NSString alloc] initWithFormat:@"%@Preferiti/friendlist.php?acc=%@", WEBSERVICEURL,tokenData.accessToken ];
     NSLog(@"%@",url);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -283,7 +284,9 @@
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Preferiti/addpreferiti.php"]];
+    NSString *urlnick = [[NSString alloc] initWithFormat:@"%@Preferiti/addpreferiti.php", WEBSERVICEURL ];
+    
+    [request setURL:[NSURL URLWithString:urlnick]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];

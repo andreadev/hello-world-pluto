@@ -175,6 +175,8 @@
 		F7981D4B1742C7D2006770F2 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D491742C7D2006770F2 /* SearchView.xib */; };
 		F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A6699417198A6500CEFD39 /* CoreLocation.framework */; };
 		F7C224C5176F3EA8001D1616 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C224C4176F3EA8001D1616 /* libsqlite3.0.dylib */; };
+		F7C224D0176F48A6001D1616 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C224CE176F48A6001D1616 /* icon.png */; };
+		F7C224D1176F48A6001D1616 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7C224CF176F48A6001D1616 /* icon@2x.png */; };
 		F7F4FAAE176370CB001E516C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAD176370CB001E516C /* Default.png */; };
 		F7F4FAB017637332001E516C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAF17637332001E516C /* Default@2x.png */; };
 		F7F4FAB11763749B001E516C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAB17636A72001E516C /* Default-568h@2x.png */; };
@@ -371,6 +373,8 @@
 		F7981D491742C7D2006770F2 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		F7A6699417198A6500CEFD39 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F7C224C4176F3EA8001D1616 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		F7C224CE176F48A6001D1616 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		F7C224CF176F48A6001D1616 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		F7F4FAAB17636A72001E516C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F7F4FAAD176370CB001E516C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		F7F4FAAF17637332001E516C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -418,6 +422,8 @@
 			children = (
 				F7F4FAAF17637332001E516C /* Default@2x.png */,
 				F7F4FAAD176370CB001E516C /* Default.png */,
+				F7C224CE176F48A6001D1616 /* icon.png */,
+				F7C224CF176F48A6001D1616 /* icon@2x.png */,
 				F7F4FAAB17636A72001E516C /* Default-568h@2x.png */,
 				65B7FDDC16E746A400F65710 /* elite */,
 				65B7FDFE16E746A500F65710 /* eliteTests */,
@@ -770,6 +776,7 @@
 				659A1D9516F7296A007589FF /* LoginViewController.xib in Resources */,
 				F78EC34716FCEE6000E57078 /* 28-star.png in Resources */,
 				F794CC3B17675AFB00347BCD /* 111-user@2x.png in Resources */,
+				F7C224D1176F48A6001D1616 /* icon@2x.png in Resources */,
 				F78EC34916FCEE7800E57078 /* 53-house.png in Resources */,
 				F78EC34B16FCEE8800E57078 /* 67-tshirt.png in Resources */,
 				F78EC34D16FCEE9600E57078 /* 74-location.png in Resources */,
@@ -839,6 +846,7 @@
 				F7772089175F6E9B000B0E3F /* TakePhotoViewController.xib in Resources */,
 				F777209E175F72D3000B0E3F /* LoadDetailViewController.xib in Resources */,
 				F77720A4175F7A15000B0E3F /* bollas.png in Resources */,
+				F7C224D0176F48A6001D1616 /* icon.png in Resources */,
 				F77720A6175F7A15000B0E3F /* bollas@2x.png in Resources */,
 				F77720A8175F7A15000B0E3F /* bollavuota.png in Resources */,
 				F77720AA175F7A15000B0E3F /* bollavuota@2x.png in Resources */,
@@ -1045,7 +1053,6 @@
 		65B7FE0A16E746A500F65710 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1066,7 +1073,6 @@
 		65B7FE0B16E746A500F65710 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

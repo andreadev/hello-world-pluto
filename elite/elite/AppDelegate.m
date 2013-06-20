@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+NSString *const FBSessionStateChangedNotification =@"it.plutodev.Elite:FBSessionStateChangedNotification";
+NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 
 @implementation AppDelegate
 
@@ -14,32 +16,60 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList,loadProd,profile,wishlist;
-@synthesize session;
 
--(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [session handleOpenURL:url];
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBSession.activeSession handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //NSString *const FBSessionStateChangedNotification =@"it.plutodev.Elite:FBSessionStateChangedNotification";
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    //DESIGN GRAPHIC
     
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
+    [[UITabBar appearance] setTintColor:[UIColor blackColor]];
+    
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back_nav.png"]]];
     
-    [[UIBarButtonItem appearance] setTintColor:[UIColor grayColor]];
     
-    /*[[UINavigationBar appearance] setTitleTextAttributes: @{
-                                UITextAttributeTextColor: [UIColor whiteColor],
-                          UITextAttributeTextShadowColor: [UIColor clearColor],
-                         UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
-                                     UITextAttributeFont: [UIFont fontWithName:@"Gill Sans" size:20.0f]
-     }];*/
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    //LOAD VIEWS
+    
+    loadProd = [[TakePhotoViewController alloc] initWithNibName:@"TakePhotoViewController" bundle:nil];
+    homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    preferitiList = [[PreferitiListView alloc] initWithNibName:@"PreferitiListView" bundle:nil];
+    profile = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
+    wishlist = [[WishlistView alloc] initWithNibName:@"WishlistView" bundle:nil];
+    
+    //LOAD NAVIGATION
+    
+    UINavigationController *navPref = [[UINavigationController alloc] initWithRootViewController:preferitiList];
+    [navPref.navigationBar setTintColor:[UIColor whiteColor]];
+    UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
+    [navHome.navigationBar setTintColor:[UIColor whiteColor]];
+    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
+    [navProd.navigationBar setTintColor:[UIColor whiteColor]];
+    UINavigationController *navProfile = [[UINavigationController alloc] initWithRootViewController:profile];
+    [navProfile.navigationBar setTintColor:[UIColor whiteColor]];
+    UINavigationController *navWish = [[UINavigationController alloc] initWithRootViewController:wishlist];
+    [navWish.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    //TABBAR VIEWS
+    
+    NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navWish, navProd,navProfile, navPref, nil];
+    tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = viewControllerArray;
+    
+    
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]!=YES)
     {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Tutorial"];
@@ -49,52 +79,29 @@
         
     }
     
-    //Product = [[NewProductViewController alloc] initWithNibName:@"NewProductViewController" bundle:nil];
-    loadProd = [[TakePhotoViewController alloc] initWithNibName:@"TakePhotoViewController" bundle:nil];
-    homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
-    homeController.session = session;
-    //preferitiView = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
-    preferitiList = [[PreferitiListView alloc] initWithNibName:@"PreferitiListView" bundle:nil];
-    profile = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
-    wishlist = [[WishlistView alloc] initWithNibName:@"WishlistView" bundle:nil];
-    
-    
-    UINavigationController *navPref = [[UINavigationController alloc] initWithRootViewController:preferitiList];
-    UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
-    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
-    UINavigationController *navProfile = [[UINavigationController alloc] initWithRootViewController:profile];
-    UINavigationController *navWish = [[UINavigationController alloc] initWithRootViewController:wishlist];
-    
-    NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navWish, navProd,navProfile, navPref, nil];
-    
-    
-    tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = viewControllerArray;
-    loginController = [[LoginViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
-    //[self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"tab-back.png"]];
-    //[self.tabBarController.tabBar setBackgroundColor:[UIColor grayColor]];
-    [[UITabBar appearance] setTintColor:[UIColor blackColor]];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
         //proceed with app normally
-        NSLog(@"accettato");
-        nav.navigationBarHidden = NO;
-        //self.window.rootViewController = nav;
+        NSLog(@"TUTORIAL SI");
+        
+        if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+            // Yes, so just open the session (this won't display any UX).
+            
+            NSLog(@"LOGIN did LOAD");
+            [self presentTabBarController];
+            
+        }
+        else{
+            loginController = [[LoginViewController alloc] init];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+            self.window.rootViewController = nav;
+        }
     }
     else{
-        //show terms
-        NSLog(@"NO accettato");
         
+        NSLog(@"TUTORIAL NO");
         tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
-        //UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:tutorial];
-        //[self presentModalViewController:tutorial animated:YES];
         self.window.rootViewController = tutorial;
     }
-
-   
-    
-    //self.window.rootViewController = loginController;
-    
     
     [self.window makeKeyAndVisible];
     
@@ -257,6 +264,72 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+/*
+ * Callback for session changes.
+ */
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    switch (state) {
+        case FBSessionStateOpen:
+            if (!error) {
+                // We have a valid session
+                NSLog(@"User session found");
+                NSLog(@"OPEN SESSION");
+                if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
+                    NSLog(@"Non Registrato");
+                    NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
+                    [loginController.navigationController pushViewController:nick animated:YES];
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
+                    
+                }
+                else{
+                    NSLog(@"Else");
+                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                    [appDelegate  presentTabBarController];
+                }
+            }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            [FBSession.activeSession closeAndClearTokenInformation];
+            break;
+        default:
+            break;
+    }
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:FBSessionStateChangedNotification
+     object:session];
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
 
-
+/*
+ * Opens a Facebook session and optionally shows the login UX.
+ */
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    NSArray *permissions = @[
+                             @"basic_info",
+                             @"email",
+                             @"user_likes"];
+    return [FBSession openActiveSessionWithReadPermissions:permissions
+                                              allowLoginUI:allowLoginUI
+                                         completionHandler:^(FBSession *session,
+                                                             FBSessionState state,
+                                                             NSError *error) {
+                                             [self sessionStateChanged:session
+                                                                 state:state
+                                                                 error:error];
+                                         }];
+}
 @end
