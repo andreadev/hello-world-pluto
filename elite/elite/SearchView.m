@@ -8,6 +8,8 @@
 
 #import "SearchView.h"
 #import "ResultViewController.h"
+#import "AppDelegate.h"
+
 @interface SearchView (){
     UIPickerView *category;
     UIToolbar *toolBar;
@@ -82,7 +84,7 @@
 }
 
 - (void) cerca{
-    NSString *searchString = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_products.php?words=%@&?category=%d&?or=%d", searchText.text,category_id,segment.selectedSegmentIndex ];
+    NSString *searchString = [[NSString alloc] initWithFormat:@"%@Prodotti/get_products.php?words=%@&?category=%d&?or=%d", WEBSERVICEURL ,searchText.text,category_id,segment.selectedSegmentIndex ];
     
     ResultViewController *result = [[ResultViewController alloc] initWithNibName:@"ResultViewController" bundle:nil];
     result.urlProdotti = searchString;
