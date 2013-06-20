@@ -97,8 +97,9 @@
     } else {
         NSLog(@"LOGIN RIUSCITO");
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
-         
-        [[NSUserDefaults standardUserDefaults] setValue:mail.text forKey:@"User"];
+        
+        NSString *valueSave = mail.text;
+        [[NSUserDefaults standardUserDefaults] setObject:valueSave forKey:@"Username"];
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate presentTabBarController];
         
@@ -143,7 +144,7 @@
         mail.textColor = [UIColor blackColor];
         mail.backgroundColor = [UIColor clearColor];
         mail.delegate =self;
-        mail.textAlignment = UITextAlignmentLeft;
+        mail.textAlignment = NSTextAlignmentLeft;
         mail.highlighted = YES;
         mail.placeholder = @"example@example.com";
         mail.keyboardType = UIKeyboardTypeEmailAddress;
@@ -160,7 +161,7 @@
         pass.textColor = [UIColor blackColor];
         pass.backgroundColor = [UIColor clearColor];
         pass.delegate =self;
-        pass.textAlignment = UITextAlignmentLeft;
+        pass.textAlignment = NSTextAlignmentLeft;
         pass.highlighted = YES;
         pass.placeholder = @"Required";
         pass.keyboardType = UIKeyboardTypeDefault;

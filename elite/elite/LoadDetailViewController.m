@@ -31,7 +31,7 @@
 @end
 
 @implementation LoadDetailViewController
-@synthesize tabellaView,imageProd,imageViewProd,name,price,where,category,desc,consiglia,consigliaTutti,negozio;
+@synthesize tabellaView,imageProd,imageViewProd,name,price,where,category,desc,consiglia,consigliaTutti,negozio,locationManager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -70,15 +70,24 @@
     
     list = [[NSMutableArray alloc] initWithObjects:@"Nome",@"Categoria",@"Negozio",@"Descrizione", nil];
     listLoad = [[NSMutableArray alloc] initWithObjects:@"Inserisci",@"Ok!",@"Seleziona",@"Seleziona",@"Seleziona",@"", nil];
+    [self setLocationManager:[[CLLocationManager alloc] init]];
+    [locationManager setDelegate:self];
+    [locationManager setDistanceFilter:kCLDistanceFilterNone];
+    [locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    [locationManager startUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated{
+    
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    NSLog(@"USERNAME: %@",valUser);
     if(location.shopSelected.nome != nil){
         
         [list replaceObjectAtIndex:2 withObject:location.shopSelected.nome];
@@ -411,16 +420,17 @@
         // now lets make the connection to the web
         NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-        //NSLog(returnString);
+        NSLog(returnString);
         NSLog(@"finish");
     }
     
     //change Image to NSData
-    
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    NSLog(@"USERNAME: %@",valUser);
     
     ima = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/product_images/%@.jpg",ima ];
     
-    NSString *slogan = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su Elite.",@"Utente",name.text ];
+    NSString *slogan = [[NSString alloc] initWithFormat:@"%@ ha appena consigliato: %@ su Elite.",valUser,name.text ];
     
     postParams =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -442,7 +452,7 @@
                               cat, @"category_id",
                               @"Dummy", @"insertion_code",
                               ima, @"imageurl",
-                              @"Test",@"username",
+                              valUser,@"username",
                               desc.text,@"desc",
                               nil];
     

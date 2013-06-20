@@ -16,11 +16,13 @@
 #import "LocalizeViewController.h"
 
 
-@interface LoadDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface LoadDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate>{
+    CLLocationManager *locationManager;
+}
 
 @property (strong,nonatomic) UIImage *imageProd;
 @property (strong,nonatomic) NSString *negozio;
-
+@property (retain, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UITableView *tabellaView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewProd;

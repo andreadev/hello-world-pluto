@@ -9,7 +9,7 @@
 #import "HomeViewController.h"
 #import "ProdottoViewController.h"
 #import "Prodotto.h"
-#import "AsyncImageView.h"
+//#import "AsyncImageView.h"
 #import "RemoteImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SearchView.h"
@@ -135,6 +135,7 @@
     
     for (int i = 0; i<[prodotti count]; i++) {
         Prodotto *prod = [[Prodotto alloc] init];
+        prod.idprodotto = [[prodotti objectAtIndex:i] objectForKey:@"ID"]; 
         prod.name = [[prodotti objectAtIndex:i] objectForKey:@"Name"];
         prod.prezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
@@ -150,7 +151,6 @@
 	filteredListContent = [[NSMutableArray alloc] initWithCapacity: [ProdottiArray count]];
 	//inserisce in questa  nuova lista gli elementi della lista originale
 	[filteredListContent addObjectsFromArray:ProdottiArray];
-    
 
     
 }
@@ -193,9 +193,9 @@
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
     NSString *numberString = [formatter stringFromNumber:[NSNumber numberWithFloat:a]];
-    
-    cell.Price.text = numberString;
-    cell.oldPrice.text =  pro.oldprezzo;
+    //[prod.prezzo stringByAppendingString:@"  €"];
+    cell.Price.text = [numberString stringByAppendingString:@"  €"];
+    cell.oldPrice.text =  [pro.oldprezzo stringByAppendingString:@"  €"];
     cell.whereProd.text = pro.where;
     
     NSLog(@"%@",url);

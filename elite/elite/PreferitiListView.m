@@ -10,7 +10,10 @@
 #import "User.h"
 #import "PreferitiView.h"
 
-@interface PreferitiListView ()
+@interface PreferitiListView (){
+    NSMutableArray *AmiciArray;
+    PreferitiView *pre;
+}
 
 @end
 
@@ -43,17 +46,40 @@
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = menuBarButton;
+    AmiciArray = [[NSMutableArray alloc] init];
+    pre = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self pressedLeftButton];
+    //[self pressedLeftButton];
+    [self loadPreferiti];
 }
 
 - (void) loadPreferiti{
+    
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    NSString *urlPref = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Preferiti/getpreferiti.php?nick=%@",valUser ];
+    NSLog(@"%@",urlPref);
+    
+    //NSError *error = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@""]];
+        //NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlPref] error:&error];
+        NSError* error = nil;
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlPref] options:NSDataReadingUncached error:&error];
+        if (error) {
+            NSLog(@"%@", [error localizedDescription]);
+            //[error release];
+        } else {
+            NSLog(@"Data has loaded successfully.");
+        }
+        /*NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlPref]];
+        if (data == nil) {
+            [self.navigationController pushViewController:pre animated:YES];
+        }
+        else{
+            NSLog(@"ramo else");*/
         [self performSelectorOnMainThread:@selector(fetchedData:)
                                withObject:data waitUntilDone:YES]; });
 }
@@ -64,10 +90,10 @@
                      JSONObjectWithData:responseData //1
                      options:kNilOptions error:nil];
     self.preferiti = json;
+    NSLog(@"asd");
     if([preferiti count] == 0){
-        PreferitiView *pre = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
+        NSLog(@"ciao");
         [self.navigationController pushViewController:pre animated:YES];
-        
     }
     //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
     [self loadPrefer];
@@ -78,20 +104,18 @@
 
 - (void) loadPrefer{
     for (int i = 0; i<[preferiti count]; i++) {
-        //User *prod = [[User alloc] init];
-        //prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
-        //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
+        User *amico = [[User alloc] init];
+        NSLog(@"ecco");
+        amico.name = [[preferiti objectAtIndex:i] objectForKey:@"name_f"];
+        amico.idfacebook = [[preferiti objectAtIndex:i] objectForKey:@"id_f"];
         //prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
         //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
-        //[ProdottiArray  addObject:prod];
+        [AmiciArray  addObject:amico];
     }
 }
 
 - (void) pressedLeftButton{
-    
-    PreferitiView *pre = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
     [self.navigationController pushViewController:pre animated:YES];
-    
 }
 
 
@@ -107,14 +131,14 @@
 {
 
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
     // Return the number of rows in the section.
-    return 0;
+    return [AmiciArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,6 +148,10 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    User *amico = [AmiciArray objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = amico.name;
+    cell.detailTextLabel.text = amico.idfacebook;
     
     // Configure the cell...
     

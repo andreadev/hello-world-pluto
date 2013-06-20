@@ -1,29 +1,42 @@
 //
-//  ResultViewController.m
+//  WishlistView.m
 //  elite
 //
-//  Created by Andrea Barbieri on 07/06/13.
+//  Created by Andrea Barbieri on 13/06/13.
 //  Copyright (c) 2013 Andrea. All rights reserved.
 //
 
-#import "ResultViewController.h"
+#import "WishlistView.h"
+#import "ProdottoViewController.h"
+#import "Prodotto.h"
+#import "RemoteImageView.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface ResultViewController (){
+@interface WishlistView (){
+    NSMutableArray *ProdottiArray;
     ODRefreshControl *refreshControl;
     int iol;
-    NSMutableArray *ProdottiArray;
 }
+
 
 @end
 
-@implementation ResultViewController
-@synthesize urlProdotti,prodotti,itemCell,redLine;
+@implementation WishlistView
+@synthesize prodotti,itemCell,urlProdotti;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        UITabBarItem *tabBarItem =[[UITabBarItem alloc]
+                                   initWithTitle:@"Wishlist"
+                                   image:[UIImage imageNamed:@"80-shopping-cart"]
+                                   tag:0];
+        self.tabBarItem=tabBarItem;
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
+        
     }
     return self;
 }
@@ -31,32 +44,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
-    
-    UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
-    UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    
-    [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
-    btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
-    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
-    [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    [btnToggle showsTouchWhenHighlighted];
-    iol=0;
-    //self.title = @"Home";
-    
-    self.navigationItem.rightBarButtonItem = menuBarButton;
-    ProdottiArray = [[NSMutableArray alloc] init];
-    //[self populateUserDetails];
-    
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
-    
+ 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    urlProdotti = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Wishlist/get_wish_prod.php?user=%@",valUser ];
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    iol=0;
+    ProdottiArray = [[NSMutableArray alloc] init];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void) loadProducts{
@@ -86,13 +93,6 @@
     
     
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 
 #pragma mark - Table view data source
@@ -175,7 +175,7 @@
     NSString *numberString = [formatter stringFromNumber:[NSNumber numberWithFloat:a]];
     
     cell.Price.text = [numberString stringByAppendingString:@"  €"];
-    cell.oldPrice.text =  [pro.oldprezzo stringByAppendingString:@"  €"];;
+    cell.oldPrice.text =  [pro.oldprezzo stringByAppendingString:@"  €"];
     cell.whereProd.text = pro.where;
     cell.prodImage.layer.cornerRadius = 9.0 ;
     cell.prodImage.layer.masksToBounds = YES ;
@@ -211,7 +211,7 @@
 
 -(void)pressedLeftButton
 {
-    
+    NSLog(@"Account");
 }
 
 
@@ -253,21 +253,6 @@
  return YES;
  }
  */
-- (void)populateUserDetails
-{
-    if (FBSession.activeSession.isOpen) {
-        [[FBRequest requestForMe] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphUser> *user,
-           NSError *error) {
-             if (!error) {
-                 //self.title = user.name;
-                 //NSLog(@"%@", user.name);
-                 //NSLog(@"%@", user.id);
-             }
-         }];
-    }
-}
 
 
 #pragma mark - Table view delegate
@@ -288,11 +273,4 @@
     
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
-
-- (void)viewDidUnload {
-    [self setRedLine:nil];
-    [super viewDidUnload];
-}
-
-
 @end

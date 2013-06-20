@@ -34,7 +34,6 @@
 		65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B7FE1616E7486800F65710 /* LG_FBConnect.png */; };
 		65D48E3D173BF2F50025AB6F /* tab-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 65D48E3C173BF2F50025AB6F /* tab-back.png */; };
 		F70B27BA16F612C20048694C /* NewProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27B816F612C20048694C /* NewProductViewController.m */; };
-		F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27B916F612C20048694C /* NewProductViewController.xib */; };
 		F70B27BF16F656E50048694C /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B27BD16F656E50048694C /* TutorialViewController.m */; };
 		F70B27C016F656E50048694C /* TutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B27BE16F656E50048694C /* TutorialViewController.xib */; };
 		F72F865A1726DA5000ECFA11 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F86581726DA5000ECFA11 /* menu.png */; };
@@ -140,8 +139,6 @@
 		F78EC34916FCEE7800E57078 /* 53-house.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34816FCEE7800E57078 /* 53-house.png */; };
 		F78EC34B16FCEE8800E57078 /* 67-tshirt.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34A16FCEE8800E57078 /* 67-tshirt.png */; };
 		F78EC34D16FCEE9600E57078 /* 74-location.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34C16FCEE9600E57078 /* 74-location.png */; };
-		F78EC34F16FCEEA100E57078 /* 80-shopping-cart.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC34E16FCEEA100E57078 /* 80-shopping-cart.png */; };
-		F78EC35116FCEED700E57078 /* 111-user.png in Resources */ = {isa = PBXBuildFile; fileRef = F78EC35016FCEED700E57078 /* 111-user.png */; };
 		F78EC35516FCF02700E57078 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EC35316FCF02700E57078 /* HomeViewController.m */; };
 		F78EC35616FCF02700E57078 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EC35416FCF02700E57078 /* HomeViewController.xib */; };
 		F78EC37D16FF279000E57078 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EC37C16FF279000E57078 /* User.m */; };
@@ -150,6 +147,14 @@
 		F78EC38B170035A400E57078 /* ProdottoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EC389170035A300E57078 /* ProdottoViewController.m */; };
 		F78EC38C170035A400E57078 /* ProdottoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EC38A170035A300E57078 /* ProdottoViewController.xib */; };
 		F78EC38F1700364E00E57078 /* Prodotto.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EC38E1700364D00E57078 /* Prodotto.m */; };
+		F794CC321767591E00347BCD /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F794CC301767591E00347BCD /* ProfileViewController.m */; };
+		F794CC331767591E00347BCD /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F794CC311767591E00347BCD /* ProfileViewController.xib */; };
+		F794CC3617675A6E00347BCD /* 80-shopping-cart.png in Resources */ = {isa = PBXBuildFile; fileRef = F794CC3417675A6E00347BCD /* 80-shopping-cart.png */; };
+		F794CC3717675A6E00347BCD /* 80-shopping-cart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F794CC3517675A6E00347BCD /* 80-shopping-cart@2x.png */; };
+		F794CC3A17675AFB00347BCD /* 111-user.png in Resources */ = {isa = PBXBuildFile; fileRef = F794CC3817675AFB00347BCD /* 111-user.png */; };
+		F794CC3B17675AFB00347BCD /* 111-user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F794CC3917675AFB00347BCD /* 111-user@2x.png */; };
+		F794CC3F176A10A700347BCD /* WishlistView.m in Sources */ = {isa = PBXBuildFile; fileRef = F794CC3D176A10A700347BCD /* WishlistView.m */; };
+		F794CC40176A10A700347BCD /* WishlistView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F794CC3E176A10A700347BCD /* WishlistView.xib */; };
 		F7981D1D17368BA4006770F2 /* 29-heart.png in Resources */ = {isa = PBXBuildFile; fileRef = F7981D1B17368BA4006770F2 /* 29-heart.png */; };
 		F7981D1E17368BA4006770F2 /* 29-heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7981D1C17368BA4006770F2 /* 29-heart@2x.png */; };
 		F7981D221736939E006770F2 /* PreferitiView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D201736939E006770F2 /* PreferitiView.m */; };
@@ -166,11 +171,10 @@
 		F7981D3D173BBEE9006770F2 /* SingUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D3B173BBEE9006770F2 /* SingUpViewController.xib */; };
 		F7981D41173BBF8E006770F2 /* LoginSiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D3F173BBF8C006770F2 /* LoginSiteViewController.m */; };
 		F7981D42173BBF8E006770F2 /* LoginSiteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */; };
-		F7981D44173E8568006770F2 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7981D43173E8567006770F2 /* icon@2x.png */; };
-		F7981D46173E8602006770F2 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F7981D45173E8601006770F2 /* icon.png */; };
 		F7981D4A1742C7D2006770F2 /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7981D481742C7D2006770F2 /* SearchView.m */; };
 		F7981D4B1742C7D2006770F2 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7981D491742C7D2006770F2 /* SearchView.xib */; };
 		F7A6699517198A6500CEFD39 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A6699417198A6500CEFD39 /* CoreLocation.framework */; };
+		F7C224C5176F3EA8001D1616 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C224C4176F3EA8001D1616 /* libsqlite3.0.dylib */; };
 		F7F4FAAE176370CB001E516C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAD176370CB001E516C /* Default.png */; };
 		F7F4FAB017637332001E516C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAF17637332001E516C /* Default@2x.png */; };
 		F7F4FAB11763749B001E516C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F4FAAB17636A72001E516C /* Default-568h@2x.png */; };
@@ -220,7 +224,6 @@
 		65D48E3C173BF2F50025AB6F /* tab-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-back.png"; sourceTree = "<group>"; };
 		F70B27B716F612C20048694C /* NewProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewProductViewController.h; sourceTree = "<group>"; };
 		F70B27B816F612C20048694C /* NewProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewProductViewController.m; sourceTree = "<group>"; };
-		F70B27B916F612C20048694C /* NewProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewProductViewController.xib; sourceTree = "<group>"; };
 		F70B27BC16F656E50048694C /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		F70B27BD16F656E50048694C /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		F70B27BE16F656E50048694C /* TutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialViewController.xib; sourceTree = "<group>"; };
@@ -320,8 +323,6 @@
 		F78EC34816FCEE7800E57078 /* 53-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house.png"; sourceTree = "<group>"; };
 		F78EC34A16FCEE8800E57078 /* 67-tshirt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "67-tshirt.png"; sourceTree = "<group>"; };
 		F78EC34C16FCEE9600E57078 /* 74-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location.png"; sourceTree = "<group>"; };
-		F78EC34E16FCEEA100E57078 /* 80-shopping-cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "80-shopping-cart.png"; sourceTree = "<group>"; };
-		F78EC35016FCEED700E57078 /* 111-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "111-user.png"; sourceTree = "<group>"; };
 		F78EC35216FCF02700E57078 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		F78EC35316FCF02700E57078 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		F78EC35416FCF02700E57078 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -335,6 +336,16 @@
 		F78EC38A170035A300E57078 /* ProdottoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProdottoViewController.xib; sourceTree = "<group>"; };
 		F78EC38D1700364D00E57078 /* Prodotto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prodotto.h; sourceTree = "<group>"; };
 		F78EC38E1700364D00E57078 /* Prodotto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prodotto.m; sourceTree = "<group>"; };
+		F794CC2F1767591E00347BCD /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = ../ProfileViewController.h; sourceTree = "<group>"; };
+		F794CC301767591E00347BCD /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = ../ProfileViewController.m; sourceTree = "<group>"; };
+		F794CC311767591E00347BCD /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileViewController.xib; path = ../ProfileViewController.xib; sourceTree = "<group>"; };
+		F794CC3417675A6E00347BCD /* 80-shopping-cart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "80-shopping-cart.png"; sourceTree = "<group>"; };
+		F794CC3517675A6E00347BCD /* 80-shopping-cart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "80-shopping-cart@2x.png"; sourceTree = "<group>"; };
+		F794CC3817675AFB00347BCD /* 111-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "111-user.png"; sourceTree = "<group>"; };
+		F794CC3917675AFB00347BCD /* 111-user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "111-user@2x.png"; sourceTree = "<group>"; };
+		F794CC3C176A10A700347BCD /* WishlistView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WishlistView.h; path = ../WishlistView.h; sourceTree = "<group>"; };
+		F794CC3D176A10A700347BCD /* WishlistView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WishlistView.m; path = ../WishlistView.m; sourceTree = "<group>"; };
+		F794CC3E176A10A700347BCD /* WishlistView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WishlistView.xib; path = ../WishlistView.xib; sourceTree = "<group>"; };
 		F7981D1B17368BA4006770F2 /* 29-heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "29-heart.png"; sourceTree = "<group>"; };
 		F7981D1C17368BA4006770F2 /* 29-heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "29-heart@2x.png"; sourceTree = "<group>"; };
 		F7981D1F1736939E006770F2 /* PreferitiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferitiView.h; path = ../PreferitiView.h; sourceTree = "<group>"; };
@@ -355,12 +366,11 @@
 		F7981D3E173BBF8C006770F2 /* LoginSiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSiteViewController.h; sourceTree = "<group>"; };
 		F7981D3F173BBF8C006770F2 /* LoginSiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSiteViewController.m; sourceTree = "<group>"; };
 		F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginSiteViewController.xib; sourceTree = "<group>"; };
-		F7981D43173E8567006770F2 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
-		F7981D45173E8601006770F2 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		F7981D471742C7D1006770F2 /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
 		F7981D481742C7D2006770F2 /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
 		F7981D491742C7D2006770F2 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		F7A6699417198A6500CEFD39 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F7C224C4176F3EA8001D1616 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		F7F4FAAB17636A72001E516C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F7F4FAAD176370CB001E516C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		F7F4FAAF17637332001E516C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -371,6 +381,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7C224C5176F3EA8001D1616 /* libsqlite3.0.dylib in Frameworks */,
 				F77720D11760DC0A000B0E3F /* Security.framework in Frameworks */,
 				F77720CF1760DA74000B0E3F /* libsqlite3.dylib in Frameworks */,
 				F77720CD1760D9BD000B0E3F /* FBUserSettingsViewResources.bundle in Frameworks */,
@@ -408,9 +419,6 @@
 				F7F4FAAF17637332001E516C /* Default@2x.png */,
 				F7F4FAAD176370CB001E516C /* Default.png */,
 				F7F4FAAB17636A72001E516C /* Default-568h@2x.png */,
-				F77720D01760DC09000B0E3F /* Security.framework */,
-				F7981D45173E8601006770F2 /* icon.png */,
-				F7981D43173E8567006770F2 /* icon@2x.png */,
 				65B7FDDC16E746A400F65710 /* elite */,
 				65B7FDFE16E746A500F65710 /* eliteTests */,
 				65B7FDD316E746A400F65710 /* Frameworks */,
@@ -430,6 +438,8 @@
 		65B7FDD316E746A400F65710 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7C224C4176F3EA8001D1616 /* libsqlite3.0.dylib */,
+				F77720D01760DC09000B0E3F /* Security.framework */,
 				F7A6699417198A6500CEFD39 /* CoreLocation.framework */,
 				F76855B51701A833001BE112 /* QuartzCore.framework */,
 				F77720CE1760DA74000B0E3F /* libsqlite3.dylib */,
@@ -474,10 +484,14 @@
 				F7981D3A173BBEE8006770F2 /* SingUpViewController.m */,
 				F74BA8631747A7DC007654DE /* NickViewController.h */,
 				F74BA8641747A7DC007654DE /* NickViewController.m */,
+				F794CC2F1767591E00347BCD /* ProfileViewController.h */,
+				F794CC301767591E00347BCD /* ProfileViewController.m */,
 				F74BA8701747C090007654DE /* PreferitiListView.h */,
 				F74BA8711747C090007654DE /* PreferitiListView.m */,
 				F7981D1F1736939E006770F2 /* PreferitiView.h */,
 				F7981D201736939E006770F2 /* PreferitiView.m */,
+				F794CC3C176A10A700347BCD /* WishlistView.h */,
+				F794CC3D176A10A700347BCD /* WishlistView.m */,
 				F7981D3017390461006770F2 /* FBFriend.h */,
 				F7981D3117390461006770F2 /* FBFriend.m */,
 				F78EC37B16FF279000E57078 /* User.h */,
@@ -543,7 +557,9 @@
 			isa = PBXGroup;
 			children = (
 				F7981D40173BBF8D006770F2 /* LoginSiteViewController.xib */,
+				F794CC3E176A10A700347BCD /* WishlistView.xib */,
 				F77720DC176227FF000B0E3F /* ResultViewController.xib */,
+				F794CC311767591E00347BCD /* ProfileViewController.xib */,
 				F777207A175CC660000B0E3F /* DetailViewController.xib */,
 				F77720D517621E47000B0E3F /* LocalizeViewController.xib */,
 				F7772086175F6E99000B0E3F /* TakePhotoViewController.xib */,
@@ -556,7 +572,6 @@
 				659A1D9316F7296A007589FF /* LoginViewController.xib */,
 				F70B27BE16F656E50048694C /* TutorialViewController.xib */,
 				F777209B175F72D3000B0E3F /* LoadDetailViewController.xib */,
-				F70B27B916F612C20048694C /* NewProductViewController.xib */,
 				F74BA8721747C090007654DE /* PreferitiListView.xib */,
 				F7981D491742C7D2006770F2 /* SearchView.xib */,
 				F7981D3717398E19006770F2 /* FriendCell.xib */,
@@ -645,6 +660,10 @@
 				F74BA88E174D242F007654DE /* camerabianca2x.png */,
 				F74BA88F174D242F007654DE /* camerablu.png */,
 				F74BA890174D2430007654DE /* camerablu@2x.png */,
+				F794CC3417675A6E00347BCD /* 80-shopping-cart.png */,
+				F794CC3517675A6E00347BCD /* 80-shopping-cart@2x.png */,
+				F794CC3817675AFB00347BCD /* 111-user.png */,
+				F794CC3917675AFB00347BCD /* 111-user@2x.png */,
 				F74BA879174A5F0B007654DE /* 13-plus.png */,
 				F74BA87A174A5F0B007654DE /* 13-plus@2x.png */,
 				F74BA875174A5A01007654DE /* 08-chat.png */,
@@ -662,8 +681,6 @@
 				F78EC34816FCEE7800E57078 /* 53-house.png */,
 				F78EC34A16FCEE8800E57078 /* 67-tshirt.png */,
 				F78EC34C16FCEE9600E57078 /* 74-location.png */,
-				F78EC34E16FCEEA100E57078 /* 80-shopping-cart.png */,
-				F78EC35016FCEED700E57078 /* 111-user.png */,
 				F76855C01701A8A1001BE112 /* SampleBackground.png */,
 				F76855C11701A8A1001BE112 /* SampleHeaderImage.png */,
 				F76855C21701A8A1001BE112 /* SampleImage1.png */,
@@ -718,7 +735,7 @@
 		65B7FDC716E746A400F65710 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Andrea;
 			};
 			buildConfigurationList = 65B7FDCA16E746A400F65710 /* Build configuration list for PBXProject "elite" */;
@@ -749,21 +766,21 @@
 				65B7FDEB16E746A400F65710 /* Default@2x.png in Resources */,
 				65B7FDED16E746A400F65710 /* Default-568h@2x.png in Resources */,
 				65B7FE1716E7486800F65710 /* LG_FBConnect.png in Resources */,
-				F70B27BB16F612C20048694C /* NewProductViewController.xib in Resources */,
 				F70B27C016F656E50048694C /* TutorialViewController.xib in Resources */,
 				659A1D9516F7296A007589FF /* LoginViewController.xib in Resources */,
 				F78EC34716FCEE6000E57078 /* 28-star.png in Resources */,
+				F794CC3B17675AFB00347BCD /* 111-user@2x.png in Resources */,
 				F78EC34916FCEE7800E57078 /* 53-house.png in Resources */,
 				F78EC34B16FCEE8800E57078 /* 67-tshirt.png in Resources */,
 				F78EC34D16FCEE9600E57078 /* 74-location.png in Resources */,
-				F78EC34F16FCEEA100E57078 /* 80-shopping-cart.png in Resources */,
-				F78EC35116FCEED700E57078 /* 111-user.png in Resources */,
 				F78EC35616FCF02700E57078 /* HomeViewController.xib in Resources */,
 				F78EC38216FF977A00E57078 /* ProdCell.xib in Resources */,
 				F78EC38C170035A400E57078 /* ProdottoViewController.xib in Resources */,
+				F794CC3717675A6E00347BCD /* 80-shopping-cart@2x.png in Resources */,
 				F76855C41701A8A1001BE112 /* SampleBackground.png in Resources */,
 				F76855C51701A8A1001BE112 /* SampleHeaderImage.png in Resources */,
 				F76855C61701A8A1001BE112 /* SampleImage1.png in Resources */,
+				F794CC40176A10A700347BCD /* WishlistView.xib in Resources */,
 				F76855C71701A8A1001BE112 /* SampleImage2.png in Resources */,
 				F72F865A1726DA5000ECFA11 /* menu.png in Resources */,
 				F72F865B1726DA5000ECFA11 /* menu@2x.png in Resources */,
@@ -773,14 +790,14 @@
 				F7981D1E17368BA4006770F2 /* 29-heart@2x.png in Resources */,
 				F7981D231736939E006770F2 /* PreferitiView.xib in Resources */,
 				65B7D1001738F8A100286775 /* back_nav.png in Resources */,
+				F794CC331767591E00347BCD /* ProfileViewController.xib in Resources */,
 				65B7D1021738FA3500286775 /* OPT_alone.png in Resources */,
 				F7981D3817398E19006770F2 /* FriendCell.xib in Resources */,
 				F7981D3D173BBEE9006770F2 /* SingUpViewController.xib in Resources */,
 				F7981D42173BBF8E006770F2 /* LoginSiteViewController.xib in Resources */,
 				65D48E3D173BF2F50025AB6F /* tab-back.png in Resources */,
-				F7981D44173E8568006770F2 /* icon@2x.png in Resources */,
-				F7981D46173E8602006770F2 /* icon.png in Resources */,
 				F7981D4B1742C7D2006770F2 /* SearchView.xib in Resources */,
+				F794CC3617675A6E00347BCD /* 80-shopping-cart.png in Resources */,
 				F74BA85C17469797007654DE /* logo_nav.png in Resources */,
 				F74BA85D17469797007654DE /* logo_nav@2x.png in Resources */,
 				F74BA8671747A7DC007654DE /* NickViewController.xib in Resources */,
@@ -810,6 +827,7 @@
 				F74BA8A7174D2440007654DE /* consigliaprefblue.png in Resources */,
 				F74BA8A8174D2440007654DE /* consigliaprefblue@2x.png in Resources */,
 				F77720621753424E000B0E3F /* sbarra@2x.png in Resources */,
+				F794CC3A17675AFB00347BCD /* 111-user.png in Resources */,
 				F77720631753424E000B0E3F /* sbarra.png in Resources */,
 				F77720661756483F000B0E3F /* logoelitenav.png in Resources */,
 				F77720671756483F000B0E3F /* logoelitenav@2x.png in Resources */,
@@ -883,6 +901,7 @@
 				65B7FDE716E746A400F65710 /* AppDelegate.m in Sources */,
 				65B7FDF016E746A500F65710 /* elite.xcdatamodeld in Sources */,
 				F70B27BA16F612C20048694C /* NewProductViewController.m in Sources */,
+				F794CC321767591E00347BCD /* ProfileViewController.m in Sources */,
 				F70B27BF16F656E50048694C /* TutorialViewController.m in Sources */,
 				659A1D9416F7296A007589FF /* LoginViewController.m in Sources */,
 				F78EC35516FCF02700E57078 /* HomeViewController.m in Sources */,
@@ -905,6 +924,7 @@
 				F74BA8731747C090007654DE /* PreferitiListView.m in Sources */,
 				F74BA884174D0DF0007654DE /* LocationViewController.m in Sources */,
 				F74BA888174D10EB007654DE /* Shop.m in Sources */,
+				F794CC3F176A10A700347BCD /* WishlistView.m in Sources */,
 				F777207217565426000B0E3F /* JGProgressView.m in Sources */,
 				F777207B175CC660000B0E3F /* DetailViewController.m in Sources */,
 				F777207F175CE5F5000B0E3F /* ODRefreshControl.m in Sources */,
@@ -990,6 +1010,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "FA653EB9-6627-453C-9843-E74DC5A4A5E8";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA653EB9-6627-453C-9843-E74DC5A4A5E8";
 				SDKROOT = iphoneos;
@@ -1024,6 +1045,7 @@
 		65B7FE0A16E746A500F65710 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1031,7 +1053,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "elite/elite-Prefix.pch";
 				INFOPLIST_FILE = "elite/elite-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
 					"-ObjC",
@@ -1044,6 +1066,7 @@
 		65B7FE0B16E746A500F65710 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1051,7 +1074,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "elite/elite-Prefix.pch";
 				INFOPLIST_FILE = "elite/elite-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
 					"-ObjC",

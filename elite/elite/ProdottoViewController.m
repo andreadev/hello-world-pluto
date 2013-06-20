@@ -39,6 +39,8 @@
     //lista = [[NSArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consiliato da:", @"Codice Sconto:",@"Descrizione" ,nil];
     datiList = [[NSMutableArray alloc] init];
     //lista = [[NSMutableArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consigliato da:",@"Codice Sconto:","Descrizione:", nil];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"WhishList" style:UIBarButtonItemStylePlain target:self action:@selector(pressedRightButton)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
     
     [Scrollview setScrollEnabled:YES];//Abilitiamo lo scroll
     
@@ -87,6 +89,53 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) pressedRightButton{
+    //aggiungi a whish list!
+    //CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    //NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    
+    NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              valUser, @"id_p",
+                              prod.idprodotto, @"id_prod",
+                              nil];
+    
+    
+    NSError *error;
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSLog(@"%@",postData);
+    
+    
+    NSString *postLength = [NSString stringWithFormat:@"12321443"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Wishlist/add_prod.php"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLResponse *response;
+    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"%@",theReply);
+    
+    if ([theReply rangeOfString:@"Array1"].location == NSNotFound) {
+        NSLog(@"ADD NON RIUSCITO");
+    } else {
+        NSLog(@"ADD LOGIN RIUSCITO");
+        
+    }
+    
+    
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -132,7 +181,7 @@
         prices.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
         prices.backgroundColor = [UIColor clearColor];
         prices.text = @"Prezzo:";
-        prices.textAlignment = UITextAlignmentLeft;
+        prices.textAlignment = NSTextAlignmentLeft;
         [cell.contentView addSubview:prices];
         
         UILabel *pricesVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 5, 50, 30)];
@@ -140,7 +189,7 @@
         pricesVal.textColor = [UIColor blackColor];
         pricesVal.backgroundColor = [UIColor clearColor];
         pricesVal.text = [prod.prezzo stringByAppendingString:@"  €"];
-        pricesVal.textAlignment = UITextAlignmentRight;
+        pricesVal.textAlignment = NSTextAlignmentRight;
         [cell.contentView addSubview:pricesVal];
         
         UILabel *newpricesVal = [[UILabel alloc]initWithFrame:CGRectMake(200, 5, 50, 30)];
@@ -148,7 +197,7 @@
         newpricesVal.textColor = [UIColor blackColor];
         newpricesVal.backgroundColor = [UIColor clearColor];
         newpricesVal.text = [prod.prezzo stringByAppendingString:@"  €"];
-        newpricesVal.textAlignment = UITextAlignmentRight;
+        newpricesVal.textAlignment = NSTextAlignmentRight;
         [cell.contentView addSubview:newpricesVal];
         
         UIImageView *sbarra = [[UIImageView alloc] initWithFrame:CGRectMake(125, 15, 51, 15)];
@@ -160,7 +209,7 @@
         wheres.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
         wheres.backgroundColor = [UIColor clearColor];
         wheres.text = @"Dove:";
-        wheres.textAlignment = UITextAlignmentLeft;
+        wheres.textAlignment = NSTextAlignmentLeft;
         [cell.contentView addSubview:wheres];
         
         UILabel *wheresVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 200, 30)];
@@ -179,7 +228,7 @@
         consigliatos.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
         consigliatos.backgroundColor = [UIColor clearColor];
         consigliatos.text = @"Consigliato da:";
-        consigliatos.textAlignment = UITextAlignmentLeft;
+        consigliatos.textAlignment = NSTextAlignmentLeft;
         [cell.contentView addSubview:consigliatos];
         
         UILabel *consigliatosVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 5, 200, 30)];
@@ -195,7 +244,7 @@
         codicesconto.textColor = [UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f];
         codicesconto.backgroundColor = [UIColor clearColor];
         codicesconto.text = @"Codice Sconto:";
-        codicesconto.textAlignment = UITextAlignmentLeft;
+        codicesconto.textAlignment = NSTextAlignmentLeft;
         [cell.contentView addSubview:codicesconto];
         
         UILabel *codicescontoVal = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 200, 30)];
@@ -261,8 +310,7 @@
         DetailViewController *detail = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
         UINavigationController *navDet = [[UINavigationController alloc] initWithRootViewController:detail];
         detail.detail = prod.desc;
-        
-        [self presentModalViewController:navDet animated:YES];
+        [self presentViewController:navDet animated:YES completion:nil];
 
         
     }

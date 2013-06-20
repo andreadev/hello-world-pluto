@@ -10,6 +10,6 @@
 
 @implementation Prodotto
 
-@synthesize categoria,codice,name,prezzo,oldprezzo,where,desc,url,consigliato;
+@synthesize categoria,codice,name,prezzo,oldprezzo,where,desc,url,consigliato,idprodotto;
 
 @end

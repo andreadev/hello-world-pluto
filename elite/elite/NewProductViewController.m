@@ -177,7 +177,7 @@
     location.longitudine = lon;
     //location. = self;
     
-    [self presentModalViewController:navLoc animated:YES];
+    [self presentViewController:navLoc animated:YES completion:nil];
     /*
     NSString * url = [[NSString alloc] initWithFormat:@"http://cosapensidime.ilbello.com/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", lat, lon];
     
@@ -219,7 +219,8 @@
             [picker setDelegate: self ];
             [picker setAllowsEditing: NO ];
             [picker setSourceType: UIImagePickerControllerSourceTypeCamera ];
-            [self presentModalViewController: picker animated: YES ];
+            
+            [self presentViewController:picker animated:YES completion:nil];
             //[picker release];
 }
 
@@ -239,7 +240,7 @@
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
-	[picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -316,7 +317,7 @@
         // now lets make the connection to the web
         NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-        //NSLog(returnString);
+        NSLog(returnString);
         NSLog(@"finish");
     }
     

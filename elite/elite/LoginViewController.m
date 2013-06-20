@@ -45,7 +45,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     lista = [[NSArray alloc] initWithObjects:@"Accedi",@"Registrati", nil];
-    
+    NSString *const FBSessionStateChangedNotification =
+    @"it.plutodev.Elite:FBSessionStateChangedNotification";
     //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     /*
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
@@ -143,9 +144,27 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    NSArray *permissions = @[
+                             @"basic_info",
+                             @"email",
+                             @"user_likes"];
+    return [FBSession openActiveSessionWithReadPermissions:permissions
+                                              allowLoginUI:allowLoginUI
+                                         completionHandler:^(FBSession *session,
+                                                             FBSessionState state,
+                                                             NSError *error) {
+                                             [self sessionStateChanged:session
+                                                                 state:state
+                                                                 error:error];
+                                         }];
+}
 
 - (IBAction)Login:(id)sender {
     
+    [self openSessionWithAllowLoginUI:YES];
+    
+    /*
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
@@ -167,7 +186,7 @@
         //[self openSession];
         
     }
-
+*/
     
     /*
     if (appDelegate.session.isOpen) {
@@ -219,14 +238,73 @@
 - (void)openSession
 {
     
-    [FBSession openActiveSessionWithReadPermissions:nil
+    NSArray *permissions = [[NSArray alloc] initWithObjects:@"email", nil];
+    
+    
+    [FBSession openActiveSessionWithReadPermissions:permissions
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session,
        FBSessionState state, NSError *error) {
          [self sessionStateChanged:session state:state error:error];
      }];
+    NSLog(@"test");
+    
 }
+
+/*
+ * Callback for session changes.
+ */
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState) state
+                      error:(NSError *)error
+{
+    switch (state) {
+        case FBSessionStateOpen:
+            if (!error) {
+                // We have a valid session
+                NSLog(@"User session found");
+                NSLog(@"OPEN SESSION");
+                if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
+                    NSLog(@"Non Registrato");
+                    NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
+                    [self.navigationController pushViewController:nick animated:YES];
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
+                    
+                    
+                    
+                }
+                else{
+                    NSLog(@"Else");
+                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                    [appDelegate  presentTabBarController];
+                }
+            }
+            break;
+        case FBSessionStateClosed:
+        case FBSessionStateClosedLoginFailed:
+            [FBSession.activeSession closeAndClearTokenInformation];
+            break;
+        default:
+            break;
+    }
+    
+    /*[[NSNotificationCenter defaultCenter]
+     postNotificationName:FBSessionStateChangedNotification
+     object:session];*/
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Error"
+                                  message:error.localizedDescription
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+/*
 
 - (void)sessionStateChanged:(FBSession *)session
                       state:(FBSessionState) state
@@ -270,8 +348,9 @@
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
         [alertView show];
-    }    
-}
+    }
+}*/
+
 - (void)viewDidUnload {
     [self setTabellaView:nil];
     [super viewDidUnload];

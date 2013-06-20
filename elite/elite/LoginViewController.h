@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewProductViewController.h"
 
-
+extern NSString *const FBSessionStateChangedNotification;
 
 
 @interface LoginViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>

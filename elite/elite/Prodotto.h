@@ -18,10 +18,11 @@
     NSString *desc;
     NSString *url;
     NSString *consigliato;
+    NSString *idprodotto;
     
 }
 
-
+@property (strong, nonatomic) NSString *idprodotto;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *where;
 @property (strong, nonatomic) NSString *prezzo;

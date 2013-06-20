@@ -130,11 +130,11 @@
         cell.textLabel.text = @"Email";
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
         mail = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
-        mail.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        mail.font = [UIFont fontWithName:@"Helvetica" size:18];
         mail.textColor = [UIColor blackColor];
         mail.backgroundColor = [UIColor clearColor];
         mail.delegate =self;
-        mail.textAlignment = UITextAlignmentLeft;
+        mail.textAlignment = NSTextAlignmentLeft;
         mail.highlighted = YES;
         mail.placeholder = @"example@example.com";
         mail.keyboardType = UIKeyboardTypeEmailAddress;
@@ -145,13 +145,13 @@
         
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.text = @"Password";
-        cell.textLabel.font = [UIFont fontWithName:@"Gill Sans" size:18];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
         pass = [[UITextField alloc]initWithFrame:CGRectMake(110, 10, 200, 30)];
         pass.font = [UIFont fontWithName:@"Helvetica" size:18];
         pass.textColor = [UIColor blackColor];
         pass.backgroundColor = [UIColor clearColor];
         pass.delegate =self;
-        pass.textAlignment = UITextAlignmentLeft;
+        pass.textAlignment = NSTextAlignmentLeft;
         pass.highlighted = YES;
         pass.placeholder = @"Required";
         pass.keyboardType = UIKeyboardTypeDefault;
@@ -169,7 +169,7 @@
         nick.textColor = [UIColor blackColor];
         nick.backgroundColor = [UIColor clearColor];
         nick.delegate =self;
-        nick.textAlignment = UITextAlignmentLeft;
+        nick.textAlignment = NSTextAlignmentLeft;
         nick.highlighted = YES;
         nick.placeholder = @"Nickname";
         nick.keyboardType = UIKeyboardTypeDefault;

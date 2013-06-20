@@ -15,8 +15,10 @@
 #import "PreferitiView.h"
 #import "PreferitiListView.h"
 #import "TakePhotoViewController.h"
+#import "ProfileViewController.h"
+#import "WishlistView.h"
 
-
+extern NSString *const FBSessionStateChangedNotification;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -35,6 +37,8 @@
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) PreferitiListView *preferitiList;
 @property (strong, nonatomic) TakePhotoViewController *loadProd;
+@property (strong, nonatomic) ProfileViewController *profile;
+@property (strong, nonatomic) WishlistView *wishlist;
 @property (strong, nonatomic) FBSession *session;
 
 +(AppDelegate *) getApplicationDelegate;

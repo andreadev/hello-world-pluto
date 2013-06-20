@@ -171,7 +171,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Shop *detailShop = [negozi objectAtIndex:indexPath.row];
-    NSString * nam = detailShop.nome;
+    //NSString * nam = detailShop.nome;
     NSLog(@"NOME %@",detailShop.nome);
     NSLog(@"INDIRIZZO %@",detailShop.indirizzo);
     //loadDetail.negozio =nam;

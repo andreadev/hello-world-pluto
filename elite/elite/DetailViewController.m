@@ -43,7 +43,8 @@
 }
 
 - (void) pressedFinishButton{
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (void)viewDidUnload {

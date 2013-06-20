@@ -94,7 +94,7 @@
         nick.textColor = [UIColor blackColor];
         nick.backgroundColor = [UIColor clearColor];
         nick.delegate =self;
-        nick.textAlignment = UITextAlignmentLeft;
+        nick.textAlignment = NSTextAlignmentLeft;
         nick.highlighted = YES;
         nick.placeholder = @"Nickname";
         nick.keyboardType = UIKeyboardTypeEmailAddress;
@@ -107,14 +107,16 @@
 
 - (void) pressedLeftButton{
     
-    
+    FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
+    NSLog(@" TOKEN %@", tokenData.accessToken);
+    NSString *tok = [[NSString alloc] initWithFormat:@"%@",tokenData ];
     
     NSLog(@"PRESSED: %@",nick.text );
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               nick.text, @"username",
                               utente.idfacebook, @"facebook",
                               utente.email, @"email",
-                              utente.token, @"token",
+                              tok, @"token",
                               nil];
     
     
@@ -146,13 +148,18 @@
         NSLog(@"REGISTRAZIONE RIUSCITO");
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
+        /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
         [defaults setObject:nick.text forKey:@"User"];
         [defaults synchronize];
         NSLog(@"nick %@", nick.text );
         
         NSString *testoSalvato = [[NSUserDefaults standardUserDefaults] objectForKey:@"User"];
-        NSLog(@"nick2 %@", testoSalvato );
+        NSLog(@"nick2 %@", testoSalvato );*/
+        NSString *valueSave = nick.text;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:valueSave forKey:@"Username"];
         
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -178,10 +185,6 @@
                  utente.name = user.name;
                  utente.idfacebook = user.id;
                  utente.email= [user objectForKey:@"email"];
-                 FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
-                 utente.token = tokenData.accessToken;
-                 
-                 NSLog(@" TOKEN %@", tokenData.accessToken);
                  NSLog(@"USER: %@,ID %@, MAIL %@",utente.user,utente.idfacebook,utente.email);
         
              }

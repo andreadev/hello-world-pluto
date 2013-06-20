@@ -28,11 +28,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        UITabBarItem *tabBarItem =[[UITabBarItem alloc]
-                                   initWithTitle:@"Preferiti"
-                                   image:[UIImage imageNamed:@"29-heart"]
-                                   tag:0];
-        self.tabBarItem=tabBarItem;
+        UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
+        self.navigationItem.titleView = navImage;
         
     }
     return self;
@@ -173,11 +170,12 @@
     //cell.detailTextLabel.text = amicofb.idfb;
     NSLog(@"%@",amicofb.idfb);
     NSLog(@"%@",amicofb.hasapp);
-    BOOL hasapp = amicofb.hasapp;
+    //int hasapp = amicofb.hasapp;
+    NSString *hasApp = [[NSString alloc] initWithFormat:@"%@",amicofb.hasapp ];
     //NSLog(hasapp ? @"Yes" : @"No");
-    NSLog(@"%d",hasapp);
+    NSLog(@"%@",hasApp);
     
-    if (hasapp==56) {
+    if ([hasApp isEqualToString:@"0"]) {
         NSLog(@"NO APP");
         cell.follow.titleLabel.text = @"INVITA";
         [cell.follow setTitle:@"INVITA" forState:UIControlStateNormal];
@@ -197,12 +195,15 @@
         
         [cell.contentView addSubview:button];*/
     }
-    else if (hasapp==48){
+    else{
         NSLog(@"SI APP");
         [cell.follow setTitle:@"SEGUI" forState:UIControlStateNormal];
         [cell.follow setTag:amicofb.idfb];
-        cell.follow.titleLabel.textAlignment = UITextAlignmentCenter;
+        NSLog(@"%@",amicofb.idfb);
+        
+        cell.follow.titleLabel.textAlignment = NSTextAlignmentCenter;
         [cell.follow addTarget:self action:@selector(seguiTo:) forControlEvents:UIControlEventTouchUpInside];
+        
         /*
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
@@ -224,17 +225,86 @@
 
 - (void) inviteTo:(id) sender{
     NSLog(@"%d",[sender tag]);
-    [self share];
-    idialog = [[NSString alloc] initWithFormat:@"%d",[sender tag] ];
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    NSLog(@"%d",indexPath.row);
+    FBFriend *amicofb = [amici objectAtIndex:indexPath.row];
+    //[self share];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   amicofb.idfb, @"to",
+                                   @"Scopri Elite Advice",  @"message",
+                                   @"Scatta, Consiglia, Risparmia!", @"description",
+                                   @"www.eliteadvice.it", @"link",
+                                   @"http://www.eliteadvice.it/style/images/home_users.jpg", @"picture",
+                                   @"107955302711336",@"app_id",
+                                   @"feed",@"method",
+                                   @"EliteAdvice.it",@"name",
+                                   nil];
+    
+    [FBSession activeSession];
+    
+    [FBWebDialogs presentFeedDialogModallyWithSession:session//
+                                           parameters:params
+                                              handler:
+     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error){
+         NSLog(@"%@",error);
+         NSLog(@"%@",resultURL);
+         
+     }];
+    
+    
     
 }
 - (void) seguiTo:(id) sender{
+    //100002916262674
     NSLog(@"%d",[sender tag]);
     NSLog(@"Segui");
-    idialog = [[NSString alloc] initWithFormat:@"%d",[sender tag] ];
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    NSLog(@"%d",indexPath.row);
+    FBFriend *amicofb = [amici objectAtIndex:indexPath.row];
+    
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    
+    NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              valUser, @"id_p",
+                              amicofb.idfb, @"id_f",
+                              amicofb.name, @"name_f",
+                              nil];
+    
+    
+    NSError *error;
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSLog(@"%@",postData);
+    
+    
+    NSString *postLength = [NSString stringWithFormat:@"12321443"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://eliteitalia.altervista.org/webservice/Preferiti/addpreferiti.php"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLResponse *response;
+    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"%@",theReply);
+    
+    if ([theReply rangeOfString:@"Array1"].location == NSNotFound) {
+        NSLog(@"ADD NON RIUSCITO");
+    } else {
+        NSLog(@"ADD LOGIN RIUSCITO");
+            
+    }
     
 }
-
+/*
 - (void) test1{
     postPara =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -273,9 +343,9 @@
                           @"error: domain = %@, code = %d",
                           error.domain, error.code];
          } else {
-             /*alertText = [NSString stringWithFormat:
+             alertText = [NSString stringWithFormat:
               @"Posted action, id: %@",
-              [result objectForKey:@"id"]];*/
+              [result objectForKey:@"id"]];
              alertText = @"Hai consigliato correttamente \n il tuo prodotto";
          }
          // Show the result in an alert
@@ -336,13 +406,14 @@
              }
          }];
     }
+*/
 
 - (void) share{
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    idialog, @"to",
-                                   @"Say Hello",  @"message",
-                                   @"Funziona", @"description",
+                                   @"Scopri Elite Advice",  @"message",
+                                   @"Scatta, Consiglia, Risparmia!", @"description",
                                    @"www.eliteadvice.it", @"link",
                                    @"http://www.eliteadvice.it/style/images/home_users.jpg", @"picture",
                                    @"107955302711336",@"app_id",

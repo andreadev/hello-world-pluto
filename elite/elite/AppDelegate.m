@@ -13,7 +13,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList,loadProd;
+@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList,loadProd,profile,wishlist;
 @synthesize session;
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -22,8 +22,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //NSString *const FBSessionStateChangedNotification =@"it.plutodev.Elite:FBSessionStateChangedNotification";
+    
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back_nav.png"]]];
+    
     [[UIBarButtonItem appearance] setTintColor:[UIColor grayColor]];
     
     /*[[UINavigationBar appearance] setTitleTextAttributes: @{
@@ -51,10 +55,18 @@
     homeController.session = session;
     //preferitiView = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
     preferitiList = [[PreferitiListView alloc] initWithNibName:@"PreferitiListView" bundle:nil];
+    profile = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
+    wishlist = [[WishlistView alloc] initWithNibName:@"WishlistView" bundle:nil];
+    
+    
     UINavigationController *navPref = [[UINavigationController alloc] initWithRootViewController:preferitiList];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
     UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
-    NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navProd, navPref, nil];
+    UINavigationController *navProfile = [[UINavigationController alloc] initWithRootViewController:profile];
+    UINavigationController *navWish = [[UINavigationController alloc] initWithRootViewController:wishlist];
+    
+    NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navWish, navProd,navProfile, navPref, nil];
+    
     
     tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = viewControllerArray;
@@ -72,7 +84,7 @@
     else{
         //show terms
         NSLog(@"NO accettato");
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
+        
         tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
         //UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:tutorial];
         //[self presentModalViewController:tutorial animated:YES];
