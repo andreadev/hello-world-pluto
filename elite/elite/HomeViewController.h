@@ -11,6 +11,7 @@
 #import "ProdCell.h"
 #import <CoreLocation/CoreLocation.h>
 #import "ODRefreshControl.h"
+#import "GAITrackedViewController.h"
 
 @interface HomeViewController : UITableViewController<CLLocationManagerDelegate>{
     ProdCell *itemCell;

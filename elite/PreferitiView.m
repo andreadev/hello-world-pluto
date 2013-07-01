@@ -63,8 +63,8 @@
 - (void)getFriends{
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
     NSLog(@" TOKEN %@", tokenData.accessToken);
-    
-    NSString *url = [[NSString alloc] initWithFormat:@"%@Preferiti/friendlist.php?acc=%@", WEBSERVICEURL,tokenData.accessToken ];
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    NSString *url = [[NSString alloc] initWithFormat:@"%@Preferiti/friendlist.php?user=%@&acc=%@", WEBSERVICEURL,valUser ,tokenData.accessToken ];
     NSLog(@"%@",url);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -177,9 +177,10 @@
     NSLog(@"%@",hasApp);
     
     if ([hasApp isEqualToString:@"0"]) {
+        //INVITA
         NSLog(@"NO APP");
-        cell.follow.titleLabel.text = @"INVITA";
-        [cell.follow setTitle:@"INVITA" forState:UIControlStateNormal];
+        [cell.follow setTitle:@"" forState:UIControlStateNormal];
+        [cell.follow setBackgroundImage:[UIImage imageNamed:@"invita"] forState:UIControlStateNormal];
         [cell.follow setTag:amicofb.idfb];
         [cell.follow addTarget:self action:@selector(inviteTo:) forControlEvents:UIControlEventTouchUpInside];
         /*
@@ -196,10 +197,13 @@
         
         [cell.contentView addSubview:button];*/
     }
-    else{
+    else if ([hasApp isEqualToString:@"1"]){
+        //SEGUI
         NSLog(@"SI APP");
-        [cell.follow setTitle:@"SEGUI" forState:UIControlStateNormal];
+        [cell.follow setTitle:@"" forState:UIControlStateNormal];
         [cell.follow setTag:amicofb.idfb];
+        [cell.follow setBackgroundImage:[UIImage imageNamed:@"segui"] forState:UIControlStateNormal];
+        //[consiglia setBackgroundImage:[UIImage imageNamed:@"consigliapapress"] forState:UIControlStateHighlighted];
         NSLog(@"%@",amicofb.idfb);
         
         cell.follow.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -219,6 +223,18 @@
         button.layer.borderWidth=2.0f;
         
         [cell.contentView addSubview:button];*/
+    }
+    else if ([hasApp isEqualToString:@"2"]){
+        //SEGUI
+        NSLog(@"SI APP");
+        [cell.follow setTitle:@"" forState:UIControlStateNormal];
+        [cell.follow setTag:amicofb.idfb];
+        [cell.follow setBackgroundImage:[UIImage imageNamed:@"seguogia"] forState:UIControlStateNormal];
+        //[consiglia setBackgroundImage:[UIImage imageNamed:@"consigliapapress"] forState:UIControlStateHighlighted];
+        NSLog(@"%@",amicofb.idfb);
+        
+        cell.follow.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [cell.follow addTarget:self action:@selector(nonseguiTo:) forControlEvents:UIControlEventTouchUpInside];
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
@@ -256,10 +272,57 @@
     
     
 }
+
+- (void) nonseguiTo:(id) sender{
+    [sender setBackgroundImage:[UIImage imageNamed:@"segui"] forState:UIControlStateNormal];
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    NSLog(@"%d",indexPath.row);
+    FBFriend *amicofb = [amici objectAtIndex:indexPath.row];
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    
+    NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              valUser, @"id_p",
+                              amicofb.idfb, @"id_f",
+                              nil];
+    NSError *error;
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSLog(@"%@",postData);
+    
+    
+    NSString *postLength = [NSString stringWithFormat:@"12321443"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSString *urlnick = [[NSString alloc] initWithFormat:@"%@Preferiti/removepreferiti.php", WEBSERVICEURL ];
+    
+    [request setURL:[NSURL URLWithString:urlnick]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLResponse *response;
+    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"%@",theReply);
+    
+    if ([theReply rangeOfString:@"Array1"].location == NSNotFound) {
+        NSLog(@"ADD NON RIUSCITO");
+    } else {
+        NSLog(@"ADD LOGIN RIUSCITO");
+        
+    }
+    
+}
 - (void) seguiTo:(id) sender{
     //100002916262674
     NSLog(@"%d",[sender tag]);
     NSLog(@"Segui");
+    [sender setBackgroundImage:[UIImage imageNamed:@"seguogia"] forState:UIControlStateNormal];
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     NSLog(@"%d",indexPath.row);
@@ -423,6 +486,7 @@
                                    @"feed",@"method",
                                    @"EliteAdvice.it",@"name",
                                    nil];
+    
     
     [FBWebDialogs presentFeedDialogModallyWithSession:session//[FBSession activeSession]
                                            parameters:params

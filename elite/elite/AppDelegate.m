@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "GAI.h"
+
 NSString *const FBSessionStateChangedNotification =@"it.plutodev.Elite:FBSessionStateChangedNotification";
 NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 
@@ -15,7 +17,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList,loadProd,profile,wishlist;
+@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList,loadProd,profile,wishlist,navProd;
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -27,6 +29,17 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //registro push notifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+    
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    // Optional: set debug to YES for extra debugging information.
+    [GAI sharedInstance].debug = YES;
+    // Create tracker instance.
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-20727450-10"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -35,6 +48,13 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     [[UITabBar appearance] setTintColor:[UIColor blackColor]];
+    [[UITabBarItem appearance] setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      
+      [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0], UITextAttributeTextShadowColor,
+      [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+      [UIFont fontWithName:@"Helvetica" size:8.5], UITextAttributeFont,
+      nil] forState:UIControlStateNormal];
     
     [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
@@ -46,6 +66,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     
     loadProd = [[TakePhotoViewController alloc] initWithNibName:@"TakePhotoViewController" bundle:nil];
     homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    homeController.urlProdotti = [[NSString alloc] initWithFormat:@"%@Prodotti/get_all_products.php", WEBSERVICEURL ];
     preferitiList = [[PreferitiListView alloc] initWithNibName:@"PreferitiListView" bundle:nil];
     profile = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
     wishlist = [[WishlistView alloc] initWithNibName:@"WishlistView" bundle:nil];
@@ -56,7 +77,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     [navPref.navigationBar setTintColor:[UIColor whiteColor]];
     UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
     [navHome.navigationBar setTintColor:[UIColor whiteColor]];
-    UINavigationController *navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
+    navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
     [navProd.navigationBar setTintColor:[UIColor whiteColor]];
     UINavigationController *navProfile = [[UINavigationController alloc] initWithRootViewController:profile];
     [navProfile.navigationBar setTintColor:[UIColor whiteColor]];
@@ -93,6 +114,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
         else{
             loginController = [[LoginViewController alloc] init];
             UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+            [nav.navigationBar setTintColor:[UIColor whiteColor]];
             self.window.rootViewController = nav;
         }
     }
@@ -237,11 +259,16 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 -(void)presentTabBarController{
     self.window.rootViewController = tabBarController;
 }
+-(void)presentHomeController{
+    [navProd popToRootViewControllerAnimated:NO];
+    [tabBarController setSelectedIndex:0];
+}
 
 -(void)presentLoginController{
     
     loginController = [[LoginViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+    [nav.navigationBar setTintColor:[UIColor whiteColor]];
     self.window.rootViewController = nav;
 }
 
@@ -280,6 +307,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
                 if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
                     NSLog(@"Non Registrato");
                     NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
+                    
                     [loginController.navigationController pushViewController:nick animated:YES];
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
                     
@@ -332,4 +360,24 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
                                                                  error:error];
                                          }];
 }
+
+- (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    //NSString *str = [NSString stringWithFormat:@"%@",deviceToken];
+    //NSLog(@"This is device token%@", deviceToken);
+    NSString* str = [[[[deviceToken description]
+                                stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                               stringByReplacingOccurrencesOfString: @">" withString: @""]
+                              stringByReplacingOccurrencesOfString: @" " withString: @""];
+    
+    NSLog(@"%@",str);
+    [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"Token"];
+    
+}
+- (void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+}
+-(void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    
+}
+
 @end

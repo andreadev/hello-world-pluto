@@ -12,11 +12,13 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "TTAlertView.h"
 #import "JGProgressView.h"
-#import "LocationViewController.h"
 #import "LocalizeViewController.h"
+#import "GAITrackedViewController.h"
+#import "ConsigliaPredView.h"
+#import "CategoryView.h"
 
 
-@interface LoadDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate>{
+@interface LoadDetailViewController : GAITrackedViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate, TTAlertViewDelegate>{
     CLLocationManager *locationManager;
 }
 
@@ -35,8 +37,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *consiglia;
 @property (weak, nonatomic) IBOutlet UIButton *consigliaTutti;
 
+@property (strong, nonatomic) NSString *categoriaid;
+@property (strong, nonatomic) NSString *categorianome;
+@property (strong, nonatomic) NSString *negozioid;
+@property (strong, nonatomic) NSString *negozionome;
+
+
+
 - (IBAction)seeConsiglia:(id)sender;
-- (IBAction)seeConsigliaTutti:(id)sender;
+- (IBAction)seeConsigliaPreferiti:(id)sender;
 
 
 @end

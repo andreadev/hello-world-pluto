@@ -12,6 +12,7 @@
 #import "RemoteImageView.h"
 #import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UserInfoView.h"
 
 @interface ProfileViewController (){
     NSMutableArray *ProdottiArray;
@@ -115,11 +116,12 @@
     
     for (int i = 0; i<[prodotti count]; i++) {
         Prodotto *prod = [[Prodotto alloc] init];
+        prod.idprodotto = [[prodotti objectAtIndex:i] objectForKey:@"ID"];
         prod.name = [[prodotti objectAtIndex:i] objectForKey:@"Name"];
         prod.prezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
-        prod.url = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
+        prod.urlfoto = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
         prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
         prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
         prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
@@ -182,18 +184,16 @@
     cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
     cell.prodImage.layer.borderWidth = 3.0 ;
     
-    NSArray * array = [pro.url componentsSeparatedByString:@"/"];
+    NSArray * array = [pro.urlfoto componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@",WEBSERVICEURL ,[array objectAtIndex:[array count]-1] ];
     
     //NSLog(@"%@",[array objectAtIndex:i]);
-    NSLog(@"%@",pro.url);
+    //NSLog(@"%@",pro.url);
     
-    [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
-    //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
-    //load the image
-    //imageView.imageURL = [[NSURL alloc] initWithString:url];
+    
+    [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"girandola@2x.gif"] andId:pro.idprodotto];
     
     return cell;
 }
@@ -204,7 +204,6 @@
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
-    
     [self.tabellaView reloadData];
     
 }
@@ -212,6 +211,9 @@
 -(void)pressedLeftButton
 {
     NSLog(@"Account");
+    UserInfoView *userinfo = [[UserInfoView alloc] initWithNibName:@"UserInfoView" bundle:nil];
+    [self.navigationController pushViewController:userinfo animated:YES];
+    
 }
 
 
@@ -272,5 +274,23 @@
     detailViewController.prod = [filteredListContent objectAtIndex:indexPath.row];
     
     [self.navigationController pushViewController:detailViewController animated:YES];
+}
+- (IBAction)changeView:(id)sender {
+    NSLog(@"cambio");
+    if([sender selectedSegmentIndex] == 0)
+    {
+        NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+        self.urlProdotti = [[NSString alloc] initWithFormat:@"%@Prodotti/get_user_prod.php?user=%@", WEBSERVICEURL,valUser ];
+        [ProdottiArray removeAllObjects];
+    	[self loadProducts];
+    	
+    }
+    else if([sender selectedSegmentIndex] == 1)
+    {
+        self.urlProdotti = [[NSString alloc] initWithFormat:@"%@Prodotti/get_all_products.php", WEBSERVICEURL ];
+        [ProdottiArray removeAllObjects];
+    	[self loadProducts];
+    	
+    }
 }
 @end

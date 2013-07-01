@@ -30,6 +30,39 @@
 {
     [super viewDidLoad];
     NSLog(@"intro");
+    //NSFileManager *manager = [NSFileManager defaultManager];
+    
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"cacheProd"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+    if (error)
+        NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+    else
+        NSLog(@"CREATA CARTELLA");
+    /*NSArray *paths = (NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES));
+    NSString *cacheDir = [paths objectAtIndex:0];
+    
+    BOOL isDirectory;
+    
+    
+    
+    NSString *cacheProd = [cacheDir stringByAppendingPathComponent:@"cacheProd"];
+    
+    if (![manager fileExistsAtPath:cacheProd isDirectory:&isDirectory] || !isDirectory) {
+        NSError *error = nil;
+        NSDictionary *attr = [NSDictionary dictionaryWithObject:NSFileProtectionComplete
+                                                         forKey:NSFileProtectionKey];
+        [manager createDirectoryAtPath:cacheProd
+           withIntermediateDirectories:YES
+                            attributes:attr
+                                 error:&error];
+        if (error)
+            NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+    }*/
     
     //self.title=@"Prima";
     

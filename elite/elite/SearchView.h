@@ -10,7 +10,7 @@
 #import "HomeViewController.h"
 #import "ResultViewController.h"
 
-@interface SearchView : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate>
+@interface SearchView : UIViewController< UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *searchText;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
@@ -19,7 +19,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *searchBotton;
 @property (weak, nonatomic) IBOutlet HomeViewController *rootController;
 
+@property (strong,nonatomic) NSString *categorianome;
+@property (strong,nonatomic) NSString *categoriaid;
+
+
 - (IBAction)search:(id)sender;
+
+- (IBAction) cerca : (id) sender;
+
 - (IBAction)valueChange:(id)sender;
 - (IBAction)seeCategory:(id)sender;
 

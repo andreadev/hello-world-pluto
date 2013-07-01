@@ -1,30 +1,28 @@
 //
-//  LocationViewController.m
+//  CategoryView.m
 //  elite
 //
-//  Created by Andrea Barbieri on 22/05/13.
+//  Created by Andrea Barbieri on 29/06/13.
 //  Copyright (c) 2013 Andrea. All rights reserved.
 //
 
-#import "LocationViewController.h"
-#import "Shop.h"
+#import "CategoryView.h"
 
-@interface LocationViewController (){
-    NSMutableArray *negozi;
+@interface CategoryView (){
+    NSMutableArray *categorie;
+    
 }
 
 @end
 
-@implementation LocationViewController
-@synthesize shops,longitudine,latitudine;
+@implementation CategoryView
+@synthesize loadDetail,search;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.navigationItem.title = @"Negozi";
-        
     }
     return self;
 }
@@ -32,13 +30,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"qui");
-    self.title = @"Negozi";
-    negozi = [[NSMutableArray alloc] init];
+    self.title = @"Categorie";
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(pressedFinishButton)];
     self.navigationItem.leftBarButtonItem = anotherButton;
-    [self seeNegozi];
     
+    
+    
+    categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -56,8 +55,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
-    
     // Return the number of sections.
     return 1;
 }
@@ -66,7 +63,7 @@
 {
 
     // Return the number of rows in the section.
-    return [negozi count];
+    return [categorie count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,58 +71,14 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.textLabel.text = [categorie objectAtIndex:indexPath.row];
     
-    Shop *detailShop = [negozi objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = detailShop.nome;
-    cell.detailTextLabel.text = detailShop.indirizzo;
-    NSLog(@"%@",detailShop.nome);
+    // Configure the cell...
     
     return cell;
 }
-
-- (void)seeNegozi {
-    NSString * url = [[NSString alloc] initWithFormat:@"http://cosapensidime.ilbello.com/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", latitudine, longitudine];
-    NSLog(@"%@",url);
-    
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        [self performSelectorOnMainThread:@selector(fetchedData:)
-                               withObject:data waitUntilDone:YES]; });
-    
-}
-
-
-- (void)fetchedData:(NSData *)responseData {
-    NSArray* json = [NSJSONSerialization
-                     JSONObjectWithData:responseData //1
-                     options:kNilOptions error:nil];
-    shops = json;
-    //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
-    [self loadNegozi];
-    [self.tableView reloadData];
-    
-    
-    
-}
-
-- (void) loadNegozi{
-    for (int i =0 ; i< [shops count]; i++) {
-        Shop *nuovoShop = [[Shop alloc] init];
-        
-       nuovoShop.nome = [[shops objectAtIndex:i] objectForKey:@"Name"];
-        nuovoShop.indirizzo= [[shops objectAtIndex:i] objectForKey:@"Address"];
-        NSLog(@"NEGOZIO");
-        NSLog(@"%@",nuovoShop.nome);
-        [negozi addObject:nuovoShop];
-    }
-    
-    NSLog(@"count: %d", [negozi count]);
-}
-    
 
 /*
 // Override to support conditional editing of the table view.
@@ -166,24 +119,22 @@
 }
 */
 
+
 #pragma mark - Table view delegate
 
+// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Shop *detailShop = [negozi objectAtIndex:indexPath.row];
-    //NSString * nam = detailShop.nome;
-    NSLog(@"NOME %@",detailShop.nome);
-    NSLog(@"INDIRIZZO %@",detailShop.indirizzo);
-    //loadDetail.negozio =nam;
-    //prodView.negozio = nam;
-    //prodView.moreShop.titleLabel.text = nam;
-    //[prodView.moreShop setTitle:detailShop.nome forState:UIControlStateNormal];
+    NSLog(@"%@",[categorie objectAtIndex:indexPath.row]);
     
+    loadDetail.categorianome = [categorie objectAtIndex:indexPath.row];
+    loadDetail.categoriaid = [[NSString alloc] initWithFormat:@"%d", indexPath.row ];
     
+    search.categorianome = [categorie objectAtIndex:indexPath.row];
+    search.categoriaid = [[NSString alloc] initWithFormat:@"%d", indexPath.row ];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 - (IBAction)done:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -193,4 +144,5 @@
 - (void) pressedFinishButton{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end

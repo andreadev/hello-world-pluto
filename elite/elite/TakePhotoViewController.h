@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "LoadDetailViewController.h"
+#import "GAITrackedViewController.h"
 
-
-@interface TakePhotoViewController : UIViewController < UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface TakePhotoViewController : GAITrackedViewController < UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (strong,nonatomic) UIImage *imageProd;
 
 - (IBAction)takePicture:(id)sender;

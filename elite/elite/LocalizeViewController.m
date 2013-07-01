@@ -10,13 +10,12 @@
 
 @interface LocalizeViewController (){
     NSMutableArray *negozi;
-    LocalizeViewController *location;
 }
 
 @end
 
 @implementation LocalizeViewController
-@synthesize shops,latitudine,longitudine,shopSelected;
+@synthesize shops,latitudine,longitudine,shopSelected,loadDetail;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -31,13 +30,12 @@
 {
     [super viewDidLoad];
     NSLog(@"qui");
-    location = [[LocalizeViewController alloc] initWithNibName:@"LocalizeViewController" bundle:nil];
     shopSelected.nome = @"Negozio";
     self.title = @"Negozi";
     negozi = [[NSMutableArray alloc] init];
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(pressedFinishButton)];
     self.navigationItem.leftBarButtonItem = anotherButton;
-    [self seeNegozi];
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -50,6 +48,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    [negozi removeAllObjects];
+    [self seeNegozi];
 }
 
 #pragma mark - Table view data source
@@ -87,7 +90,8 @@
 }
 
 - (void)seeNegozi {
-    NSString * url = [[NSString alloc] initWithFormat:@"http://cosapensidime.ilbello.com/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", latitudine, longitudine];
+    //http://www.eliteadvice.it/webservice/geoloc/get_products_get.php?lat=45&lng=11
+    NSString * url = [[NSString alloc] initWithFormat:@"http://www.eliteadvice.it/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", latitudine, longitudine];
     NSLog(@"%@",url);
     
     
@@ -114,13 +118,19 @@
 
 - (void) loadNegozi{
     for (int i =0 ; i< [shops count]; i++) {
-        Shop *nuovoShop = [[Shop alloc] init];
+        @try {
+            Shop *nuovoShop = [[Shop alloc] init];
+            nuovoShop.idnegozio = [[shops objectAtIndex:i] objectForKey:@"ID"];
+            nuovoShop.nome = [[shops objectAtIndex:i] objectForKey:@"Name"];
+            nuovoShop.indirizzo= [[shops objectAtIndex:i] objectForKey:@"Address"];
+            NSLog(@"NEGOZIO");
+            NSLog(@"%@",nuovoShop.nome);
+            [negozi addObject:nuovoShop];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"No negozi");
+        }
         
-        nuovoShop.nome = [[shops objectAtIndex:i] objectForKey:@"Name"];
-        nuovoShop.indirizzo= [[shops objectAtIndex:i] objectForKey:@"Address"];
-        NSLog(@"NEGOZIO");
-        NSLog(@"%@",nuovoShop.nome);
-        [negozi addObject:nuovoShop];
     }
     
     NSLog(@"count: %d", [negozi count]);
@@ -179,7 +189,8 @@
     //prodView.moreShop.titleLabel.text = nam;
     //[prodView.moreShop setTitle:detailShop.nome forState:UIControlStateNormal];
     
-    
+    loadDetail.negozionome= nam;
+    loadDetail.negozioid = shopSelected.idnegozio;
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

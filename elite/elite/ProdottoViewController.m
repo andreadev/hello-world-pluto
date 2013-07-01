@@ -40,16 +40,21 @@
     //lista = [[NSArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consiliato da:", @"Codice Sconto:",@"Descrizione" ,nil];
     datiList = [[NSMutableArray alloc] init];
     //lista = [[NSMutableArray alloc] initWithObjects:@"Dove:",@"Prezzo Negozio:",@"Prezzo Elite:",@"Consigliato da:",@"Codice Sconto:","Descrizione:", nil];
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"WhishList" style:UIBarButtonItemStylePlain target:self action:@selector(pressedRightButton)];
-    self.navigationItem.rightBarButtonItem = anotherButton;
+    //UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"WhishList" style:UIBarButtonItemStylePlain target:self action:@selector(pressedRightButton)];
+    //self.navigationItem.rightBarButtonItem = anotherButton;
     
     [Scrollview setScrollEnabled:YES];//Abilitiamo lo scroll
     
-    [Scrollview setContentSize:(CGSizeMake(320,440))];
+    [Scrollview setContentSize:(CGSizeMake(320,480))];
     
     CGRect tbFrame = [tabellaView frame];
     tbFrame.size.height = 500;
     [tabellaView setFrame:tbFrame];
+    UIButton *wishlist = [[UIButton alloc] initWithFrame:CGRectMake(60, 400, 200, 52)];
+    [wishlist  addTarget:self action:@selector(pressedRightButton) forControlEvents:UIControlEventTouchUpInside];
+    [wishlist setBackgroundImage:[UIImage imageNamed:@"wishlist"] forState:UIControlStateNormal];
+    [Scrollview addSubview:wishlist];
+    
     /*queste sono<span id="more-1890"></span> le dimesione 320 larghezza e 900 la lunghezza*/
     // Do any additional setup after loading the view from its nib.
 }
@@ -70,19 +75,18 @@
     self.prezzo.text = numberString;
     self.oldprezzo.text = prod.oldprezzo;
     self.from.text = prod.consigliato;
-    self.descrizione.text = prod.desc;
     //self.title = prod.name;
     self.imageProd.layer.cornerRadius = 9.0 ;
     self.imageProd.layer.masksToBounds = YES ;
     self.imageProd.layer.borderColor = [UIColor whiteColor].CGColor ;
     self.imageProd.layer.borderWidth = 3.0 ;
     //imageProd.image = image;
-    NSArray * array = [prod.url componentsSeparatedByString:@"/"];
+    NSArray * array = [prod.urlfoto componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@", WEBSERVICEURL, [array objectAtIndex:[array count]-1] ];
     
-    [imageProd setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    [imageProd setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"girandola@2x.gif"] andId:prod.idprodotto];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -203,7 +207,7 @@
         [cell.contentView addSubview:newpricesVal];
         
         UIImageView *sbarra = [[UIImageView alloc] initWithFrame:CGRectMake(125, 15, 51, 15)];
-        sbarra.image = [UIImage imageNamed:@"sbarra"];
+        sbarra.image = [UIImage imageNamed:@"linea"];
         [cell.contentView addSubview:sbarra];
         
         UILabel *wheres = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 100, 30)];

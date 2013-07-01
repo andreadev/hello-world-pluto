@@ -9,18 +9,22 @@
 #import "SearchView.h"
 #import "ResultViewController.h"
 #import "AppDelegate.h"
+#import "CategoryView.h"
 
 @interface SearchView (){
     UIPickerView *category;
     UIToolbar *toolBar;
     NSMutableArray *categorie;
     int category_id;
+    CategoryView *categorieView;
+    UINavigationController *navCate;
+    
 }
 
 @end
 
 @implementation SearchView
-@synthesize searchBotton,searchText,segment,categoryText,categoryView,rootController;
+@synthesize searchBotton,searchText,segment,categoryText,categoryView,rootController,categorianome,categoriaid;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,30 +39,29 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    categorie = [[NSMutableArray alloc] initWithObjects:@"Tutte",@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
     
-    category = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 205, 320, 20)];
-    category.showsSelectionIndicator = YES;
-    category.delegate = self;
-    [category setHidden:YES];
-    toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 163, 320, 44)];
-    toolBar.barStyle = UIBarStyleBlackOpaque;
-    [toolBar setHidden:YES];
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Fine" style:UIBarButtonItemStylePlain target:self action:@selector(cerca)];
-    self.navigationItem.rightBarButtonItem = anotherButton;
+    categorieView = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
+    navCate = [[UINavigationController alloc] initWithRootViewController:categorieView];
+    categorianome = @"Seleziona Categoria";
+    //UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Cerca" style:UIBarButtonItemStylePlain target:self action:@selector(cerca)];
+    //self.navigationItem.rightBarButtonItem = anotherButton;
     
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
     
     [toolBar setItems:[NSArray arrayWithObjects:btn,nil]];
-    [self.view addSubview:toolBar];
+    //[self.view addSubview:toolBar];
     
-    [self.view addSubview:category];
+    //[self.view addSubview:category];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    categoryText.text = categorianome;
 }
 
 - (void)viewDidUnload {
@@ -71,7 +74,6 @@
 }
 - (IBAction)search:(id)sender {
     NSLog(@"%@",searchText.text);
-    
     NSLog(@"%d",segment.selectedSegmentIndex);
     
     //NSString *searchString = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_products.php?words=%@&?category=%d&?or=%d", searchText.text,category_id,segment.selectedSegmentIndex ];
@@ -83,10 +85,10 @@
     
 }
 
-- (void) cerca{
-    NSString *searchString = [[NSString alloc] initWithFormat:@"%@Prodotti/get_products.php?words=%@&?category=%d&?or=%d", WEBSERVICEURL ,searchText.text,category_id,segment.selectedSegmentIndex ];
+- (IBAction)cerca:(id)sender{
+    NSString *searchString = [[NSString alloc] initWithFormat:@"%@Prodotti/find_products.php?words=%@&?category=%@&?or=%d", WEBSERVICEURL ,searchText.text,categoriaid,segment.selectedSegmentIndex ];
     
-    ResultViewController *result = [[ResultViewController alloc] initWithNibName:@"ResultViewController" bundle:nil];
+    HomeViewController *result = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
     result.urlProdotti = searchString;
     
     [self.navigationController pushViewController:result animated:YES];
@@ -102,30 +104,8 @@
 
 - (IBAction)seeCategory:(id)sender {
     NSLog(@"category");
-    [toolBar setHidden:NO];
-    [category setHidden:NO];
-}
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
-{
-    return [categorie count];
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
-{
-    id str=[categorie objectAtIndex:row];
-    return str;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    NSLog(@"selectedRowInPicker >> %d",row);
-    categoryText.text = [categorie objectAtIndex:row];
-    category_id = row;
+    categorieView.search = self;
+    [self presentViewController:navCate animated:YES completion:NO];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

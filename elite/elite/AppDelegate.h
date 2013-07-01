@@ -41,6 +41,7 @@ extern NSString *const WEBSERVICEURL;
 @property (strong, nonatomic) TakePhotoViewController *loadProd;
 @property (strong, nonatomic) ProfileViewController *profile;
 @property (strong, nonatomic) WishlistView *wishlist;
+@property (strong, nonatomic) UINavigationController *navProd;
 
 +(AppDelegate *) getApplicationDelegate;
 
@@ -50,6 +51,8 @@ extern NSString *const WEBSERVICEURL;
 -(void)presentTabBarController;
 -(void)presentLoginController;
 -(void)addTabBarController;
+-(void)presentHomeController;
+
 - (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 
 @end

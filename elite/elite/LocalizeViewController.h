@@ -10,13 +10,18 @@
 
 #import "NewProductViewController.h"
 #import "Shop.h"
-#import "TakePhotoViewController.h"
+#import "LoadDetailViewController.h"
 
-@interface LocalizeViewController : UITableViewController
+@class LoadDetailViewController;
 
+@interface LocalizeViewController : UITableViewController{
+}
 @property (strong, nonatomic) NSArray *shops;
 @property (strong, nonatomic) NSString *latitudine;
 @property (strong, nonatomic) NSString *longitudine;
 @property (strong, nonatomic) Shop *shopSelected;
+
+@property (strong, nonatomic) LoadDetailViewController *loadDetail;
+
 
 @end

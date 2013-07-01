@@ -9,6 +9,7 @@
 #import "NickViewController.h"
 #import "User.h"
 #import "AppDelegate.h"
+#import "GAI.h"
 
 @interface NickViewController (){
     UITextField *nick;
@@ -50,6 +51,16 @@
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = menuBarButton;*/
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // returns the same tracker you created in your app delegate
+    // defaultTracker originally declared in AppDelegate.m
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    // manual screen tracking
+    [tracker sendView:@"Nick Screen"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,6 +118,9 @@
 
 - (void) pressedLeftButton{
     
+    NSString *appToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"Token"];
+    NSLog(@"%@", appToken);
+    
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
     NSLog(@" TOKEN %@", tokenData.accessToken);
     NSString *tok = [[NSString alloc] initWithFormat:@"%@",tokenData ];
@@ -117,6 +131,7 @@
                               utente.idfacebook, @"facebook",
                               utente.email, @"email",
                               tok, @"token",
+                              appToken, @"apptoken",
                               nil];
     
     

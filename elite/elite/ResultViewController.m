@@ -7,6 +7,7 @@
 //
 
 #import "ResultViewController.h"
+#import "HomeViewController.h"
 #import "AppDelegate.h"
 
 @interface ResultViewController (){
@@ -38,7 +39,6 @@
     
     UIImage *menuButtonImage = [UIImage imageNamed:@"06-magnify"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
-    
     
     [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
     btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
@@ -120,7 +120,7 @@
         prod.prezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
         prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
-        prod.url = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
+        prod.urlfoto = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
         prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
         prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
         prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
@@ -183,13 +183,13 @@
     cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
     cell.prodImage.layer.borderWidth = 3.0 ;
     
-    NSArray * array = [pro.url componentsSeparatedByString:@"/"];
+    NSArray * array = [pro.urlfoto componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@",WEBSERVICEURL ,[array objectAtIndex:[array count]-1] ];
     
     //NSLog(@"%@",[array objectAtIndex:i]);
-    NSLog(@"%@",pro.url);
+    NSLog(@"%@",pro.urlfoto);
     
     [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
@@ -254,22 +254,6 @@
  return YES;
  }
  */
-- (void)populateUserDetails
-{
-    if (FBSession.activeSession.isOpen) {
-        [[FBRequest requestForMe] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphUser> *user,
-           NSError *error) {
-             if (!error) {
-                 //self.title = user.name;
-                 //NSLog(@"%@", user.name);
-                 //NSLog(@"%@", user.id);
-             }
-         }];
-    }
-}
-
 
 #pragma mark - Table view delegate
 

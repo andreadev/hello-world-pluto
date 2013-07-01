@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "NewProductViewController.h"
+#import "GAITrackedViewController.h"
 
 extern NSString *const FBSessionStateChangedNotification;
 
 
-@interface LoginViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface LoginViewController : GAITrackedViewController <UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 

@@ -8,6 +8,7 @@
 
 #import "LoadDetailViewController.h"
 #import "AppDelegate.h"
+#import "Prodotto.h"
 
 @interface LoadDetailViewController (){
     NSMutableArray *list;
@@ -16,23 +17,30 @@
     NSString *filenames;
     NSMutableDictionary *postParams;
     NSString *lat,*lon;
-    UIPickerView *categoryPicker;
     NSMutableArray *categorie;
     NSString *whereload;
     int category_id;
     int doit;
     LocalizeViewController *location;
+    ConsigliaPredView *consigliaPref;
+    CategoryView *categoryView;
+    UINavigationController *navCategory;
+    UINavigationController *navLoc;
+    NSString *idProdotto;
     BOOL settedCategory;
     BOOL settedShop;
     BOOL settedName;
     BOOL settedPrice;
     BOOL settedDesc;
+    int imageUploaded;
+    NSString *ima;
+    
 }
 
 @end
 
 @implementation LoadDetailViewController
-@synthesize tabellaView,imageProd,imageViewProd,name,price,where,category,desc,consiglia,consigliaTutti,negozio,locationManager;
+@synthesize tabellaView,imageProd,imageViewProd,name,price,where,category,desc,consiglia,consigliaTutti,negozio,locationManager,categoriaid,categorianome,negozioid,negozionome;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,34 +56,70 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    negozio = @"negozio";
+    imageUploaded = 0;
+    [self.navigationItem setHidesBackButton:NO animated:YES];
+    negozionome = @"Negozio";
+    categorianome = @"Categoria";
+    
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Annulla" style:UIBarButtonItemStylePlain target:self action:@selector(pressedDone)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    
     location = [[LocalizeViewController alloc] initWithNibName:@"LocalizeViewController" bundle:nil];
+    navLoc = [[UINavigationController alloc] initWithRootViewController:location];
+    [navLoc.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    categoryView = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
+    navCategory = [[UINavigationController alloc] initWithRootViewController:categoryView];
+    [navLoc.navigationBar setTintColor:[UIColor whiteColor]];
+    
+    consigliaPref = [[ConsigliaPredView alloc] initWithNibName:@"ConsigliaPredView" bundle:nil];
+    
     doit = 0;
     // Do any additional setup after loading the view from its nib.    
     CGRect tbFrame = [tabellaView frame];
     tbFrame.size.height = 500;
     [tabellaView setFrame:tbFrame];
     
-    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliablue"] forState:UIControlStateNormal];
-    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliabianco"] forState:UIControlStateHighlighted];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consiglianew"] forState:UIControlStateNormal];
+    [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliapapress"] forState:UIControlStateHighlighted];
     
-    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefblue"] forState:UIControlStateNormal];
-    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaprefbianco"] forState:UIControlStateHighlighted];
-    
-    categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
-    
-    categoryPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 205, 320, 20)];
-    categoryPicker.showsSelectionIndicator = YES;
-    categoryPicker.delegate = self;
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaapreferitinew"] forState:UIControlStateNormal];
+    [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaapreferitipapress"] forState:UIControlStateHighlighted];
 
     
     list = [[NSMutableArray alloc] initWithObjects:@"Nome",@"Categoria",@"Negozio",@"Descrizione", nil];
-    listLoad = [[NSMutableArray alloc] initWithObjects:@"Inserisci",@"Ok!",@"Seleziona",@"Seleziona",@"Seleziona",@"", nil];
+    
     [self setLocationManager:[[CLLocationManager alloc] init]];
     [locationManager setDelegate:self];
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
     [locationManager startUpdatingLocation];
+    
+    p = [[JGProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    [p setUseSharedImages:YES];
+    p.frame = CGRectMake(50, 50, 280, p.frame.size.height);
+    p.center = CGPointMake(CGRectGetMidX(self.view.bounds), p.center.y);
+    
+    
+}
+
+
+- (void) viewWillAppear:(BOOL)animated{
+    /*if(location.shopSelected.nome != nil){
+        
+        [list replaceObjectAtIndex:2 withObject:location.shopSelected.nome];
+    }*/
+    
+    if(imageProd != nil){
+        [self loadImage];
+    }
+    [self.tabellaView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.trackedViewName = @"Insert Detail Screen";
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,18 +129,63 @@
     
 }
 
-- (void) viewWillAppear:(BOOL)animated{
+
+- (void) loadImage{
     
-    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
-    NSLog(@"USERNAME: %@",valUser);
-    if(location.shopSelected.nome != nil){
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //Carico l'immagine, creo il la tupla del prodotto, ritorna l'id
+    NSLog(@"CARICO IMMAGINE ");
+    NSData *imageDatas = UIImageJPEGRepresentation(imageProd,0.4);     //change Image to NSData
+    //NSString *ima = [@"temp_ios" stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    if (imageDatas != nil)
+    {
         
-        [list replaceObjectAtIndex:2 withObject:location.shopSelected.nome];
+        //set name here
+        //filenames = [NSString stringWithFormat:ima];
+        filenames = @"temp_ios";
+        NSLog(@"%@", filenames);
+        
+        NSString *urlString = [[NSString alloc] initWithFormat:@"%@Prodotti/upload_image.php", WEBSERVICEURL ];
+        
+        NSMutableURLRequest *requestimage = [[NSMutableURLRequest alloc] init];
+        [requestimage setURL:[NSURL URLWithString:urlString]];
+        [requestimage setHTTPMethod:@"POST"];
+        
+        NSString *boundary = @"---------------------------14737809831466499882746641449";
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+        [requestimage addValue:contentType forHTTPHeaderField: @"Content-Type"];
+        
+        NSMutableData *body = [NSMutableData data];
+        
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"filenames\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[@"Content-Disposition: form-data; name=\"file\"; filename=\"provav.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[NSData dataWithData:imageDatas]];
+        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        // setting the body of the post to the reqeust
+        [requestimage setHTTPBody:body];
+        // now lets make the connection to the web
+        
+            
+            NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
+            idProdotto = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+            
+            NSLog(@"ID PRODOTTO %@", idProdotto);
+            
+            NSLog(@"finish");
+            imageUploaded = 1;
+            imageProd = nil;
     }
-    [self.tabellaView reloadData];
-    
+    });
     
 }
+
+
 
 #pragma mark - Table view data source
 
@@ -116,8 +205,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSLog(@"sono al tre");
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -163,11 +250,13 @@
         }
         else if(indexPath.row == 1){
             cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
-            cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            cell.textLabel.text = categorianome;
+            //cell.textLabel.text = [list objectAtIndex:indexPath.row];
         }
         else if(indexPath.row == 2){
             cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
-            cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            cell.textLabel.text = negozionome;
+            //cell.textLabel.text = [list objectAtIndex:indexPath.row];
         }
         else if(indexPath.row == 3){
             NSLog(@"tre");
@@ -241,15 +330,15 @@
             }
         }
         else if(indexPath.row == 1){
-            if (settedCategory == YES){
+            if (![categorianome isEqualToString:@"Negozio"]){
                 cell.imageView.image = [UIImage imageNamed:@"bollasok"];
-                cell.textLabel.text = [list objectAtIndex:indexPath.row];
+                cell.textLabel.text = categorianome;
             }
         }
         else if(indexPath.row == 2){
             if (location.shopSelected != nil){
                 cell.imageView.image = [UIImage imageNamed:@"bollasok"];
-                cell.textLabel.text = [list objectAtIndex:indexPath.row];
+                cell.textLabel.text = negozionome;
             }
         }
         else if(indexPath.row == 3){
@@ -329,36 +418,38 @@
                                  cache:YES];
         [[self view] addSubview:categoryPicker];
         [UIView commitAnimations];*/
-        [self.view addSubview:categoryPicker];
-        categoryPicker.frame = CGRectMake(0, 440, 320, 20);
+        //[self.view addSubview:categoryPicker];
+        //categoryPicker.frame = CGRectMake(0, 440, 320, 20);
  // somewhere offscreen, in the direction you want it to appear from
-        [UIView animateWithDuration:0.5
+        /*[UIView animateWithDuration:0.5
                          animations:^{
                              categoryPicker.frame = CGRectMake(0, 205, 320, 20);
  // its final location
-                         }];
+                         }];*/
         //[self.view addSubview:categoryPicker];
+        categoryView.loadDetail = self;
+         [self presentViewController:navCategory animated:YES completion:NO];
         
     }
     if (indexPath.row == 2) {
         
-        categoryPicker.frame = CGRectMake(0, 205, 320, 20);
+        //categoryPicker.frame = CGRectMake(0, 205, 320, 20);
         // somewhere offscreen, in the direction you want it to appear from
-        [UIView animateWithDuration:0.5
+        /*[UIView animateWithDuration:0.5
                          animations:^{
                              categoryPicker.frame =CGRectMake(0, 440, 320, 20);
                              // its final location
                          }];
-        [categoryPicker removeFromSuperview];
+        [categoryPicker removeFromSuperview];*/
         [name resignFirstResponder];
         [price resignFirstResponder];
         [desc resignFirstResponder];
         
-        UINavigationController *navLoc = [[UINavigationController alloc] initWithRootViewController:location];
         location.latitudine = lat;
         location.longitudine = lon;
         //location.loadDetail = self;
         
+        location.loadDetail = self;
         [self presentViewController:navLoc animated:YES completion:NO];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -376,63 +467,20 @@
     
     //UPLOAD IMMAGINE
     
-    p = [[JGProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    [p setUseSharedImages:YES];
-    p.frame = CGRectMake(20, 5, 280, p.frame.size.height);
-    p.center = CGPointMake(CGRectGetMidX(self.view.bounds), p.center.y);
+    
     
     [self.view addSubview:p];
     p.animationSpeed = 1.0;
     [p setIndeterminate:YES];
     
-    NSLog(@"Immagine");
-    
-    NSData *imageDatas = UIImageJPEGRepresentation(imageProd,0.1);     //change Image to NSData
-    NSString *ima = [name.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    if (imageDatas != nil)
-    {
-        //set name here
-        filenames = [NSString stringWithFormat:ima];
-        NSLog(@"%@", filenames);
-        
-        NSString *urlString = [[NSString alloc] initWithFormat:@"%@Prodotti/upload_image.php", WEBSERVICEURL ];
-        
-        NSMutableURLRequest *requestimage = [[NSMutableURLRequest alloc] init];
-        [requestimage setURL:[NSURL URLWithString:urlString]];
-        [requestimage setHTTPMethod:@"POST"];
-        
-        NSString *boundary = @"---------------------------14737809831466499882746641449";
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-        [requestimage addValue:contentType forHTTPHeaderField: @"Content-Type"];
-        
-        NSMutableData *body = [NSMutableData data];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"filenames\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[@"Content-Disposition: form-data; name=\"file\"; filename=\"provav.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[NSData dataWithData:imageDatas]];
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        // setting the body of the post to the reqeust
-        [requestimage setHTTPBody:body];
-        // now lets make the connection to the web
-        NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
-        NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-        NSLog(returnString);
-        NSLog(@"finish");
-    }
-    
-    //change Image to NSData
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
     NSLog(@"USERNAME: %@",valUser);
     
-    ima = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, ima ];
+    ima = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, idProdotto ];
+    //ima = [[NSString alloc] initWithFormat:@]
     
-    NSString *slogan = [[NSString alloc] initWithFormat:@"Ha appena consigliato: %@ su Elite.",name.text ];
+    NSString *slogan = [[NSString alloc] initWithFormat:@"Ho appena consigliato: %@ su Elite.",name.text ];
+    
     
     postParams =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
@@ -443,15 +491,15 @@
      @"Scopri Elite Advice e risparmia su ogni acquisto.", @"description",
      nil];
     
-    NSString *cat = [[NSString alloc] initWithFormat:@"%d",category_id ];
     
-    NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
+    //NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
 
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              idProdotto,@"id",
                               name.text, @"name",
-                              location.shopSelected.nome, @"store_id",
+                              negozionome, @"store_id",
                               price.text, @"price",
-                              cat, @"category_id",
+                              categoriaid, @"category_id",
                               @"Dummy", @"insertion_code",
                               ima, @"imageurl",
                               valUser,@"username",
@@ -475,7 +523,6 @@
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:postData];
     
-    
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
@@ -486,21 +533,29 @@
          * if the current session has no publish permission we need to reauthorize
          */
         if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
-            
-            [[FBSession activeSession] requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_action"] defaultAudience:FBSessionDefaultAudienceFriends
-                                                  completionHandler:^(FBSession *session,NSError *error){
-                                                      [self publishStory];
-                                                  }];
+            NSLog(@"sessione non aperta");
+            [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                               defaultAudience:FBSessionDefaultAudienceFriends
+                                                  allowLoginUI:YES
+                                             completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                                 if (!error && status == FBSessionStateOpen) {
+                                                     [self publishStory];
+                                                 }else{
+                                                     NSLog(@"error");
+                                                 }
+                                             }];
             
         }else{
+            NSLog(@"sessione aperta");
             [self publishStory];
         }
     }else{
         /*
          * open a new session with publish permission
          */
+        NSLog(@"sessione riaperta");
         [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
-                                           defaultAudience:FBSessionDefaultAudienceOnlyMe
+                                           defaultAudience:FBSessionDefaultAudienceFriends
                                               allowLoginUI:YES
                                          completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                                              if (!error && status == FBSessionStateOpen) {
@@ -510,10 +565,10 @@
                                              }
                                          }];
     }
-    
-    //[self publishStory];
 
 }
+
+
 
 - (void)publishStory
 {
@@ -530,12 +585,11 @@
                           @"error: domain = %@, code = %d",
                           error.domain, error.code];
          } else {
-             /*alertText = [NSString stringWithFormat:
-              @"Posted action, id: %@",
-              [result objectForKey:@"id"]];*/
              alertText = @"Hai consigliato correttamente \n il tuo prodotto";
          }
          // Show the result in an alert
+         [self pulisci];
+         
          [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
                                      message:alertText
                                     delegate:self
@@ -543,11 +597,38 @@
                            otherButtonTitles:nil]
           show];
          [p removeFromSuperview];
+         
      }];
 }
 
 
-- (IBAction)seeConsigliaTutti:(id)sender {
+- (void) pulisci{
+    
+    imageUploaded = 0;
+    name.text = @"";
+    price.text = @"";
+    desc.text = @"";
+    categorianome= @"Categoria";
+    negozionome = @"Negozio";
+    imageProd = nil;
+    
+    [self reloadTabella];
+}
+
+- (IBAction)seeConsigliaPreferiti:(id)sender {
+    
+    Prodotto *prod = [[Prodotto alloc] init];
+    prod.idprodotto = idProdotto;
+    prod.name = name.text;
+    prod.where = negozionome;
+    prod.prezzo = price.text;
+    prod.categoria = categoriaid;
+    prod.urlfoto = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, idProdotto ];
+    prod.desc = desc.text;
+    consigliaPref.prod = prod;
+    [self pulisci];
+    [self.navigationController pushViewController:consigliaPref animated:YES];
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -558,32 +639,6 @@
     
     lon = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
     
-}
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
-{
-    return [categorie count];
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
-{
-    id str=[categorie objectAtIndex:row];
-    return str;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    NSLog(@"selectedRowInPicker >> %d",row);
-    NSString *t = [categorie objectAtIndex:row];
-    [list replaceObjectAtIndex:1 withObject:t];
-    settedCategory = YES;
-    [self.tabellaView reloadData];
-    category_id = row;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
@@ -609,6 +664,19 @@
 - (void) reloadTabella{
     NSLog(@"ricarico");
     [self.tabellaView reloadData];
+}
+
+- (void) pressedDone{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)alertView:(TTAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"esco alert");
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate presentHomeController];
+    
+    
 }
 
 @end

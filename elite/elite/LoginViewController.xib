@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="wall.png" id="21">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Default.png" id="21">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -52,7 +52,7 @@
         </view>
     </objects>
     <resources>
+        <image name="Default.png" width="320" height="480"/>
         <image name="LG_FBConnect.png" width="460" height="98"/>
-        <image name="wall.png" width="640" height="940"/>
     </resources>
 </document>

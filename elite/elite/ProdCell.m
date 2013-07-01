@@ -21,7 +21,7 @@
         
         //self.layer.cornerRadius = 15.0;
         //self.layer.masksToBounds = YES;
-        self.prodImage.image = [UIImage imageNamed:@"sbarra"];
+        self.prodImage.image = [UIImage imageNamed:@"linea"];
 
     }
     return self;

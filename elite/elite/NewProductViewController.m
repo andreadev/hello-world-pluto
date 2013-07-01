@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "User.h"
 #import "AppDelegate.h"
-#import "LocationViewController.h"
 
 
 @interface NewProductViewController (){
@@ -171,13 +170,13 @@
 }
 
 - (IBAction)seeNegozi:(id)sender {
-    LocationViewController *location = [[LocationViewController alloc] initWithNibName:@"LocationViewController" bundle:nil];
-    UINavigationController *navLoc = [[UINavigationController alloc] initWithRootViewController:location];
-    location.latitudine = lat;
-    location.longitudine = lon;
+    //LocationViewController *location = [[LocationViewController alloc] initWithNibName:@"LocationViewController" bundle:nil];
+    //UINavigationController *navLoc = [[UINavigationController alloc] initWithRootViewController:location];
+    //location.latitudine = lat;
+    //location.longitudine = lon;
     //location. = self;
     
-    [self presentViewController:navLoc animated:YES completion:nil];
+    //[self presentViewController:navLoc animated:YES completion:nil];
     /*
     NSString * url = [[NSString alloc] initWithFormat:@"http://cosapensidime.ilbello.com/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", lat, lon];
     

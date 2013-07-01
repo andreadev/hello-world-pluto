@@ -28,7 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"SampleBackground.png"]];
+        UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Default"]];
         self.view.backgroundColor = background;
         self.tabellaView.backgroundColor = [UIColor clearColor];
         UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
@@ -55,14 +55,9 @@
         [appDelegate presentTabBarController];
      
     }
-    
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-        // Yes, so just open the session (this won't display any UX).
-        
-        NSLog(@"LOGIN did LOAD");
-        //[self openSession];
-        //[appDelegate presentTabBarController];
-        
+    else if ([[NSUserDefaults standardUserDefaults] stringForKey:@"Username"] != nil){
+        NSLog(@"login auto from App");
+        [appDelegate presentTabBarController];
     }
     
 }
@@ -80,6 +75,11 @@
         [appDelegate presentTabBarController];
         
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.trackedViewName = @"Login Screen";
 }
 
 - (void)viewWillDisappear:(BOOL)animated

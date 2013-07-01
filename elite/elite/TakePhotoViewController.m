@@ -8,7 +8,9 @@
 
 #import "TakePhotoViewController.h"
 
-@interface TakePhotoViewController ()
+@interface TakePhotoViewController (){
+    LoadDetailViewController *detail;
+}
 
 @end
 
@@ -24,6 +26,15 @@
                                    initWithTitle:@"Nuovo Prodotto"
                                    image:[UIImage imageNamed:@"13-plus"]
                                    tag:0];
+        //[UIColor colorWithRed:220.0/255.0 green:104.0/255.0 blue:1.0/255.0 alpha:1.0], UITextAttributeTextColor,
+        [tabBarItem setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          
+          [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0], UITextAttributeTextShadowColor,
+          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+          [UIFont fontWithName:@"Helvetica" size:8.5], UITextAttributeFont,
+          nil] forState:UIControlStateNormal];
+        
         self.tabBarItem=tabBarItem;
         UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
         self.navigationItem.titleView = navImage;
@@ -34,13 +45,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
     //[self attivaPhoto];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.trackedViewName = @"TakePhoto Screen";
 }
 
 - (void) viewWillAppear:(BOOL)animated{
     [self attivaPhoto];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -60,12 +79,10 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
     
-    LoadDetailViewController *detail = [[LoadDetailViewController alloc] initWithNibName:@"LoadDetailViewController" bundle:nil];
+    
+    detail = [[LoadDetailViewController alloc] initWithNibName:@"LoadDetailViewController" bundle:nil];
     detail.imageProd = image;
-    
     [self.navigationController pushViewController:detail animated:YES];
-    
-    //
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -74,6 +91,7 @@
 	[picker dismissViewControllerAnimated:YES completion:nil];
     
 }
+
 
 
 - (IBAction)takePicture:(id)sender {

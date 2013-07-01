@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString *idfacebook;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *token;
+@property (strong, nonatomic) NSString *selected;
 
 
 @end

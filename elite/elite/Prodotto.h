@@ -16,7 +16,7 @@
     NSString *codice;
     NSString *categoria;
     NSString *desc;
-    NSString *url;
+    NSString *urlfoto;
     NSString *consigliato;
     NSString *idprodotto;
     
@@ -30,7 +30,7 @@
 @property (strong, nonatomic) NSString *codice;
 @property (strong, nonatomic) NSString *categoria;
 @property (strong, nonatomic) NSString *desc;
-@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSString *urlfoto;
 @property (strong, nonatomic) NSString *consigliato;
 
 

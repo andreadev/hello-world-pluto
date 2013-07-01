@@ -12,6 +12,7 @@
 #import "RemoteImageView.h"
 #import "AppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
+#import "TTAlertView.h"
 
 @interface WishlistView (){
     NSMutableArray *ProdottiArray;
@@ -55,8 +56,8 @@
     urlProdotti = [[NSString alloc] initWithFormat:@"%@Wishlist/get_wish_prod.php?user=%@", WEBSERVICEURL,valUser ];
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
-    self.navigationItem.rightBarButtonItem = anotherButton;
+    //UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
+    //self.navigationItem.rightBarButtonItem = anotherButton;
     iol=0;
     ProdottiArray = [[NSMutableArray alloc] init];
 }
@@ -113,19 +114,38 @@
 
 
 - (void) loadProdotti{
-    
+    int x=0;
     for (int i = 0; i<[prodotti count]; i++) {
-        Prodotto *prod = [[Prodotto alloc] init];
-        prod.name = [[prodotti objectAtIndex:i] objectForKey:@"Name"];
-        prod.prezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
-        prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
-        prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
-        prod.url = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
-        prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
-        prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
-        prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
-        //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
-        [ProdottiArray  addObject:prod];
+        
+        @try {
+            Prodotto *prod = [[Prodotto alloc] init];
+            prod.idprodotto = [[prodotti objectAtIndex:i] objectForKey:@"ID"];
+            prod.name = [[prodotti objectAtIndex:i] objectForKey:@"Name"];
+            prod.prezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
+            prod.oldprezzo = [[prodotti objectAtIndex:i] objectForKey:@"Price"];
+            prod.where = [[prodotti objectAtIndex:i] objectForKey:@"Store_ID"];
+            prod.urlfoto = [[prodotti objectAtIndex:i] objectForKey:@"ImageUrl"];
+            prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
+            prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
+            prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"User_upload"];
+            //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
+            [ProdottiArray  addObject:prod];
+        }
+        @catch (NSException *exception) {
+            // deal with the exception
+            //NSLog(@"eccezione");
+            //PreferitiView *pref = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
+            //[self.navigationController pushViewController:pref animated:YES];
+            if(x==0){
+                [[[TTAlertView alloc] initWithTitle:@"Nessun prodotto!"
+                                            message:@"Consiglia i tuoi prodotti!"
+                                           delegate:self
+                                  cancelButtonTitle:@"Continua"
+                                  otherButtonTitles:nil]
+                 show];
+                x=1;
+            }
+        }
     }
     // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
 	filteredListContent = [[NSMutableArray alloc] initWithCapacity: [ProdottiArray count]];
@@ -183,15 +203,15 @@
     cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
     cell.prodImage.layer.borderWidth = 3.0 ;
     
-    NSArray * array = [pro.url componentsSeparatedByString:@"/"];
+    NSArray * array = [pro.urlfoto componentsSeparatedByString:@"/"];
     //int i = [array count];
     //i--;
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@webservice/product_images/thumb/%@", WEBSERVICEURL,[array objectAtIndex:[array count]-1] ];
     
     //NSLog(@"%@",[array objectAtIndex:i]);
-    NSLog(@"%@",pro.url);
+    NSLog(@"%@",pro.urlfoto);
     
-    [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
+    [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"girandola@2x.gif"] andId:pro.idprodotto];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
     //load the image
     //imageView.imageURL = [[NSURL alloc] initWithString:url];

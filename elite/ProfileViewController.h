@@ -19,4 +19,6 @@
 @property (nonatomic, strong) IBOutlet ProdCell *itemCell;
 @property (nonatomic, strong) NSArray *prodotti;
 @property (nonatomic, retain) NSString *urlProdotti;
+- (IBAction)changeView:(id)sender;
+
 @end
