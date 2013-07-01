@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "FriendCell.h"
 #import "TTAlertView.h"
+#import "MBProgressHUD.h"
 
 @interface PreferitiView : UITableViewController{
     FriendCell *itemCell;

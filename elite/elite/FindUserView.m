@@ -295,7 +295,7 @@
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    NSString *urlnick = [[NSString alloc] initWithFormat:@"%@Preferiti/addpreferiti.php", WEBSERVICEURL ];
+    NSString *urlnick = [[NSString alloc] initWithFormat:@"%@Preferiti/addpreferitielite.php", WEBSERVICEURL ];
     
     [request setURL:[NSURL URLWithString:urlnick]];
     [request setHTTPMethod:@"POST"];
@@ -389,9 +389,10 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)saearchBar {
-    //[self.filteredListContent removeAllObjects];
-    //[self.filteredListContent addObjectsFromArray: lista];
+    [amici removeAllObjects];
+    [self.tableView reloadData];
 }
+
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBarr{
     NSLog(@"bottone");
     NSLog(@"%@",searchBarr.text);

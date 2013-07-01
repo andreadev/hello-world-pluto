@@ -42,6 +42,7 @@
 		F70C58BC177ED1D300794573 /* CategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70C58BA177ED1D300794573 /* CategoryView.xib */; };
 		F70C58BF177EE04B00794573 /* barramessaggio.png in Resources */ = {isa = PBXBuildFile; fileRef = F70C58BD177EE04B00794573 /* barramessaggio.png */; };
 		F70C58C0177EE04B00794573 /* barramessaggio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F70C58BE177EE04B00794573 /* barramessaggio@2x.png */; };
+		F70C58C3178079D800794573 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F70C58C2178079D800794573 /* MBProgressHUD.m */; };
 		F72F865A1726DA5000ECFA11 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F86581726DA5000ECFA11 /* menu.png */; };
 		F72F865B1726DA5000ECFA11 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F86591726DA5000ECFA11 /* menu@2x.png */; };
 		F72F865E1726DD3400ECFA11 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = F72F865C1726DD3400ECFA11 /* 06-magnify.png */; };
@@ -293,6 +294,8 @@
 		F70C58BA177ED1D300794573 /* CategoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
 		F70C58BD177EE04B00794573 /* barramessaggio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barramessaggio.png; sourceTree = "<group>"; };
 		F70C58BE177EE04B00794573 /* barramessaggio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barramessaggio@2x.png"; sourceTree = "<group>"; };
+		F70C58C1178079D800794573 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		F70C58C2178079D800794573 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		F72F86581726DA5000ECFA11 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		F72F86591726DA5000ECFA11 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
 		F72F865C1726DD3400ECFA11 /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
@@ -715,6 +718,8 @@
 			children = (
 				F777207D175CE5F5000B0E3F /* ODRefreshControl.h */,
 				F777207E175CE5F5000B0E3F /* ODRefreshControl.m */,
+				F70C58C1178079D800794573 /* MBProgressHUD.h */,
+				F70C58C2178079D800794573 /* MBProgressHUD.m */,
 				F7981D281738156C006770F2 /* GraphicalEffects.h */,
 				F7981D291738156C006770F2 /* GraphicalEffects.m */,
 				F7730DC217218EE800DA2F9D /* AsyncImageView.h */,
@@ -1297,6 +1302,7 @@
 				F7772087175F6E9B000B0E3F /* TakePhotoViewController.m in Sources */,
 				F70C58B6177E432B00794573 /* ConsigliaPredView.m in Sources */,
 				F7C224D51773506C001D1616 /* UserInfoView.m in Sources */,
+				F70C58C3178079D800794573 /* MBProgressHUD.m in Sources */,
 				F79C8642177DBFF2006773A9 /* FindUserView.m in Sources */,
 				F777209C175F72D3000B0E3F /* LoadDetailViewController.m in Sources */,
 				F77720D617621E49000B0E3F /* LocalizeViewController.m in Sources */,
@@ -1428,7 +1434,7 @@
 					"-lsqlite3.0",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = elite;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1453,7 +1459,7 @@
 					"-lsqlite3.0",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = elite;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1470,7 +1476,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "elite/elite-Prefix.pch";
 				INFOPLIST_FILE = "eliteTests/eliteTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = eliteTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1488,7 +1494,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "elite/elite-Prefix.pch";
 				INFOPLIST_FILE = "eliteTests/eliteTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = eliteTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};

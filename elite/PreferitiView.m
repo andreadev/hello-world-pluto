@@ -67,10 +67,13 @@
     NSString *url = [[NSString alloc] initWithFormat:@"%@Preferiti/friendlist.php?user=%@&acc=%@", WEBSERVICEURL,valUser ,tokenData.accessToken ];
     NSLog(@"%@",url);
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         [self performSelectorOnMainThread:@selector(fetchedData:)
-                               withObject:data waitUntilDone:YES]; });
+                               withObject:data waitUntilDone:YES];
+        
+    });
 }
 
 - (void)populateUserDetails
@@ -127,7 +130,7 @@
 	//filteredListContent = [[NSMutableArray alloc] initWithCapacity: [ProdottiArray count]];
 	//inserisce in questa  nuova lista gli elementi della lista originale
 	//[filteredListContent addObjectsFromArray:ProdottiArray];
-    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }
     
 }
@@ -487,6 +490,7 @@
                                    @"EliteAdvice.it",@"name",
                                    nil];
     
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     [FBWebDialogs presentFeedDialogModallyWithSession:session//[FBSession activeSession]
                                            parameters:params

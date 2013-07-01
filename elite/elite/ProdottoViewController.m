@@ -202,7 +202,7 @@
         newpricesVal.font = [UIFont fontWithName:@"Helvetica" size:15];
         newpricesVal.textColor = [UIColor blackColor];
         newpricesVal.backgroundColor = [UIColor clearColor];
-        newpricesVal.text = [prod.prezzo stringByAppendingString:@"  €"];
+        newpricesVal.text = [numberString stringByAppendingString:@"  €"];
         newpricesVal.textAlignment = NSTextAlignmentRight;
         [cell.contentView addSubview:newpricesVal];
         
