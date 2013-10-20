@@ -7,7 +7,6 @@
 //
 
 #import "TutorialViewController.h"
-#import "NewProductViewController.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 
@@ -29,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"intro");
+    //NSLog(@"intro");
     //NSFileManager *manager = [NSFileManager defaultManager];
     
     NSError *error;
@@ -39,10 +38,10 @@
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
         [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-    if (error)
-        NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+    /*if (error)
+        //NSLog(@"Error creating directory path: %@", [error localizedDescription]);
     else
-        NSLog(@"CREATA CARTELLA");
+        //NSLog(@"CREATA CARTELLA");*/
     /*NSArray *paths = (NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES));
     NSString *cacheDir = [paths objectAtIndex:0];
     
@@ -61,7 +60,7 @@
                             attributes:attr
                                  error:&error];
         if (error)
-            NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+            //NSLog(@"Error creating directory path: %@", [error localizedDescription]);
     }*/
     
     //self.title=@"Prima";
@@ -86,18 +85,18 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    NSLog(@"TUTORIAL");
-    NSLog(@"tento");
+    //NSLog(@"TUTORIAL");
+    //NSLog(@"tento");
     
     //STEP 1 Construct Panels
-    MYIntroductionPanel *panel = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage1"] description:@"Benvenuto in Elite Advice, il social che ti fa risparmiare!"];
+    MYIntroductionPanel *panel = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"tut1"] title:@"" description:@""];
     
     //You may also add in a title for each panel
-    MYIntroductionPanel *panel2 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Registrati!" description:@"E' semplicissimo!"];
+    MYIntroductionPanel *panel2 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"tut2"] title:@"" description:@""];
     
-    MYIntroductionPanel *panel3 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Scatta una foto ad un prodotto!" description:@"Risparmia!"];
+    MYIntroductionPanel *panel3 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"tut3"] title:@"" description:@""];
     
-    MYIntroductionPanel *panel4 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Carica la foto!" description:@"Consiglia a tutti!"];
+    //MYIntroductionPanel *panel4 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"SampleImage2"] title:@"Carica la foto!" description:@"Consiglia a tutti!"];
     
     //STEP 2 Create IntroductionView
     
@@ -109,7 +108,7 @@
     //MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) panels:@[panel, panel2]];
     
     /*A more customized version*/
-    MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) headerText:@"Elite Advice" panels:@[panel, panel2,panel3,panel4] languageDirection:MYLanguageDirectionLeftToRight];
+    MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) headerText:@"" panels:@[panel, panel2,panel3] languageDirection:MYLanguageDirectionLeftToRight];
     [introductionView setBackgroundImage:[UIImage imageNamed:@"SampleBackground"]];
     
     
@@ -123,14 +122,14 @@
 
 -(void)introductionDidFinishWithType:(MYFinishType)finishType{
     if (finishType == MYFinishTypeSkipButton) {
-        NSLog(@"Did Finish Introduction By Skipping It");
+        //NSLog(@"Did Finish Introduction By Skipping It");
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate  presentLoginController];
         
     }
     else if (finishType == MYFinishTypeSwipeOut){
-        NSLog(@"Did Finish Introduction By Swiping Out");
+        //NSLog(@"Did Finish Introduction By Swiping Out");
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate  presentLoginController];
@@ -142,7 +141,7 @@
 }
 
 -(void)introductionDidChangeToPanel:(MYIntroductionPanel *)panel withIndex:(NSInteger)panelIndex{
-    NSLog(@"%@ \nPanelIndex: %d", panel.Description, panelIndex);
+    //NSLog(@"%@ \nPanelIndex: %d", panel.Description, panelIndex);
 }
 
 
@@ -156,10 +155,10 @@
 
 
 - (void) nextButtonTapped{
-    NSLog(@"Cambia immagine");
+    //NSLog(@"Cambia immagine");
 }
 - (void) skipButtonTapped{
-    NSLog(@"Chiudi");
+    //NSLog(@"Chiudi");
     [self.view removeFromSuperview];
     
 }

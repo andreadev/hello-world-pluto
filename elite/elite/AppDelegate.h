@@ -9,18 +9,19 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "LoginViewController.h"
-#import "NewProductViewController.h"
 #import "TutorialViewController.h"
 #import "HomeViewController.h"
 #import "PreferitiView.h"
 #import "PreferitiListView.h"
 #import "TakePhotoViewController.h"
-#import "ProfileViewController.h"
+#import "ProfileDefView.h"
 #import "WishlistView.h"
 #import "NickViewController.h"
 
 extern NSString *const FBSessionStateChangedNotification;
 extern NSString *const WEBSERVICEURL;
+
+@class TakePhotoViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -33,13 +34,13 @@ extern NSString *const WEBSERVICEURL;
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) LoginViewController *loginController;
-@property (strong, nonatomic) NewProductViewController *Product;
 @property (strong, nonatomic) PreferitiView *preferitiView;
 @property (strong, nonatomic) HomeViewController *homeController;
 @property (strong, nonatomic) TutorialViewController *tutorial;
 @property (strong, nonatomic) PreferitiListView *preferitiList;
-@property (strong, nonatomic) TakePhotoViewController *loadProd;
-@property (strong, nonatomic) ProfileViewController *profile;
+@property (strong, nonatomic) TakePhotoViewController *loadProdo;
+//@property (strong, nonatomic) TakePhoto *loadProdo;
+@property (strong, nonatomic) ProfileDefView *profile;
 @property (strong, nonatomic) WishlistView *wishlist;
 @property (strong, nonatomic) UINavigationController *navProd;
 

@@ -14,13 +14,14 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *searchText;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
-@property (weak, nonatomic) IBOutlet UILabel *categoryText;
 @property (weak, nonatomic) IBOutlet UIButton *categoryView;
-@property (weak, nonatomic) IBOutlet UIButton *searchBotton;
 @property (weak, nonatomic) IBOutlet HomeViewController *rootController;
 
 @property (strong,nonatomic) NSString *categorianome;
 @property (strong,nonatomic) NSString *categoriaid;
+@property (strong,nonatomic) NSString *lat;
+@property (strong,nonatomic) NSString *lon;
+
 
 
 - (IBAction)search:(id)sender;

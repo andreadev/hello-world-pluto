@@ -9,6 +9,7 @@
 #import "LoadDetailViewController.h"
 #import "AppDelegate.h"
 #import "Prodotto.h"
+#import "GAI.h"
 
 @interface LoadDetailViewController (){
     NSMutableArray *list;
@@ -32,7 +33,7 @@
     BOOL settedName;
     BOOL settedPrice;
     BOOL settedDesc;
-    int imageUploaded;
+    int imageUploading;
     NSString *ima;
     
 }
@@ -56,10 +57,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    imageUploaded = 0;
+    imageUploading = 0;
     [self.navigationItem setHidesBackButton:NO animated:YES];
-    negozionome = @"Negozio";
-    categorianome = @"Categoria";
+    negozionome = @"Scegli Negozio";
+    categorianome = @"Scegli Categoria";
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Annulla" style:UIBarButtonItemStylePlain target:self action:@selector(pressedDone)];
     self.navigationItem.rightBarButtonItem = anotherButton;
@@ -70,7 +71,7 @@
     
     categoryView = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
     navCategory = [[UINavigationController alloc] initWithRootViewController:categoryView];
-    [navLoc.navigationBar setTintColor:[UIColor whiteColor]];
+    [navCategory.navigationBar setTintColor:[UIColor whiteColor]];
     
     consigliaPref = [[ConsigliaPredView alloc] initWithNibName:@"ConsigliaPredView" bundle:nil];
     
@@ -79,13 +80,13 @@
     CGRect tbFrame = [tabellaView frame];
     tbFrame.size.height = 500;
     [tabellaView setFrame:tbFrame];
+    [tabellaView setScrollEnabled:NO];
     
     [consiglia setBackgroundImage:[UIImage imageNamed:@"consiglianew"] forState:UIControlStateNormal];
     [consiglia setBackgroundImage:[UIImage imageNamed:@"consigliapapress"] forState:UIControlStateHighlighted];
     
     [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaapreferitinew"] forState:UIControlStateNormal];
     [consigliaTutti setBackgroundImage:[UIImage imageNamed:@"consigliaapreferitipapress"] forState:UIControlStateHighlighted];
-
     
     list = [[NSMutableArray alloc] initWithObjects:@"Nome",@"Categoria",@"Negozio",@"Descrizione", nil];
     
@@ -93,13 +94,6 @@
     [locationManager setDelegate:self];
     [locationManager setDistanceFilter:kCLDistanceFilterNone];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
-    [locationManager startUpdatingLocation];
-    
-    p = [[JGProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    [p setUseSharedImages:YES];
-    p.frame = CGRectMake(50, 50, 280, p.frame.size.height);
-    p.center = CGPointMake(CGRectGetMidX(self.view.bounds), p.center.y);
-    
     
 }
 
@@ -109,8 +103,9 @@
         
         [list replaceObjectAtIndex:2 withObject:location.shopSelected.nome];
     }*/
+    self.navigationItem.hidesBackButton = YES;
     
-    if(imageProd != nil){
+    if((imageProd != nil)&&(imageUploading == 0)){
         [self loadImage];
     }
     [self.tabellaView reloadData];
@@ -131,39 +126,41 @@
 
 
 - (void) loadImage{
+    [locationManager startUpdatingLocation];
+    [[ALAlertBannerManager sharedManager] showAlertBannerInView:self.view
+                                                          style:ALAlertBannerStyleNotify
+                                                       position:ALAlertBannerPositionTop
+                                                          title:@"Caricamento foto in corso!Compila i campi!"
+                                                       subtitle:Nil];
+    [[ALAlertBannerManager sharedManager] setSecondsToShow:5];
+    [[ALAlertBannerManager sharedManager] allowTapToDismiss];
+    [consiglia setUserInteractionEnabled:NO];
+    [consigliaTutti setUserInteractionEnabled:NO];
+    //[consiglia setEnabled:NO];
+    //[consigliaTutti setEnabled:NO];
     
+    imageUploading = 1;
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     //Carico l'immagine, creo il la tupla del prodotto, ritorna l'id
-    NSLog(@"CARICO IMMAGINE ");
+    //NSLog(@"CARICO IMMAGINE ");
     NSData *imageDatas = UIImageJPEGRepresentation(imageProd,0.4);     //change Image to NSData
     //NSString *ima = [@"temp_ios" stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     if (imageDatas != nil)
     {
-        
-        //set name here
-        //filenames = [NSString stringWithFormat:ima];
         filenames = @"temp_ios";
-        NSLog(@"%@", filenames);
-        
         NSString *urlString = [[NSString alloc] initWithFormat:@"%@Prodotti/upload_image.php", WEBSERVICEURL ];
-        
         NSMutableURLRequest *requestimage = [[NSMutableURLRequest alloc] init];
         [requestimage setURL:[NSURL URLWithString:urlString]];
         [requestimage setHTTPMethod:@"POST"];
-        
         NSString *boundary = @"---------------------------14737809831466499882746641449";
         NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
         [requestimage addValue:contentType forHTTPHeaderField: @"Content-Type"];
-        
         NSMutableData *body = [NSMutableData data];
-        
         [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"filenames\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[filenames dataUsingEncoding:NSUTF8StringEncoding]];
-        
         [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[@"Content-Disposition: form-data; name=\"file\"; filename=\"provav.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        
         [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[NSData dataWithData:imageDatas]];
         [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -172,16 +169,24 @@
         // now lets make the connection to the web
         
             
-            NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
-            idProdotto = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-            
-            NSLog(@"ID PRODOTTO %@", idProdotto);
-            
-            NSLog(@"finish");
-            imageUploaded = 1;
-            imageProd = nil;
+        NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
+        idProdotto = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+        //NSLog(@"ID PRODOTTO %@", idProdotto);
+        imageUploading = 0;
+        imageProd = nil;
+        [[ALAlertBannerManager sharedManager] showAlertBannerInView:self.view
+                                                              style:ALAlertBannerStyleNotify
+                                                           position:ALAlertBannerPositionTop
+                                                              title:@"Immagine caricata correttamente!"
+                                                           subtitle:Nil];
+        [[ALAlertBannerManager sharedManager] setSecondsToShow:3];
+        [[ALAlertBannerManager sharedManager] allowTapToDismiss];
+        [consiglia setUserInteractionEnabled:YES];
+        [consigliaTutti setUserInteractionEnabled:YES];
     }
     });
+    
+    
     
 }
 
@@ -212,68 +217,165 @@
     }
     //cell.textLabel.text = [list objectAtIndex:indexPath.row];
     //cell.detailTextLabel.text = [listLoad objectAtIndex:indexPath.row];
+    float currentVersion = 6.0;
+    
+    
     if (doit == 0){
-        if(indexPath.row == 0){
-            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] <= currentVersion)
+        {
+            //NSLog(@"Running in IOS-6");
             
-            name = [[UITextField alloc]initWithFrame:CGRectMake(30, 10, 110, 30)];
-            name.font = [UIFont fontWithName:@"Helvetica" size:18];
-            name.textColor = [UIColor blackColor];
-            name.backgroundColor = [UIColor clearColor];
-            name.delegate =self;
-            name.highlighted = YES;
-            name.placeholder = [list objectAtIndex:indexPath.row];
-            name.keyboardType = UIKeyboardTypeDefault;
-            name.returnKeyType = UIReturnKeyDone;
-            name.tag = 0;
-            [cell.contentView addSubview:name];
+            if(indexPath.row == 0){
+                
+                
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                
+                name = [[UITextField alloc]initWithFrame:CGRectMake(35, 10, 110, 30)];
+                name.font = [UIFont fontWithName:@"Helvetica" size:18];
+                name.textColor = [UIColor blackColor];
+                name.backgroundColor = [UIColor clearColor];
+                name.delegate =self;
+                name.highlighted = YES;
+                name.placeholder = [list objectAtIndex:indexPath.row];
+                name.keyboardType = UIKeyboardTypeDefault;
+                name.returnKeyType = UIReturnKeyDone;
+                name.tag = 0;
+                [cell.contentView addSubview:name];
+                
+                UIImageView *bollaprice = [[UIImageView alloc] initWithFrame:CGRectMake(160, 14, 13 , 13)];
+                bollaprice.image = [UIImage imageNamed:@"bollavuota"];
+                [cell.contentView addSubview:bollaprice];
+                
+                price = [[UITextField alloc]initWithFrame:CGRectMake(185, 10, 110, 30)];
+                price.font = [UIFont fontWithName:@"Helvetica" size:18];
+                price.textColor = [UIColor blackColor];
+                price.backgroundColor = [UIColor clearColor];
+                price.delegate =self;
+                price.highlighted = YES;
+                price.placeholder = @"Prezzo";
+                price.keyboardType = UIKeyboardTypeDefault;
+                price.returnKeyType = UIReturnKeyDone;
+                price.tag = 1;
+                [cell.contentView addSubview:price];
+                
+                UILabel *euro = [[UILabel alloc]initWithFrame:CGRectMake(270, 5, 110, 30)];
+                euro.font = [UIFont fontWithName:@"Helvetica" size:18];
+                euro.textColor = [UIColor lightGrayColor];
+                euro.backgroundColor = [UIColor clearColor];
+                euro.highlighted = YES;
+                euro.text = @"€";
+                [cell.contentView addSubview:euro];
+            }
+            else if(indexPath.row == 1){
+                
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                cell.textLabel.textColor = [UIColor lightGrayColor];
+                cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+                cell.textLabel.text = categorianome;
+                //cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            }
+            else if(indexPath.row == 2){
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                cell.textLabel.textColor = [UIColor lightGrayColor];
+                cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+                cell.textLabel.text = negozionome;
+                //cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            }
+            else if(indexPath.row == 3){
+                //NSLog(@"tre");
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                desc = [[UITextField alloc]initWithFrame:CGRectMake(35, 10, 200, 30)];
+                desc.font = [UIFont fontWithName:@"Helvetica" size:18];
+                desc.textColor = [UIColor blackColor];
+                desc.backgroundColor = [UIColor clearColor];
+                desc.delegate =self;
+                desc.highlighted = YES;
+                desc.placeholder = [list objectAtIndex:indexPath.row];
+                desc.keyboardType = UIKeyboardTypeDefault;
+                desc.returnKeyType = UIReturnKeyDone;
+                desc.tag = 2;
+                [cell.contentView addSubview:desc];
+                doit=1;
+            }
+        }
+        else{
             
-            price = [[UITextField alloc]initWithFrame:CGRectMake(150, 10, 110, 30)];
-            price.font = [UIFont fontWithName:@"Helvetica" size:18];
-            price.textColor = [UIColor blackColor];
-            price.backgroundColor = [UIColor clearColor];
-            price.delegate =self;
-            price.highlighted = YES;
-            price.placeholder = @"Prezzo";
-            price.keyboardType = UIKeyboardTypeDefault;
-            price.returnKeyType = UIReturnKeyDone;
-            price.tag = 1;
-            [cell.contentView addSubview:price];
+            if(indexPath.row == 0){
+                
+                
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                
+                name = [[UITextField alloc]initWithFrame:CGRectMake(45, 5, 110, 30)];
+                name.font = [UIFont fontWithName:@"Helvetica" size:18];
+                name.textColor = [UIColor blackColor];
+                name.backgroundColor = [UIColor clearColor];
+                name.delegate =self;
+                name.highlighted = YES;
+                name.placeholder = [list objectAtIndex:indexPath.row];
+                name.keyboardType = UIKeyboardTypeDefault;
+                name.returnKeyType = UIReturnKeyDone;
+                name.tag = 0;
+                [cell.contentView addSubview:name];
+                
+                price = [[UITextField alloc]initWithFrame:CGRectMake(185, 5, 110, 30)];
+                price.font = [UIFont fontWithName:@"Helvetica" size:18];
+                price.textColor = [UIColor blackColor];
+                price.backgroundColor = [UIColor clearColor];
+                price.delegate =self;
+                price.highlighted = YES;
+                price.placeholder = @"Prezzo";
+                price.keyboardType = UIKeyboardTypeDefault;
+                price.returnKeyType = UIReturnKeyDone;
+                price.tag = 1;
+                [cell.contentView addSubview:price];
+                
+                UIImageView *bollaprice = [[UIImageView alloc] initWithFrame:CGRectMake(160, 14, 13, 13)];
+                bollaprice.image = [UIImage imageNamed:@"bollavuota"];
+                [cell.contentView addSubview:bollaprice];
+                
+                UILabel *euro = [[UILabel alloc]initWithFrame:CGRectMake(270, 5, 110, 30)];
+                euro.font = [UIFont fontWithName:@"Helvetica" size:18];
+                euro.textColor = [UIColor lightGrayColor];
+                euro.backgroundColor = [UIColor clearColor];
+                euro.highlighted = YES;
+                euro.text = @"€";
+                [cell.contentView addSubview:euro];
+            }
+            else if(indexPath.row == 1){
+                
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                cell.textLabel.textColor = [UIColor lightGrayColor];
+                cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+                cell.textLabel.text = categorianome;
+                //cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            }
+            else if(indexPath.row == 2){
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                cell.textLabel.textColor = [UIColor lightGrayColor];
+                cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+                cell.textLabel.text = negozionome;
+                //cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            }
+            else if(indexPath.row == 3){
+                //NSLog(@"tre");
+                cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
+                desc = [[UITextField alloc]initWithFrame:CGRectMake(45, 5, 200, 30)];
+                desc.font = [UIFont fontWithName:@"Helvetica" size:18];
+                desc.textColor = [UIColor blackColor];
+                desc.backgroundColor = [UIColor clearColor];
+                desc.delegate =self;
+                desc.highlighted = YES;
+                desc.placeholder = [list objectAtIndex:indexPath.row];
+                desc.keyboardType = UIKeyboardTypeDefault;
+                desc.returnKeyType = UIReturnKeyDone;
+                desc.tag = 2;
+                [cell.contentView addSubview:desc];
+                doit=1;
+            }
             
-            UILabel *euro = [[UILabel alloc]initWithFrame:CGRectMake(270, 5, 110, 30)];
-            euro.font = [UIFont fontWithName:@"Helvetica" size:18];
-            euro.textColor = [UIColor blackColor];
-            euro.backgroundColor = [UIColor clearColor];
-            euro.highlighted = YES;
-            euro.text = @"€";
-            [cell.contentView addSubview:euro];
+            
         }
-        else if(indexPath.row == 1){
-            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
-            cell.textLabel.text = categorianome;
-            //cell.textLabel.text = [list objectAtIndex:indexPath.row];
-        }
-        else if(indexPath.row == 2){
-            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
-            cell.textLabel.text = negozionome;
-            //cell.textLabel.text = [list objectAtIndex:indexPath.row];
-        }
-        else if(indexPath.row == 3){
-            NSLog(@"tre");
-            cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
-            desc = [[UITextField alloc]initWithFrame:CGRectMake(30, 10, 200, 30)];
-            desc.font = [UIFont fontWithName:@"Helvetica" size:18];
-            desc.textColor = [UIColor blackColor];
-            desc.backgroundColor = [UIColor clearColor];
-            desc.delegate =self;
-            desc.highlighted = YES;
-            desc.placeholder = [list objectAtIndex:indexPath.row];
-            desc.keyboardType = UIKeyboardTypeDefault;
-            desc.returnKeyType = UIReturnKeyDone;
-            desc.tag = 2;
-            [cell.contentView addSubview:desc];
-            doit=1;
-        }
+        
         
     /*else if(indexPath.row == 1){
         cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
@@ -326,78 +428,44 @@
     else{
         if (indexPath.row == 0) {
             if (settedName == YES) {
-            cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+            //cell.imageView.image = [UIImage imageNamed:@"bollasok"];
             }
         }
         else if(indexPath.row == 1){
             if (![categorianome isEqualToString:@"Negozio"]){
-                cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                //cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                cell.textLabel.textColor = [UIColor blackColor];
                 cell.textLabel.text = categorianome;
             }
         }
         else if(indexPath.row == 2){
             if (location.shopSelected != nil){
-                cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                //cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                cell.textLabel.textColor = [UIColor blackColor];
                 cell.textLabel.text = negozionome;
             }
         }
         else if(indexPath.row == 3){
-            NSLog(@"sono al tre");
+            //NSLog(@"sono al tre");
             if (settedDesc == YES) {
-                cell.imageView.image = [UIImage imageNamed:@"bollasok"];
-                NSLog(@"sono al tre");
+                //cell.imageView.image = [UIImage imageNamed:@"bollasok"];
+                //NSLog(@"sono al tre");
             }
         }
     }
     
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
-    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:18];
+    //cell.textLabel.textColor = [UIColor blackGrayColor];
+    //cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    //cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    //cell.detailTextLabel.textColor = [UIColor lightGrayColor];
 
     return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
@@ -465,16 +533,18 @@
 }
 - (IBAction)seeConsiglia:(id)sender {
     
+    if ([self isValid]) {
     //UPLOAD IMMAGINE
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
     
+    //[self.view addSubview:p];
+    //p.animationSpeed = 1.0;
+    //[p setIndeterminate:YES];
     
-    [self.view addSubview:p];
-    p.animationSpeed = 1.0;
-    [p setIndeterminate:YES];
-    
-    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
-    NSLog(@"USERNAME: %@",valUser);
+    NSString *valUserID = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
+     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    //NSLog(@"USERNAME: %@",valUser);
     
     ima = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, idProdotto ];
     //ima = [[NSString alloc] initWithFormat:@]
@@ -492,17 +562,17 @@
      nil];
     
     
-    //NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
+    ////NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
 
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               idProdotto,@"id",
                               name.text, @"name",
-                              negozionome, @"store_id",
+                              negozioid, @"store_id",
                               price.text, @"price",
                               categoriaid, @"category_id",
-                              @"Dummy", @"insertion_code",
                               ima, @"imageurl",
                               valUser,@"username",
+                              valUserID,@"userID",
                               desc.text,@"desc",
                               nil];
     
@@ -511,7 +581,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    NSLog(@"%@",postData);
+    //NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -526,14 +596,14 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"Reply: %@", theReply);
     
     if ([[FBSession activeSession]isOpen]) {
         /*
          * if the current session has no publish permission we need to reauthorize
          */
         if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
-            NSLog(@"sessione non aperta");
+            //NSLog(@"sessione non aperta");
             [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                                defaultAudience:FBSessionDefaultAudienceFriends
                                                   allowLoginUI:YES
@@ -541,19 +611,19 @@
                                                  if (!error && status == FBSessionStateOpen) {
                                                      [self publishStory];
                                                  }else{
-                                                     NSLog(@"error");
+                                                     //NSLog(@"error");
                                                  }
                                              }];
             
         }else{
-            NSLog(@"sessione aperta");
+            //NSLog(@"sessione aperta");
             [self publishStory];
         }
     }else{
         /*
          * open a new session with publish permission
          */
-        NSLog(@"sessione riaperta");
+        //NSLog(@"sessione riaperta");
         [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                            defaultAudience:FBSessionDefaultAudienceFriends
                                               allowLoginUI:YES
@@ -561,10 +631,20 @@
                                              if (!error && status == FBSessionStateOpen) {
                                                  [self publishStory];
                                              }else{
-                                                 NSLog(@"error");
+                                                 //NSLog(@"error");
                                              }
                                          }];
     }
+    }
+    else{
+        [[[TTAlertView alloc] initWithTitle:@"Ops..."
+                                    message:@"Compila tutti i campi prima di consigliare"
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil]
+         show];
+    }
+    
 
 }
 
@@ -589,6 +669,7 @@
          }
          // Show the result in an alert
          [self pulisci];
+         [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
          
          [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
                                      message:alertText
@@ -596,73 +677,63 @@
                            cancelButtonTitle:@"Continua"
                            otherButtonTitles:nil]
           show];
-         [p removeFromSuperview];
+         //[p removeFromSuperview];
          
      }];
 }
 
 
 - (void) pulisci{
-    
-    imageUploaded = 0;
     name.text = @"";
     price.text = @"";
     desc.text = @"";
-    categorianome= @"Categoria";
-    negozionome = @"Negozio";
+    negozionome = @"Scegli Negozio";
+    categorianome = @"Scegli Categoria";
     imageProd = nil;
     
     [self reloadTabella];
 }
 
 - (IBAction)seeConsigliaPreferiti:(id)sender {
+    if ([self isValid]) {
+        Prodotto *prod = [[Prodotto alloc] init];
+        prod.idprodotto = idProdotto;
+        prod.name = name.text;
+        prod.where = negozioid;
+        prod.prezzo = price.text;
+        prod.categoria = categoriaid;
+        prod.urlfoto = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, idProdotto ];
+        prod.desc = desc.text;
+        consigliaPref.prod = prod;
+        [self pulisci];
+        [self.navigationController pushViewController:consigliaPref animated:YES];
+    }
+    else{
+        [[[TTAlertView alloc] initWithTitle:@"Ops..."
+                                    message:@"Compila tutti i campi prima di consigliare"
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil
+          ]
+         show];
+    }
     
-    Prodotto *prod = [[Prodotto alloc] init];
-    prod.idprodotto = idProdotto;
-    prod.name = name.text;
-    prod.where = negozionome;
-    prod.prezzo = price.text;
-    prod.categoria = categoriaid;
-    prod.urlfoto = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, idProdotto ];
-    prod.desc = desc.text;
-    consigliaPref.prod = prod;
-    [self pulisci];
-    [self.navigationController pushViewController:consigliaPref animated:YES];
     
 }
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"Location");
+    //NSLog(@"Location");
     
     lat =[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
     
     lon = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
-    
+    [locationManager stopUpdatingLocation];
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    NSLog(@"finito editing");
-    
-    if(textField.tag == 0){
-        NSLog(@"lol");
-        settedName = YES;
-        //[self reloadTabella];
-        [self performSelectorOnMainThread:@selector(reloadTabella) withObject:nil waitUntilDone:YES];
-    }
-    else if (textField.tag == 1){
-        settedPrice = YES;
-       [self reloadTabella];
-    }
-    else if (textField.tag == 2){
-        settedDesc = YES;
-        [self reloadTabella];
-    }
-    [self reloadTabella];
-    return YES;
-}
+
 - (void) reloadTabella{
-    NSLog(@"ricarico");
+    //NSLog(@"ricarico");
     [self.tabellaView reloadData];
 }
 
@@ -671,12 +742,24 @@
 }
 
 - (void)alertView:(TTAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"esco alert");
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate presentHomeController];
+    //NSLog(@"esco alert");
+    if([alertView.titleLabel.text isEqualToString:@"Ops..."]){
+        
+    }
+    else{
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate presentHomeController];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+- (Boolean) isValid{
     
+    if ([name.text isEqualToString:@""] || location.shopSelected == nil || [price.text isEqualToString:@""]  || [categorianome isEqualToString:@"Negozio"]) {
+        return false;
+    }
     
+    return true;
 }
 
 @end

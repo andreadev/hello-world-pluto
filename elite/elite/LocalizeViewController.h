@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#import "NewProductViewController.h"
 #import "Shop.h"
 #import "LoadDetailViewController.h"
+#import "MBProgressHUD.h"
 
 @class LoadDetailViewController;
 

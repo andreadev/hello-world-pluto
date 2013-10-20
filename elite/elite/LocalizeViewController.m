@@ -7,6 +7,7 @@
 //
 
 #import "LocalizeViewController.h"
+#import "GAI.h"
 
 @interface LocalizeViewController (){
     NSMutableArray *negozi;
@@ -29,14 +30,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"qui");
+    //NSLog(@"qui");
     shopSelected.nome = @"Negozio";
     self.title = @"Negozi";
     negozi = [[NSMutableArray alloc] init];
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(pressedFinishButton)];
     self.navigationItem.leftBarButtonItem = anotherButton;
-    
-    
+    self.navigationItem.titleView.tintColor = [UIColor whiteColor];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -53,6 +53,15 @@
 - (void) viewWillAppear:(BOOL)animated{
     [negozi removeAllObjects];
     [self seeNegozi];
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // returns the same tracker you created in your app delegate
+    // defaultTracker originally declared in AppDelegate.m
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    // manual screen tracking
+    [tracker sendView:@"Home Screen"];
 }
 
 #pragma mark - Table view data source
@@ -81,20 +90,25 @@
     }
     
     Shop *detailShop = [negozi objectAtIndex:indexPath.row];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+    cell.textLabel.textColor = [UIColor darkGrayColor];
+    
+    cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    //cell.textLabel.textColor = [UIColor darkGrayColor];
     
     cell.textLabel.text = detailShop.nome;
     cell.detailTextLabel.text = detailShop.indirizzo;
-    NSLog(@"%@",detailShop.nome);
+    //NSLog(@"%@",detailShop.nome);
     
     return cell;
 }
 
 - (void)seeNegozi {
-    //http://www.eliteadvice.it/webservice/geoloc/get_products_get.php?lat=45&lng=11
-    NSString * url = [[NSString alloc] initWithFormat:@"http://www.eliteadvice.it/webservice/geoloc/get_stores_get.php?lat=%@&lng=%@&dist=50", latitudine, longitudine];
-    NSLog(@"%@",url);
+
+    NSString * url = [[NSString alloc] initWithFormat:@"http://www.eliteadvice.it/webservice/Negozi/get_stores_get.php?lat=%@&lng=%@&dist=50", latitudine, longitudine];
+    //NSLog(@"%@",url);
     
-    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         [self performSelectorOnMainThread:@selector(fetchedData:)
@@ -123,17 +137,17 @@
             nuovoShop.idnegozio = [[shops objectAtIndex:i] objectForKey:@"ID"];
             nuovoShop.nome = [[shops objectAtIndex:i] objectForKey:@"Name"];
             nuovoShop.indirizzo= [[shops objectAtIndex:i] objectForKey:@"Address"];
-            NSLog(@"NEGOZIO");
-            NSLog(@"%@",nuovoShop.nome);
+            //NSLog(@"NEGOZIO");
+            //NSLog(@"%@",nuovoShop.nome);
             [negozi addObject:nuovoShop];
         }
         @catch (NSException *exception) {
-            NSLog(@"No negozi");
+            //NSLog(@"No negozi");
         }
         
     }
-    
-    NSLog(@"count: %d", [negozi count]);
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //NSLog(@"count: %d", [negozi count]);
 }
 
 
@@ -182,8 +196,8 @@
 {
     shopSelected = [negozi objectAtIndex:indexPath.row];
     NSString * nam = shopSelected.nome;
-    NSLog(@"NOME %@",nam);
-    NSLog(@"INDIRIZZO %@",shopSelected.indirizzo);
+    //NSLog(@"NOME %@",nam);
+    //NSLog(@"INDIRIZZO %@",shopSelected.indirizzo);
     //loadDetail.negozio =nam;
     //prodView.negozio = nam;
     //prodView.moreShop.titleLabel.text = nam;

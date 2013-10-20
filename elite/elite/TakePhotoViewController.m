@@ -30,8 +30,8 @@
         [tabBarItem setTitleTextAttributes:
          [NSDictionary dictionaryWithObjectsAndKeys:
           
-          [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0], UITextAttributeTextShadowColor,
-          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+          nil, UITextAttributeTextShadowColor,
+          nil, UITextAttributeTextShadowOffset,
           [UIFont fontWithName:@"Helvetica" size:8.5], UITextAttributeFont,
           nil] forState:UIControlStateNormal];
         

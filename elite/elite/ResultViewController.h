@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ProdCell.h"
 #import "ODRefreshControl.h"
-#import "ProdottoViewController.h"
+#import "ProductsView.h"
 #import "Prodotto.h"
 #import "AsyncImageView.h"
 #import "RemoteImageView.h"

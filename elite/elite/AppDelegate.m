@@ -17,7 +17,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,Product,preferitiList,loadProd,profile,wishlist,navProd;
+@synthesize tabBarController,loginController,homeController,tutorial,preferitiView,preferitiList,loadProdo,profile,wishlist,navProd;
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -37,7 +37,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 20;
     // Optional: set debug to YES for extra debugging information.
-    [GAI sharedInstance].debug = YES;
+    [GAI sharedInstance].debug = NO;
     // Create tracker instance.
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-20727450-10"];
     
@@ -47,43 +47,66 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     //DESIGN GRAPHIC
     
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
-    [[UITabBar appearance] setTintColor:[UIColor blackColor]];
+    //[[UITabBar appearance] setTintColor:[UIColor blackColor]];
+    tabBarController.tabBar.barTintColor = [UIColor blackColor];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f]];
+    
     [[UITabBarItem appearance] setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      
-      [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0], UITextAttributeTextShadowColor,
-      [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+      nil, UITextAttributeTextColor,
+      nil, UITextAttributeTextShadowColor,
+      nil, UITextAttributeTextShadowOffset,
       [UIFont fontWithName:@"Helvetica" size:8.5], UITextAttributeFont,
       nil] forState:UIControlStateNormal];
     
     [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"back_nav.png"] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"back_nav.png"]]];
-    
     
     
     //LOAD VIEWS
     
-    loadProd = [[TakePhotoViewController alloc] initWithNibName:@"TakePhotoViewController" bundle:nil];
+    loadProdo = [[TakePhotoViewController alloc] initWithNibName:@"TakePhotoViewController" bundle:nil];
     homeController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
-    homeController.urlProdotti = [[NSString alloc] initWithFormat:@"%@Prodotti/get_all_products.php", WEBSERVICEURL ];
+    //homeController.urlProdotti = [[NSString alloc] initWithFormat:@"%@Prodotti/get_all_products.php", WEBSERVICEURL ];
     preferitiList = [[PreferitiListView alloc] initWithNibName:@"PreferitiListView" bundle:nil];
-    profile = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
+    profile = [[ProfileDefView alloc] initWithNibName:@"ProfileDefView" bundle:nil];
     wishlist = [[WishlistView alloc] initWithNibName:@"WishlistView" bundle:nil];
     
     //LOAD NAVIGATION
     
     UINavigationController *navPref = [[UINavigationController alloc] initWithRootViewController:preferitiList];
-    [navPref.navigationBar setTintColor:[UIColor whiteColor]];
-    UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
-    [navHome.navigationBar setTintColor:[UIColor whiteColor]];
-    navProd = [[UINavigationController alloc] initWithRootViewController:loadProd];
-    [navProd.navigationBar setTintColor:[UIColor whiteColor]];
-    UINavigationController *navProfile = [[UINavigationController alloc] initWithRootViewController:profile];
-    [navProfile.navigationBar setTintColor:[UIColor whiteColor]];
-    UINavigationController *navWish = [[UINavigationController alloc] initWithRootViewController:wishlist];
-    [navWish.navigationBar setTintColor:[UIColor whiteColor]];
     
+    UINavigationController *navHome = [[UINavigationController alloc] initWithRootViewController:homeController];
+    
+    navProd = [[UINavigationController alloc] initWithRootViewController:loadProdo];
+    
+    UINavigationController *navProfile = [[UINavigationController alloc] initWithRootViewController:profile];
+    
+    UINavigationController *navWish = [[UINavigationController alloc] initWithRootViewController:wishlist];
+    
+    float currentVersion = 7.0;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= currentVersion)
+    {
+        [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f]];
+        [[UINavigationBar appearance] setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [UIColor whiteColor], UITextAttributeTextColor,
+          nil, UITextAttributeTextShadowColor,
+          nil, UITextAttributeTextShadowOffset,
+          [UIFont fontWithName:@"Helvetica" size:13], UITextAttributeFont,
+          nil]];
+        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+        [navPref.navigationBar setTintColor:[UIColor whiteColor]];
+        [navHome.navigationBar setTintColor:[UIColor whiteColor]];
+        [navProd.navigationBar setTintColor:[UIColor whiteColor]];
+        [navProfile.navigationBar setTintColor:[UIColor whiteColor]];
+        [navWish.navigationBar setTintColor:[UIColor whiteColor]];
+        
+    }
+    else{
+        [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:6/255.0f green:105/255.0f blue:162/255.0f alpha:1.0f]];
+        
+    }
     //TABBAR VIEWS
     
     NSArray *viewControllerArray =[NSArray arrayWithObjects: navHome,navWish, navProd,navProfile, navPref, nil];
@@ -96,42 +119,42 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Tutorial"];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Logged"];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Registred"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Friendlist"];
         
         
     }
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
         //proceed with app normally
-        NSLog(@"TUTORIAL SI");
+        //NSLog(@"TUTORIAL SI");
         
         if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
             // Yes, so just open the session (this won't display any UX).
             
-            NSLog(@"LOGIN did LOAD");
+            //NSLog(@"LOGIN did LOAD");
             [self presentTabBarController];
             
         }
         else{
             loginController = [[LoginViewController alloc] init];
             UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
-            [nav.navigationBar setTintColor:[UIColor whiteColor]];
             self.window.rootViewController = nav;
         }
     }
     else{
         
-        NSLog(@"TUTORIAL NO");
+        //NSLog(@"TUTORIAL NO");
         tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
         self.window.rootViewController = tutorial;
     }
     
     [self.window makeKeyAndVisible];
     
-    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     return YES;
 }
 /*
- //FAI UNA ROBA DEL GENERE
+
 - (void)showLoginView
 {
     LoginViewController *login = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
@@ -177,7 +200,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
              // Replace this implementation with code to handle the error appropriately.
              // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         } 
     }
@@ -249,7 +272,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    
     
@@ -257,10 +280,12 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 }
 
 -(void)presentTabBarController{
+    [tabBarController setSelectedIndex:0];
     self.window.rootViewController = tabBarController;
 }
 -(void)presentHomeController{
     [navProd popToRootViewControllerAnimated:NO];
+    [homeController loadProducts];
     [tabBarController setSelectedIndex:0];
 }
 
@@ -268,7 +293,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     
     loginController = [[LoginViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginController];
-    [nav.navigationBar setTintColor:[UIColor whiteColor]];
+    //[nav.navigationBar setTintColor:[UIColor whiteColor]];
     self.window.rootViewController = nav;
 }
 
@@ -302,10 +327,10 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
         case FBSessionStateOpen:
             if (!error) {
                 // We have a valid session
-                NSLog(@"User session found");
-                NSLog(@"OPEN SESSION");
+                //NSLog(@"User session found");
+                //NSLog(@"OPEN SESSION");
                 if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
-                    NSLog(@"Non Registrato");
+                    //NSLog(@"Non Registrato");
                     NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
                     
                     [loginController.navigationController pushViewController:nick animated:YES];
@@ -313,7 +338,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
                     
                 }
                 else{
-                    NSLog(@"Else");
+                    //NSLog(@"Else");
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     [appDelegate  presentTabBarController];
                 }
@@ -363,20 +388,22 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 
 - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     //NSString *str = [NSString stringWithFormat:@"%@",deviceToken];
-    //NSLog(@"This is device token%@", deviceToken);
+    ////NSLog(@"This is device token%@", deviceToken);
     NSString* str = [[[[deviceToken description]
                                 stringByReplacingOccurrencesOfString: @"<" withString: @""]
                                stringByReplacingOccurrencesOfString: @">" withString: @""]
                               stringByReplacingOccurrencesOfString: @" " withString: @""];
     
-    NSLog(@"%@",str);
+    //NSLog(@"%@",str);
     [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"Token"];
     
 }
 - (void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
     
 }
--(void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [tabBarController setSelectedIndex:3];
+    [profile consigliatomi];
     
 }
 

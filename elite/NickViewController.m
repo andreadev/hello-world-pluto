@@ -34,23 +34,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Accedi" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
     self.navigationItem.rightBarButtonItem = anotherButton;
     [self populateUserDetails];
-    /*
-    UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
-    UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
-    btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
-    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
-    [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = menuBarButton;*/
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -58,9 +44,12 @@
     // returns the same tracker you created in your app delegate
     // defaultTracker originally declared in AppDelegate.m
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    
     // manual screen tracking
     [tracker sendView:@"Nick Screen"];
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,24 +97,37 @@
         nick.textAlignment = NSTextAlignmentLeft;
         nick.highlighted = YES;
         nick.placeholder = @"Nickname";
-        nick.keyboardType = UIKeyboardTypeEmailAddress;
+        nick.keyboardType = UIKeyboardTypeDefault;
         nick.returnKeyType = UIReturnKeyNext;
         [cell.contentView addSubview:nick];
     }
-    
+    cell.selected = NO;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 - (void) pressedLeftButton{
     
+    [nick resignFirstResponder];
+    if ( [nick.text isEqualToString:@""]) {
+        [[[TTAlertView alloc] initWithTitle:@"Ops..."
+                                    message:@"Compila i campi"
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil]
+         show];
+        
+        return;
+    }
+    
     NSString *appToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"Token"];
-    NSLog(@"%@", appToken);
+    //NSLog(@"%@", appToken);
     
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
-    NSLog(@" TOKEN %@", tokenData.accessToken);
+    //NSLog(@" TOKEN %@", tokenData.accessToken);
     NSString *tok = [[NSString alloc] initWithFormat:@"%@",tokenData ];
     
-    NSLog(@"PRESSED: %@",nick.text );
+    //NSLog(@"PRESSED: %@",nick.text );
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               nick.text, @"username",
                               utente.idfacebook, @"facebook",
@@ -139,7 +141,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    NSLog(@"%@",postData);
+    //NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -155,32 +157,24 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"Reply: %@", theReply);
     
     //conrollo risposta
-    if ([theReply rangeOfString:@"1"].location == NSNotFound) {
-        NSLog(@"REGISTRAZIONE NON RIUSCITA");
+    if ([theReply isEqualToString:@"0"]) {
+        //NSLog(@"Creo NON RIUSCITO");
     } else {
-        NSLog(@"REGISTRAZIONE RIUSCITO");
-        
+        //NSLog(@"Creo RIUSCITO");
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
-        /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        [defaults setObject:nick.text forKey:@"User"];
-        [defaults synchronize];
-        NSLog(@"nick %@", nick.text );
-        
-        NSString *testoSalvato = [[NSUserDefaults standardUserDefaults] objectForKey:@"User"];
-        NSLog(@"nick2 %@", testoSalvato );*/
-        NSString *valueSave = nick.text;
-        
-        [[NSUserDefaults standardUserDefaults] setObject:valueSave forKey:@"Username"];
-        
-        
+        [[NSUserDefaults standardUserDefaults] setObject:nick.text forKey:@"Username"];
+        //NSLog(@"%@",theReply);
+        theReply = [theReply stringByReplacingOccurrencesOfString:@" " withString:@""];
+        //NSLog(@"%@",theReply);
+        [[NSUserDefaults standardUserDefaults] setObject:theReply forKey:@"UserID"];
+        [[NSUserDefaults standardUserDefaults] setObject:utente.idfacebook forKey:@"FacebookID"];
+        //[self.navigationController popToRootViewControllerAnimated:YES];
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate presentTabBarController];
-        
         
     }
     
@@ -195,13 +189,13 @@
            NSError *error) {
              if (!error) {
                  //self.title = user.name;
-                 NSLog(@"%@", user.name);
-                 NSLog(@"%@", user.id);
+                 //NSLog(@"%@", user.name);
+                 //NSLog(@"%@", user.id);
                  utente = [[User alloc] init];
                  utente.name = user.name;
                  utente.idfacebook = user.id;
                  utente.email= [user objectForKey:@"email"];
-                 NSLog(@"USER: %@,ID %@, MAIL %@",utente.user,utente.idfacebook,utente.email);
+                 //NSLog(@"USER: %@,ID %@, MAIL %@",utente.user,utente.idfacebook,utente.email);
         
              }
          }];
@@ -251,6 +245,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewProductViewController.h"
 #import "GAITrackedViewController.h"
 
 extern NSString *const FBSessionStateChangedNotification;

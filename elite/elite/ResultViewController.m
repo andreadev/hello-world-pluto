@@ -68,7 +68,7 @@
 }
 
 - (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
-    NSLog(@"pull");
+    //NSLog(@"pull");
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -124,6 +124,7 @@
         prod.categoria = [[prodotti objectAtIndex:i] objectForKey:@"Category"];
         prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
         prod.consigliato = [[prodotti objectAtIndex:i] objectForKey:@"Consigliato"];
+        prod.privateCodeValue = [[prodotti objectAtIndex:i] objectForKey:@"CodeValue"];
         //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
         [ProdottiArray  addObject:prod];
     }
@@ -161,15 +162,16 @@
         cell = itemCell;
         
     }
-    NSLog(@"entro");
+    //NSLog(@"entro");
     Prodotto *pro = [filteredListContent objectAtIndex:indexPath.row];
     
     
     cell.nameProd.text = pro.name;
     float a = [pro.oldprezzo floatValue];
-    NSLog(@"%f",a);
-    a = a-(a*0.1);
-    NSLog(@"%f",a);
+    //NSLog(@"%f",a);
+    float sconto = [pro.privateCodeValue floatValue];
+    a = a-(a*sconto);
+    //NSLog(@"%f",a);
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
@@ -188,8 +190,8 @@
     //i--;
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@",WEBSERVICEURL ,[array objectAtIndex:[array count]-1] ];
     
-    //NSLog(@"%@",[array objectAtIndex:i]);
-    NSLog(@"%@",pro.urlfoto);
+    ////NSLog(@"%@",[array objectAtIndex:i]);
+    //NSLog(@"%@",pro.urlfoto);
     
     [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
@@ -201,7 +203,7 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     //self.tableView.contentOffset = CGPointMake(0.0, 90.0);
-    NSLog(@"%@", urlProdotti);
+    //NSLog(@"%@", urlProdotti);
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -238,23 +240,6 @@
     }
 }
 
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -266,7 +251,7 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ProdottoViewController *detailViewController = [[ProdottoViewController alloc] initWithNibName:@"ProdottoViewController" bundle:nil];
+    ProductsView *detailViewController = [[ProductsView alloc] initWithNibName:@"ProductsView" bundle:nil];
     // ...
     // Pass the selected object to the new view controller.
     detailViewController.prod = [filteredListContent objectAtIndex:indexPath.row];

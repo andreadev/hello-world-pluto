@@ -13,7 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *nick;
 @property (weak, nonatomic) IBOutlet UILabel *altro;
+@property (weak, nonatomic) IBOutlet UIImageView *userImage;
 
-- (IBAction)logOut:(id)sender;
+- (void)logOut;
 
 @end

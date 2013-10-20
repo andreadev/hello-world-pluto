@@ -20,13 +20,15 @@
 @implementation LoginSiteViewController
 @synthesize postParams;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
         UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
         self.navigationItem.titleView = navImage;
+        
     }
     return self;
 }
@@ -36,6 +38,8 @@
     [super viewDidLoad];
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Accedi" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
     self.navigationItem.rightBarButtonItem = anotherButton;
+    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"SampleBackground"]];
+    self.view.backgroundColor = background;
     //UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
     //UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
     //[btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
@@ -53,6 +57,16 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    UIButton *passwordLost = [UIButton buttonWithType:UIButtonTypeCustom];
+    [passwordLost setTitle:@"Password Dimenticata?" forState:UIControlStateNormal];
+    [passwordLost setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    passwordLost.frame = CGRectMake(0,130, 320, 30);
+    passwordLost.titleLabel.textAlignment = NSTextAlignmentCenter;
+    passwordLost.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    [passwordLost addTarget:self action:@selector(passLost) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:passwordLost];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,9 +75,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) passLost{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://www.eliteadvice.it/forgot_psw.php"]];
+}
+
 - (void) pressedLeftButton{
     
-    NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               mail.text, @"username",
                               pass.text, @"password",
@@ -74,7 +92,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    NSLog(@"%@",postData);
+    //NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -90,23 +108,31 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
-    //NSLog(@"%@",theReply);
     
-    if ([theReply rangeOfString:@"user_id"].location == NSNotFound) {
-        NSLog(@"LOGIN NON RIUSCITO");
+    if ([theReply isEqualToString:@"0"]) {
+        //NSLog(@"LOGIN NON RIUSCITO");
+        [[[TTAlertView alloc] initWithTitle:@"Ops..."
+                                    message:@"Login non corretta!Riprova.."
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil]
+         show];
     } else {
-        NSLog(@"LOGIN RIUSCITO");
+        //NSLog(@"LOGIN RIUSCITO");
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
-        
         NSString *valueSave = mail.text;
         [[NSUserDefaults standardUserDefaults] setObject:valueSave forKey:@"Username"];
+        theReply = [theReply stringByReplacingOccurrencesOfString:@" " withString:@""];
+        //NSLog(@"%@",theReply);
+        [[NSUserDefaults standardUserDefaults] setObject:theReply forKey:@"UserID"];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"FacebookID"];
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate presentTabBarController];
         
         
     }
-    //NSLog(@"%d",[json count]);
+    ////NSLog(@"%d",[json count]);
     
 }
 

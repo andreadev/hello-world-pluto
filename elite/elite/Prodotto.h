@@ -19,7 +19,10 @@
     NSString *urlfoto;
     NSString *consigliato;
     NSString *idprodotto;
-    
+    NSString *distance;
+    NSString *address;
+    NSString *privateCodeValue;
+    NSString *myCodeValue;
 }
 
 @property (strong, nonatomic) NSString *idprodotto;
@@ -32,7 +35,10 @@
 @property (strong, nonatomic) NSString *desc;
 @property (strong, nonatomic) NSString *urlfoto;
 @property (strong, nonatomic) NSString *consigliato;
-
+@property (strong, nonatomic) NSString *address;
+@property (strong, nonatomic) NSString *distance;
+@property (strong, nonatomic) NSString *privateCodeValue;
+@property (strong, nonatomic) NSString *myCodeValue;
 
 
 

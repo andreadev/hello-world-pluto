@@ -8,6 +8,7 @@
 
 #import "SingUpViewController.h"
 #import "AppDelegate.h"
+#import "TTAlertView.h"
 
 @interface SingUpViewController (){
     UITextField *mail;
@@ -20,13 +21,15 @@
 
 @implementation SingUpViewController
 @synthesize postParams;
-- (id)initWithStyle:(UITableViewStyle)style
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
         UIImageView *navImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoelitenav"]];
         self.navigationItem.titleView = navImage;
+        
     }
     return self;
 }
@@ -34,16 +37,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //UIImage *menuButtonImage = [UIImage imageNamed:@"111-user"];
-    //UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
-    //[btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
-    //[btnToggle setTitle:@"Fine" forState:UIControlStateNormal];
-    //btnToggle.frame = CGRectMake(0, 0, menuButtonImage.size.width, menuButtonImage.size.height);
-    //UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:btnToggle];
-    //[btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    //self.navigationItem.rightBarButtonItem = menuBarButton;
+    
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Registrati" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
     self.navigationItem.rightBarButtonItem = anotherButton;
+    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"SampleBackground"]];
+    self.view.backgroundColor = background;
     
     //self.navigationController.navigationBarHidden = NO;
 
@@ -61,12 +59,27 @@
 }
 
 - (void) pressedLeftButton{
-    
-    NSLog(@"PRESSED: %@ -- %@ -- %@",mail.text,pass.text,nick.text );
+    [mail resignFirstResponder];
+    [pass resignFirstResponder];
+    [nick resignFirstResponder];
+    if ([mail.text isEqualToString:@""] || [pass.text isEqualToString:@""] || [nick.text isEqualToString:@""]) {
+        [[[TTAlertView alloc] initWithTitle:@"Ops..."
+                                    message:@"Compila tutti i campi"
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil]
+         show];
+        
+        return;
+    }
+    //NSLog(@"PRESSED: %@ -- %@ -- %@",mail.text,pass.text,nick.text );
+    NSString *appToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"Token"];
+    //NSLog(@"%@", appToken);
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               mail.text, @"email",
                               pass.text, @"password",
                               nick.text, @"username",
+                              appToken, @"apptoken",
                               nil];
     
     
@@ -74,7 +87,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    NSLog(@"%@",postData);
+    //NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -90,13 +103,36 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
-    if ([theReply rangeOfString:@"Utente creato"].location == NSNotFound) {
-        NSLog(@"Creo NON RIUSCITO");
-    } else {
-        NSLog(@"Creo RIUSCITO");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-                
+    ////NSLog(@"Reply: %@", theReply);
+    if ([theReply isEqualToString:@"0"]) {
+        [[[TTAlertView alloc] initWithTitle:@"Ops..."
+                                    message:@"Il nick name da te scelto è già utilizzato"
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil]
+         show];
+    }
+    else if([theReply isEqualToString:@"-1"]) {
+        [[[TTAlertView alloc] initWithTitle:@"Ops..."
+                                    message:@"La mail e' già utilizzata"
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil]
+         show];
+    }
+    else {
+        //NSLog(@"Creo RIUSCITO");
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
+        [[NSUserDefaults standardUserDefaults] setObject:nick.text forKey:@"Username"];
+        //NSLog(@"%@",theReply);
+        theReply = [theReply stringByReplacingOccurrencesOfString:@" " withString:@""];
+        //NSLog(@"%@",theReply);
+        [[NSUserDefaults standardUserDefaults] setObject:theReply forKey:@"UserID"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"FacebookID"];
+        //[self.navigationController popToRootViewControllerAnimated:YES];
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate presentTabBarController];
     }
 
 }
@@ -237,6 +273,7 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

@@ -12,10 +12,13 @@
 #import "AppDelegate.h"
 #import "SelectViewController.h"
 #import "TTAlertView.h"
+#import "GAI.h"
 
 @interface ConsigliaPredView (){
     NSMutableArray *AmiciArray;
     NSMutableDictionary *postParams;
+    NSString *selezionati;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 @end
@@ -37,9 +40,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Consiglia" style:UIBarButtonItemStylePlain target:self action:@selector(pressedLeftButton)];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Consiglia" style:UIBarButtonItemStylePlain target:self action:@selector(pressedRight:)];
     self.navigationItem.rightBarButtonItem = anotherButton;
     AmiciArray = [[NSMutableArray alloc] init];
+    selezionati = [[NSString alloc] init];
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    [self navigationItem].leftBarButtonItem = barButton;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -54,10 +61,10 @@
 - (void) loadPreferiti{
     
     
-    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     
-    NSString *urlPref = [[NSString alloc] initWithFormat:@"%@Preferiti/getpreferiti.php?nick=%@",WEBSERVICEURL, valUser];
-    NSLog(@"%@",urlPref);
+    NSString *urlPref = [[NSString alloc] initWithFormat:@"%@Preferiti/get_preferiti.php?user=%@",WEBSERVICEURL, valUser];
+    //NSLog(@"%@",urlPref);
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -75,7 +82,7 @@
                      options:kNilOptions error:nil];
     self.preferiti = json;
     //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
-    NSLog(@"%d", [preferiti count]);
+    //NSLog(@"%d", [preferiti count]);
     
     [self loadPrefer];
     
@@ -91,14 +98,15 @@
             // do something that might throw an exception
             User *amico = [[User alloc] init];
             amico.name = [[preferiti objectAtIndex:i] objectForKey:@"name_f"];
-            amico.idfacebook = [[preferiti objectAtIndex:i] objectForKey:@"id_f"];
+            amico.idfacebook = [[preferiti objectAtIndex:i] objectForKey:@"id_facebook"];
+            amico.idelite = [[preferiti objectAtIndex:i] objectForKey:@"id_f"];
+            //NSLog(@"ID AMICO---> %@",amico.idelite);
             amico.selected = @"0";
             [AmiciArray  addObject:amico];
-            NSLog(@"testo");
         }
         @catch (NSException *exception) {
             // deal with the exception
-            //NSLog(@"eccezione");
+            ////NSLog(@"eccezione");
             if (x==0){
                 //alert
                 TTAlertView *alert =[[TTAlertView alloc] initWithTitle:@"Preferiti" message:@"Non hai nessun preferito" delegate:self cancelButtonTitle:@"Continua" otherButtonTitles:nil];
@@ -112,17 +120,23 @@
     [self.tableView reloadData];
 }
 
-- (void) pressedLeftButton{
-    NSLog(@"consiglio");
+
+- (IBAction)pressedRight:(id)sender {
+    
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    
+    //NSLog(@"consiglio");
+    NSString *valUserID = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
-    NSLog(@"USERNAME: %@",valUser);
+    //NSLog(@"USERNAME: %@",valUser);
     
     NSString *ima = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, prod.idprodotto ];
     //ima = [[NSString alloc] initWithFormat:@]
     
     NSString *slogan = [[NSString alloc] initWithFormat:@"Ho appena consigliato: %@ su Elite.",prod.name ];
     
-    
+    //[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     postParams =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
      @"www.eliteadvice.it", @"link",
@@ -132,20 +146,17 @@
      @"Scopri Elite Advice e risparmia su ogni acquisto.", @"description",
      nil];
     
-    //NSString *cat = [[NSString alloc] initWithFormat:@"%d",category_id ];
-    
-    //NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
-    
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               prod.idprodotto,@"id",
                               prod.name, @"name",
                               prod.where, @"store_id",
                               prod.prezzo, @"price",
                               prod.categoria, @"category_id",
-                              @"Dummy", @"insertion_code",
                               prod.urlfoto, @"imageurl",
                               valUser,@"username",
+                              valUserID,@"userID",
                               prod.desc,@"desc",
+                              selezionati,@"ids",
                               nil];
     
     
@@ -153,29 +164,53 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    NSLog(@"%@",postData);
+    //NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    NSString *urluploadprod = [[NSString alloc] initWithFormat:@"%@Prodotti/create_product.php", WEBSERVICEURL ];
+    NSString *urluploadprod = [[NSString alloc] initWithFormat:@"%@Prodotti/create_product_racco.php", WEBSERVICEURL ];
     [request setURL:[NSURL URLWithString:urluploadprod]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:postData];
     
-    NSURLResponse *response;
-    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    NSLog(@"Reply: %@", theReply);
+    //NSURLResponse *response;
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    //NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+    {
+        NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"%@",result);
+        
+        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+        NSString *alertText = @"Hai consigliato correttamente \n il tuo prodotto";
+        [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
+                                    message:alertText
+                                   delegate:self
+                          cancelButtonTitle:@"Continua"
+                          otherButtonTitles:nil]
+         show];
+        
+    }];
+    //NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    //[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    ////NSLog(@"Reply: %@", theReply);
     
+    /*[MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
+    NSString *alertText = @"Hai consigliato correttamente \n il tuo prodotto";
+    [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
+                                message:alertText
+                               delegate:self
+                      cancelButtonTitle:@"Continua"
+                      otherButtonTitles:nil]
+     show];*/
+    /*
     if ([[FBSession activeSession]isOpen]) {
-        /*
-         * if the current session has no publish permission we need to reauthorize
-         */
+     
         if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
-            NSLog(@"sessione non aperta");
+            //NSLog(@"sessione non aperta");
             [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                                defaultAudience:FBSessionDefaultAudienceFriends
                                                   allowLoginUI:YES
@@ -183,19 +218,17 @@
                                                  if (!error && status == FBSessionStateOpen) {
                                                      [self publishStory];
                                                  }else{
-                                                     NSLog(@"error");
+                                                     //NSLog(@"error");
                                                  }
                                              }];
             
         }else{
-            NSLog(@"sessione aperta");
+            //NSLog(@"sessione aperta");
             [self publishStory];
         }
     }else{
-        /*
-         * open a new session with publish permission
-         */
-        NSLog(@"sessione riaperta");
+     
+        //NSLog(@"sessione riaperta");
         [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                            defaultAudience:FBSessionDefaultAudienceFriends
                                               allowLoginUI:YES
@@ -203,15 +236,15 @@
                                              if (!error && status == FBSessionStateOpen) {
                                                  [self publishStory];
                                              }else{
-                                                 NSLog(@"error");
+                                                 //NSLog(@"error");
                                              }
                                          }];
-    }
+    }*/
     
 }
 
 
-
+/*
 - (void)publishStory
 {
     [FBRequestConnection
@@ -231,7 +264,7 @@
          }
          // Show the result in an alert
          
-         
+         [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
          [[[TTAlertView alloc] initWithTitle:@"Ben Fatto!"
                                      message:alertText
                                     delegate:self
@@ -241,7 +274,7 @@
          
      }];
 }
-
+*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -328,11 +361,16 @@
  */
 
 - (void)alertView:(TTAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"esco alert");
+    //NSLog(@"esco alert");
     //[self.navigationController popToRootViewControllerAnimated:YES];
+    if([alertView.titleLabel.text isEqualToString:@"Preferiti"]){
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else{
+        
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate presentHomeController];
-    
+    }
     
 }
 
@@ -342,19 +380,32 @@
 {
     User *amico = [AmiciArray objectAtIndex:indexPath.row];
     if([amico.selected isEqualToString:@"0"]){
-         amico.selected = @"1";
+        //NSLog(@"%@",@"asd");
+        amico.selected = @"1";
+        selezionati =  [selezionati stringByAppendingString:@","];
+        selezionati = [selezionati stringByAppendingString:amico.idelite];
+        
+        //NSLog(@"%@",selezionati);
     }
     else{
+        NSString *idamico = [amico.idelite stringByAppendingString:@","];
+        selezionati = [selezionati stringByReplacingOccurrencesOfString:idamico withString:@""];
         amico.selected = @"0";
+        //NSLog(@"id --->%@",idamico);
+        //NSLog(@"%@",selezionati);
     }
     [self.tableView reloadData];
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // returns the same tracker you created in your app delegate
+    // defaultTracker originally declared in AppDelegate.m
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    // manual screen tracking
+    [tracker sendView:@"Load Detail Racco"];
 }
 
 @end

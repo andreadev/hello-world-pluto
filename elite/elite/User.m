@@ -9,7 +9,7 @@
 #import "User.h"
 
 @implementation User
-@synthesize name,user,idfacebook,email,token,selected;
+@synthesize name,user,idfacebook,email,token,selected,idelite;
 
 - (id) init{
     return self;

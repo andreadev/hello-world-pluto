@@ -33,9 +33,6 @@
     self.title = @"Categorie";
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(pressedFinishButton)];
     self.navigationItem.leftBarButtonItem = anotherButton;
-    
-    
-    
     categorie = [[NSMutableArray alloc] initWithObjects:@"Abbigliamento e Accessori",@"Arte",@"Audio",@"Bellezza e Salute",@"Casa, Arredamento e Bricolage",@"Collezionismo",@"CD e DVD",@"Giocattoli e Modellismo",@"Infanzia e Premaman",@"Informatica",@"Libri, Riviste e Fumetti",@"Orologi, Occhiali e Gioielli",@"Musica e Strumenti Musicali",@"Telefonia",@"Videogiochi e Console",@"Altro", nil];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -73,6 +70,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
+    cell.textLabel.textColor = [UIColor darkGrayColor];
     cell.textLabel.text = [categorie objectAtIndex:indexPath.row];
     
     // Configure the cell...
@@ -125,14 +124,14 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@",[categorie objectAtIndex:indexPath.row]);
+    //NSLog(@"%@",[categorie objectAtIndex:indexPath.row]);
     
     loadDetail.categorianome = [categorie objectAtIndex:indexPath.row];
     loadDetail.categoriaid = [[NSString alloc] initWithFormat:@"%d", indexPath.row ];
     
     search.categorianome = [categorie objectAtIndex:indexPath.row];
     search.categoriaid = [[NSString alloc] initWithFormat:@"%d", indexPath.row ];
-    
+    [search.categoryView setTitle:[categorie objectAtIndex:indexPath.row] forState:UIControlStateNormal];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)done:(id)sender {

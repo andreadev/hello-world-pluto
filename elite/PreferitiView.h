@@ -12,11 +12,10 @@
 #import "TTAlertView.h"
 #import "MBProgressHUD.h"
 
-@interface PreferitiView : UITableViewController{
+@interface PreferitiView : UITableViewController<MBProgressHUDDelegate,TTAlertViewDelegate>{
     FriendCell *itemCell;
 }
 
 @property (nonatomic, strong) FBSession * session;
 @property (strong, nonatomic) IBOutlet FriendCell *itemCell;
-
 @end

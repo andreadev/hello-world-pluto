@@ -7,9 +7,10 @@
 //
 
 #import "SearchView.h"
-#import "ResultViewController.h"
+#import "ProdottiView.h"
 #import "AppDelegate.h"
 #import "CategoryView.h"
+#import "GAI.h"
 
 @interface SearchView (){
     UIPickerView *category;
@@ -24,7 +25,7 @@
 @end
 
 @implementation SearchView
-@synthesize searchBotton,searchText,segment,categoryText,categoryView,rootController,categorianome,categoriaid;
+@synthesize searchText,segment,categoryView,rootController,categorianome,categoriaid,lat,lon;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,18 +41,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    categorieView = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
-    navCate = [[UINavigationController alloc] initWithRootViewController:categorieView];
-    categorianome = @"Seleziona Categoria";
-    //UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Cerca" style:UIBarButtonItemStylePlain target:self action:@selector(cerca)];
-    //self.navigationItem.rightBarButtonItem = anotherButton;
     
+    
+    //[searchBotton setBackgroundImage:[UIImage imageNamed:@"ricerca"] forState:UIControlStateNormal];
+    //[searchBotton setBackgroundImage:[UIImage imageNamed:@"ricercapa"] forState:UIControlStateHighlighted];
+    [searchText becomeFirstResponder];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Cerca" style:UIBarButtonItemStylePlain target:self action:@selector(cerca:)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
     
     [toolBar setItems:[NSArray arrayWithObjects:btn,nil]];
-    //[self.view addSubview:toolBar];
-    
-    //[self.view addSubview:category];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,24 +60,17 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-    categoryText.text = categorianome;
 }
 
 - (void)viewDidUnload {
     [self setSearchText:nil];
     [self setSegment:nil];
-    [self setCategoryText:nil];
     [self setCategoryView:nil];
-    [self setSearchBotton:nil];
     [super viewDidUnload];
 }
 - (IBAction)search:(id)sender {
-    NSLog(@"%@",searchText.text);
-    NSLog(@"%d",segment.selectedSegmentIndex);
-    
-    //NSString *searchString = [[NSString alloc] initWithFormat:@"http://eliteitalia.altervista.org/webservice/Prodotti/get_products.php?words=%@&?category=%d&?or=%d", searchText.text,category_id,segment.selectedSegmentIndex ];
-    
-    //result.urlProdotti = searchString;
+    //NSLog(@"%@",searchText.text);
+    //NSLog(@"%d",segment.selectedSegmentIndex);
     
 }
 - (IBAction)valueChange:(id)sender {
@@ -86,9 +78,17 @@
 }
 
 - (IBAction)cerca:(id)sender{
-    NSString *searchString = [[NSString alloc] initWithFormat:@"%@Prodotti/find_products.php?words=%@&?category=%@&?or=%d", WEBSERVICEURL ,searchText.text,categoriaid,segment.selectedSegmentIndex ];
-    
-    HomeViewController *result = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
+    NSString *searchString;
+    if (segment.selectedSegmentIndex == 0) {
+       searchString = [[NSString alloc] initWithFormat:@"%@Prodotti/find_products.php?words=%@&?category=%@&user=%@", WEBSERVICEURL ,searchText.text,categoriaid,valUser ];
+    }
+    else{
+        
+    searchString = [[NSString alloc] initWithFormat:@"%@Prodotti/find_products_distance.php?words=%@&?category=%@&lat=%@&lon=%@&user=%@", WEBSERVICEURL ,searchText.text,categoriaid,lat,lon,valUser ];
+    }
+    //NSLog(@"%@", searchString);
+    ProdottiView *result = [[ProdottiView alloc] initWithNibName:@"ProdottiView" bundle:nil];
     result.urlProdotti = searchString;
     
     [self.navigationController pushViewController:result animated:YES];
@@ -97,13 +97,16 @@
 }
 
 - (IBAction)done:(id)sender {
-    NSLog(@"done");
+    //NSLog(@"done");
     [toolBar setHidden:YES];
     [category setHidden:YES];
 }
 
 - (IBAction)seeCategory:(id)sender {
-    NSLog(@"category");
+    //NSLog(@"category");
+    categorieView = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
+    navCate = [[UINavigationController alloc] initWithRootViewController:categorieView];
+    categorianome = @"Seleziona Categoria";
     categorieView.search = self;
     [self presentViewController:navCate animated:YES completion:NO];
 }
@@ -111,5 +114,14 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // returns the same tracker you created in your app delegate
+    // defaultTracker originally declared in AppDelegate.m
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    // manual screen tracking
+    [tracker sendView:@"Home Screen"];
 }
 @end

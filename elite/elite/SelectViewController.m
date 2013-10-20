@@ -85,6 +85,29 @@
     return cell;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,30)];
+    
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, headerView.frame.size.width-120.0, headerView.frame.size.height)];
+    
+    headerLabel.textAlignment = NSTextAlignmentCenter;
+    headerLabel.text = @"Trova i tuoi amici";
+    headerLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
+    headerLabel.textColor = [UIColor whiteColor];
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerView.backgroundColor = [UIColor colorWithRed:0/255.0f green:104/255.0f blue:164/255.0f alpha:0.8f];
+    
+    [headerView addSubview:headerLabel];
+    
+    return headerView;
+    
+}
+
+-(float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    return  30.0;
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -130,19 +153,24 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    //<#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
     if (indexPath.row == 0) {
-        [self.navigationController pushViewController:preferitiFacebook animated:YES];
+        if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"FacebookID"] isEqualToString:@"NO"]) {
+            //alert
+            [[[TTAlertView alloc] initWithTitle:@"Attenzione!"
+                                        message:@"Devi accedere con facebook per visualizzare questa scheda"
+                                       delegate:self
+                              cancelButtonTitle:@"Continua"
+                              otherButtonTitles:nil]
+             show];
+        }
+        else{
+            [self.navigationController pushViewController:preferitiFacebook animated:YES];
+        }
     }
     else if (indexPath.row == 1){
         [self.navigationController pushViewController:findUser animated:YES];
     }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
  

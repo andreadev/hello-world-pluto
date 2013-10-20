@@ -16,6 +16,7 @@
 #import "GAITrackedViewController.h"
 #import "ConsigliaPredView.h"
 #import "CategoryView.h"
+#import "ALAlertBanner/ALAlertBanner.h"
 
 
 @interface LoadDetailViewController : GAITrackedViewController<UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate, TTAlertViewDelegate>{

@@ -22,6 +22,8 @@
         //self.layer.cornerRadius = 15.0;
         //self.layer.masksToBounds = YES;
         self.prodImage.image = [UIImage imageNamed:@"linea"];
+        self.Price.textAlignment = NSTextAlignmentRight;
+        self.oldPrice.textAlignment = NSTextAlignmentRight;
 
     }
     return self;

@@ -11,17 +11,20 @@
 #import "PreferitiView.h"
 #import "AppDelegate.h"
 #import "SelectViewController.h"
+#import "FBFriend.h"
+#import "GAI.h"
 
 @interface PreferitiListView (){
     NSMutableArray *AmiciArray;
     PreferitiView *pref;
     SelectViewController *seleziona;
+    int x;
 }
 
 @end
 
 @implementation PreferitiListView
-@synthesize preferiti;
+@synthesize preferiti,itemCell;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -46,7 +49,7 @@
     [super viewDidLoad];
     //pref = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
     seleziona = [[SelectViewController alloc] initWithNibName:@"SelectViewController" bundle:nil];
-    
+    x=0;
     UIImage *menuButtonImage = [UIImage imageNamed:@"cerca"];
     UIButton *btnToggle = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnToggle setImage:menuButtonImage forState:UIControlStateNormal];
@@ -55,6 +58,14 @@
     [btnToggle addTarget:self action:@selector(pressedLeftButton) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = menuBarButton;
     AmiciArray = [[NSMutableArray alloc] init];
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
+                                        init];
+    refreshControl.tintColor = [UIColor lightGrayColor];
+    [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
+    //[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [self.refreshControl beginRefreshing];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -70,13 +81,22 @@
     [self loadPreferiti];
 }
 
+- (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
+    //NSLog(@"pull");
+    preferiti = nil;
+    [AmiciArray removeAllObjects];
+    [self loadPreferiti];
+}
+
 - (void) loadPreferiti{
    
     
-    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     
-    NSString *urlPref = [[NSString alloc] initWithFormat:@"%@Preferiti/getpreferiti.php?nick=%@",WEBSERVICEURL, valUser];
-    NSLog(@"%@",urlPref);
+    
+    
+    NSString *urlPref = [[NSString alloc] initWithFormat:@"%@Preferiti/get_preferiti.php?user=%@",WEBSERVICEURL,valUser];
+    //NSLog(@"%@",urlPref);
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -95,26 +115,28 @@
     self.preferiti = json;
     //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
     [self loadPrefer];
-    
     [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
     
     
 }
 
 - (void) loadPrefer{
-    int x=0;
+    
     for (int i = 0; i<[preferiti count]; i++) {
         @try {
             // do something that might throw an exception
             User *amico = [[User alloc] init];
             amico.name = [[preferiti objectAtIndex:i] objectForKey:@"name_f"];
-            amico.idfacebook = [[preferiti objectAtIndex:i] objectForKey:@"id_f"];
+            amico.idfacebook = [[preferiti objectAtIndex:i] objectForKey:@"id_facebook"];
+            amico.idelite = [[preferiti objectAtIndex:i] objectForKey:@"id_f"];
             [AmiciArray  addObject:amico];
         }
         @catch (NSException *exception) {
             // deal with the exception
-            //NSLog(@"eccezione");
+            ////NSLog(@"eccezione");
             if (x==0){
+                
                 [self.navigationController pushViewController:seleziona animated:YES];
                 x=1;
             }
@@ -124,6 +146,7 @@
         //prod.desc = [[prodotti objectAtIndex:i] objectForKey:@"Desc"];
             
     }
+    //[MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
 }
 
 - (void) pressedLeftButton{
@@ -156,21 +179,77 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    FriendCell *cell = (FriendCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        // carichiamo il nib della cella e assegniamolo alla
+        [[NSBundle mainBundle] loadNibNamed:@"FriendCell" owner:self options:NULL];
+        cell = itemCell;
     }
     User *amico = [AmiciArray objectAtIndex:indexPath.row];
+    cell.labelNome.text = amico.name;
+    [cell.follow setTitle:@"" forState:UIControlStateNormal];
+    [cell.follow setTag:amico.idfacebook];
+    [cell.follow setBackgroundImage:[UIImage imageNamed:@"seguogianew"] forState:UIControlStateNormal];
+    cell.follow.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [cell.follow addTarget:self action:@selector(nonseguiTo:) forControlEvents:UIControlEventTouchUpInside];
+    ////NSLog(@"ID FB ____> %@", amico.idfacebook);
+    if(![amico.idfacebook isEqualToString:@""]){
+        NSString *image_url= [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture", amico.idfacebook];
+        //NSLog(@"%@", image_url);
+        [cell.imageName setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"girandola@2x.gif"] andId:amico.idelite];
+    }
+    else{
+        cell.imageName.image = [UIImage imageNamed:@"111-user"];
+        cell.imageName.opaque = YES;
+        cell.imageName.alpha = 0.4;
+    }
     
-    cell.textLabel.text = amico.name;
-    cell.detailTextLabel.text = amico.idfacebook;
-    
-    // Configure the cell...
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
 
+- (void) nonseguiTo:(id) sender{
+    [sender setBackgroundImage:[UIImage imageNamed:@"seguinew"] forState:UIControlStateNormal];
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    //NSLog(@"%d",indexPath.row);
+    
+    User *amicofb = [AmiciArray objectAtIndex:indexPath.row];
+    [AmiciArray removeObjectAtIndex:indexPath.row];
+    
+    NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
+    ////NSLog(@"PRESSED: %@ -- %@",amicofb.,pass.text );
+    
+    NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              valUser, @"id_p",
+                              amicofb.idelite, @"id_f",
+                              nil];
+    NSError *error;
+    NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
+                                                       options:NSJSONWritingPrettyPrinted error:&error];
+    
+    //NSLog(@"%@",postData);
+    
+    
+    NSString *postLength = [NSString stringWithFormat:@"12321443"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSString *urlnick = [[NSString alloc] initWithFormat:@"%@Preferiti/remove_pref.php", WEBSERVICEURL ];
+    
+    [request setURL:[NSURL URLWithString:urlnick]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    
+    NSURLResponse *response;
+    NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
+    //NSLog(@"Reply: %@", theReply);
+    [self.tableView reloadData];
+    ////NSLog(@"%@",theReply);
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -221,6 +300,17 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // returns the same tracker you created in your app delegate
+    // defaultTracker originally declared in AppDelegate.m
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    
+    // manual screen tracking
+    [tracker sendView:@"Favorites Facebook"];
 }
 
 @end
