@@ -43,20 +43,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //NSLog(@"did");
+    NSLog(@"did");
     
     lista = [[NSArray alloc] initWithObjects:@"Accedi",@"Registrati", nil];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (FBSession.activeSession.isOpen){
-        //NSLog(@"login");
+        NSLog(@"login");
         // Yes, so just open the session (this won't display any UX).
-        //NSLog(@"LOGIN DID LOAD");
+        NSLog(@"LOGIN DID LOAD");
         [appDelegate presentTabBarController];
      
     }
     else if ([[NSUserDefaults standardUserDefaults] stringForKey:@"Username"] != nil){
         if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"FacebookID"] isEqualToString:@"NO"]){
-            //NSLog(@"login auto from App");
+            NSLog(@"login auto from App");
             [appDelegate presentTabBarController];
         }
     }
@@ -70,15 +70,15 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     if (FBSession.activeSession.isOpen){
-        //NSLog(@"login");
+        NSLog(@"login");
         // Yes, so just open the session (this won't display any UX).
-        //NSLog(@"LOGIN will LOAD");
+        NSLog(@"LOGIN will LOAD");
         [appDelegate presentTabBarController];
         
     }
     else if ([[NSUserDefaults standardUserDefaults] stringForKey:@"Username"] != nil){
         if ([[[NSUserDefaults standardUserDefaults] stringForKey:@"FacebookID"] isEqualToString:@"NO"]){
-            //NSLog(@"login auto from App");
+            NSLog(@"login auto from App");
             [appDelegate presentTabBarController];
         }
     }
@@ -162,7 +162,7 @@
     // Dispose of any resources that can be recreated.
 }
 - (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
-    //NSLog(@"open session");
+    NSLog(@"open session");
     NSArray *permissions = @[
                              @"basic_info",
                              @"email",
@@ -172,7 +172,7 @@
                                          completionHandler:^(FBSession *session,
                                                              FBSessionState state,
                                                              NSError *error) {
-                                             //NSLog(@"qua");
+                                             NSLog(@"qua");
                                              [self sessionStateChanged:session state:state error:error];
                                          }];
 }
@@ -188,11 +188,11 @@
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         //[self openSession];
-        //NSLog(@"LOGIN BOTTONE");
+        NSLog(@"LOGIN BOTTONE");
         
     } else {
         // No, display the login page.
-        //NSLog(@"LOGIN BOTTONE ELSE");
+        NSLog(@"LOGIN BOTTONE ELSE");
         [appDelegate.session closeAndClearTokenInformation];
         appDelegate.session = [[FBSession alloc] init];
         
@@ -213,7 +213,7 @@
         // users will simply close the app or switch away, without logging out; this will
         // cause the implicit cached-token login to occur on next launch of the application
         //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        //NSLog(@"ifffffff");
+        NSLog(@"ifffffff");
         //[appDelegate presentTabBarController];
         //[self.view addSubview:appDelegate.tabBarController.view];
         
@@ -221,7 +221,7 @@
         //sessione aperta quindi autologin: ovviamente poi va visto anche dal lato server elite
         
     } else {
-        //NSLog(@"LOGIN BOTTONE ELSE");
+        NSLog(@"LOGIN BOTTONE ELSE");
         [appDelegate.session closeAndClearTokenInformation];
         appDelegate.session = [[FBSession alloc] init];
         
@@ -246,8 +246,8 @@
            NSError *error) {
              if (!error) {
                  
-                 //NSLog(@"%@", user.name);
-                 //NSLog(@"%@", user.id);
+                 NSLog(@"%@", user.name);
+                 NSLog(@"%@", user.id);
              }
          }];
     }
@@ -266,7 +266,7 @@
        FBSessionState state, NSError *error) {
          [self sessionStateChanged:session state:state error:error];
      }];
-    //NSLog(@"test");
+    NSLog(@"test");
     
 }
 */
@@ -277,36 +277,36 @@
                       state:(FBSessionState) state
                       error:(NSError *)error
 {
-    //NSLog(@"apro aa");
+    NSLog(@"apro aa");
     switch (state) {
         case FBSessionStateOpen:
-            //NSLog(@"apro");
+            NSLog(@"apro");
             if (!error) {
                 // We have a valid session
-                //NSLog(@"User session found");
-                //NSLog(@"OPEN SESSION");
+                NSLog(@"User session found");
+                NSLog(@"OPEN SESSION");
                 if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
-                    //NSLog(@"Non Registrato");
+                    NSLog(@"Non Registrato");
                     NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
                     [self.navigationController pushViewController:nick animated:YES];
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
                     
                 }
                 else{
-                    //NSLog(@"Else");
+                    NSLog(@"Else");
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     [appDelegate  presentTabBarController];
                 }
             }
             break;
-        case FBSessionStateClosed:{ //NSLog(@"Chiusa");
+        case FBSessionStateClosed:{ NSLog(@"Chiusa");
         }
-        case FBSessionStateClosedLoginFailed:{ //NSLog(@"Fail");
+        case FBSessionStateClosedLoginFailed:{ NSLog(@"Fail");
         }
             [FBSession.activeSession closeAndClearTokenInformation];
             break;
         default:
-            { //NSLog(@"Niente");
+            { NSLog(@"Niente");
             }
             break;
     }
@@ -334,9 +334,9 @@
 {
     switch (state) {
         case FBSessionStateOpen: {
-                //NSLog(@"OPEN SESSION");
+                NSLog(@"OPEN SESSION");
             if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
-                //NSLog(@"Non Registrato");
+                NSLog(@"Non Registrato");
                 NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
                 [self.navigationController pushViewController:nick animated:YES];
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
@@ -345,7 +345,7 @@
                 
             }
             else{
-                //NSLog(@"Else");
+                NSLog(@"Else");
                 AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                 [appDelegate  presentTabBarController];
             }

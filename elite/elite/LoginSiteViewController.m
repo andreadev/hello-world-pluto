@@ -81,7 +81,7 @@
 
 - (void) pressedLeftButton{
     
-    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               mail.text, @"username",
                               pass.text, @"password",
@@ -92,7 +92,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -110,7 +110,7 @@
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
     
     if ([theReply isEqualToString:@"0"]) {
-        //NSLog(@"LOGIN NON RIUSCITO");
+        NSLog(@"LOGIN NON RIUSCITO");
         [[[TTAlertView alloc] initWithTitle:@"Ops..."
                                     message:@"Login non corretta!Riprova.."
                                    delegate:self
@@ -118,12 +118,12 @@
                           otherButtonTitles:nil]
          show];
     } else {
-        //NSLog(@"LOGIN RIUSCITO");
+        NSLog(@"LOGIN RIUSCITO");
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
         NSString *valueSave = mail.text;
         [[NSUserDefaults standardUserDefaults] setObject:valueSave forKey:@"Username"];
         theReply = [theReply stringByReplacingOccurrencesOfString:@" " withString:@""];
-        //NSLog(@"%@",theReply);
+        NSLog(@"%@",theReply);
         [[NSUserDefaults standardUserDefaults] setObject:theReply forKey:@"UserID"];
         
         [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"FacebookID"];
@@ -132,7 +132,7 @@
         
         
     }
-    ////NSLog(@"%d",[json count]);
+    //NSLog(@"%d",[json count]);
     
 }
 

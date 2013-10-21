@@ -121,13 +121,13 @@
     }
     
     NSString *appToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"Token"];
-    //NSLog(@"%@", appToken);
+    NSLog(@"%@", appToken);
     
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
-    //NSLog(@" TOKEN %@", tokenData.accessToken);
+    NSLog(@" TOKEN %@", tokenData.accessToken);
     NSString *tok = [[NSString alloc] initWithFormat:@"%@",tokenData ];
     
-    //NSLog(@"PRESSED: %@",nick.text );
+    NSLog(@"PRESSED: %@",nick.text );
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               nick.text, @"username",
                               utente.idfacebook, @"facebook",
@@ -141,7 +141,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -157,19 +157,19 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
+    NSLog(@"Reply: %@", theReply);
     
     //conrollo risposta
     if ([theReply isEqualToString:@"0"]) {
-        //NSLog(@"Creo NON RIUSCITO");
+        NSLog(@"Creo NON RIUSCITO");
     } else {
-        //NSLog(@"Creo RIUSCITO");
+        NSLog(@"Creo RIUSCITO");
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
         [[NSUserDefaults standardUserDefaults] setObject:nick.text forKey:@"Username"];
-        //NSLog(@"%@",theReply);
+        NSLog(@"%@",theReply);
         theReply = [theReply stringByReplacingOccurrencesOfString:@" " withString:@""];
-        //NSLog(@"%@",theReply);
+        NSLog(@"%@",theReply);
         [[NSUserDefaults standardUserDefaults] setObject:theReply forKey:@"UserID"];
         [[NSUserDefaults standardUserDefaults] setObject:utente.idfacebook forKey:@"FacebookID"];
         //[self.navigationController popToRootViewControllerAnimated:YES];
@@ -189,13 +189,13 @@
            NSError *error) {
              if (!error) {
                  //self.title = user.name;
-                 //NSLog(@"%@", user.name);
-                 //NSLog(@"%@", user.id);
+                 NSLog(@"%@", user.name);
+                 NSLog(@"%@", user.id);
                  utente = [[User alloc] init];
                  utente.name = user.name;
                  utente.idfacebook = user.id;
                  utente.email= [user objectForKey:@"email"];
-                 //NSLog(@"USER: %@,ID %@, MAIL %@",utente.user,utente.idfacebook,utente.email);
+                 NSLog(@"USER: %@,ID %@, MAIL %@",utente.user,utente.idfacebook,utente.email);
         
              }
          }];

@@ -97,13 +97,13 @@
                                withObject:data waitUntilDone:YES]; });
     }
     @catch (NSException *exception) {
-        //NSLog(@"No connect");
+        NSLog(@"No connect");
     }
 
 }
 
 - (void)dropViewDidBeginRefreshing{
-    //NSLog(@"pull");
+    NSLog(@"pull");
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -209,18 +209,18 @@
         cell.oldPrice.font = [UIFont fontWithName:@"Helvetica" size:16];
     }
     Prodotto *pro;
-    //NSLog(@"entro");
+    NSLog(@"entro");
     @try {
         pro = [ProdottiArray objectAtIndex:indexPath.row];
     }
     @catch (NSException *exception) {
-        //NSLog(@"eccezione");
+        NSLog(@"eccezione");
     }
     
     
     cell.nameProd.text = pro.name;
     float a = [pro.oldprezzo floatValue];
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     float sconto;
     if (isConsigliato) {
         sconto = [pro.myCodeValue floatValue];
@@ -230,7 +230,7 @@
     }
     
     a = a-(a*sconto);
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
@@ -279,7 +279,7 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     //self.tableView.contentOffset = CGPointMake(0.0, 90.0);
-    //NSLog(@"%@", urlProdotti);
+    NSLog(@"%@", urlProdotti);
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -290,7 +290,7 @@
 
 -(void)pressedLeftButton
 {
-    //NSLog(@"Account");
+    NSLog(@"Account");
     UserInfoView *userinfo = [[UserInfoView alloc] initWithNibName:@"UserInfoView" bundle:nil];
     [self.navigationController pushViewController:userinfo animated:YES];
     
@@ -413,7 +413,7 @@
 }
 
 - (void)consigliati{
-    //NSLog(@"CONSIGLIATO");
+    NSLog(@"CONSIGLIATO");
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     isConsigliato = true;
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
@@ -424,7 +424,7 @@
 }
 
 - (void)consigliatomi{
-    //NSLog(@"MI HANNO CONSIGLIATO");
+    NSLog(@"MI HANNO CONSIGLIATO");
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     isConsigliato = false;
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];

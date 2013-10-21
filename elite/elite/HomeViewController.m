@@ -105,24 +105,24 @@
 
     }
     @catch (NSException *exception) {
-        //NSLog (@"No internet connection");
+        NSLog (@"No internet connection");
     }
     
 }
 
 - (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
-    //NSLog(@"pull");
+    NSLog(@"pull");
     prodotti = nil;
     
     BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
     
     
     if(locationAllowed == NO){
-        //NSLog(@"fatto");
+        NSLog(@"fatto");
         [self.refreshControl endRefreshing];
     }
     else{
-        //NSLog(@"localizz");
+        NSLog(@"localizz");
         [locationManager startUpdatingLocation];
     }
     //[self loadProducts];
@@ -170,7 +170,7 @@
     int x=0;
     for (int i = 0; i<[prodotti count]; i++) {
         @try {
-            //NSLog(@"istanzio");
+            NSLog(@"istanzio");
             Prodotto *prod = [[Prodotto alloc] init];
             prod.idprodotto = [[prodotti objectAtIndex:i] objectForKey:@"ID"];
             prod.name = [[prodotti objectAtIndex:i] objectForKey:@"Name"];
@@ -189,7 +189,7 @@
         }
         @catch (NSException *exception) {
             // deal with the exception
-            ////NSLog(@"eccezione");
+            //NSLog(@"eccezione");
             //PreferitiView *pref = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
             //[self.navigationController pushViewController:pref animated:YES];
             if(x==0){
@@ -236,21 +236,21 @@
         cell.oldPrice.font = [UIFont fontWithName:@"Helvetica" size:16];
     }
     Prodotto *pro;
-    //NSLog(@"entro");
+    NSLog(@"entro");
     @try {
           pro = [ProdottiArray objectAtIndex:indexPath.row];
     }
     @catch (NSException *exception) {
-        //NSLog(@"eccezione");
+        NSLog(@"eccezione");
     }
     
         
     cell.nameProd.text = pro.name;
     float a = [pro.oldprezzo floatValue];
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     float sconto = [pro.privateCodeValue floatValue];
     a = a-(a*sconto);
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
@@ -312,7 +312,7 @@
     [locationManager stopUpdatingLocation];
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     urlProdotti = [[NSString alloc] initWithFormat:@"%@Prodotti/get_last_products_geoloc.php?lat=%@&lng=%@&dist=300&user=%@", WEBSERVICEURL,lat,lon,valUser ];
-    //NSLog(@"%@", urlProdotti);
+    NSLog(@"%@", urlProdotti);
     prodotti = nil;
     
    
@@ -321,7 +321,7 @@
     
     BOOL locationAllowed = [CLLocationManager locationServicesEnabled];
     if(locationAllowed == YES){
-        //NSLog(@"localizzazione attivata");
+        NSLog(@"localizzazione attivata");
         if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
             [[ALAlertBannerManager sharedManager] showAlertBannerInView:self.navigationController.view
                                                                   style:ALAlertBannerStyleFailure
@@ -333,14 +333,14 @@
         }else{
             reach.reachableBlock = ^(Reachability*reach)
             {
-                //NSLog(@"REACHABLE!");
+                NSLog(@"REACHABLE!");
                 [ProdottiArray removeAllObjects];
                 BOOL doit = [[NSUserDefaults standardUserDefaults] boolForKey:@"doit"];
-                //NSLog(@"valore %hhd", doit);
+                NSLog(@"valore %hhd", doit);
                 
                 if (doit == NO){
                     [self loadProducts];
-                    //NSLog(@"load");
+                    NSLog(@"load");
                 }
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"doit"];
                 
@@ -349,7 +349,7 @@
         }
         reach.unreachableBlock = ^(Reachability*reach)
         {
-            //NSLog(@"UNREACHABLE!");
+            NSLog(@"UNREACHABLE!");
             [self.refreshControl endRefreshing];
             [[ALAlertBannerManager sharedManager] showAlertBannerInView:self.navigationController.view
                                                                   style:ALAlertBannerStyleFailure
@@ -362,7 +362,7 @@
         };
     }
     else{
-        //NSLog(@"Localizzazione disabilitata");
+        NSLog(@"Localizzazione disabilitata");
         [self.refreshControl endRefreshing];
         [[ALAlertBannerManager sharedManager] showAlertBannerInView:self.navigationController.view
                                                               style:ALAlertBannerStyleFailure
@@ -382,7 +382,7 @@
 }
 
 -(void)getProdLocalized{
-    //NSLog(@"GET PROD");
+    NSLog(@"GET PROD");
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

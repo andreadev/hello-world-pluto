@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //NSLog(@"qui");
+    NSLog(@"qui");
     shopSelected.nome = @"Negozio";
     self.title = @"Negozi";
     negozi = [[NSMutableArray alloc] init];
@@ -92,13 +92,11 @@
     Shop *detailShop = [negozi objectAtIndex:indexPath.row];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
     cell.textLabel.textColor = [UIColor darkGrayColor];
-    
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
     //cell.textLabel.textColor = [UIColor darkGrayColor];
-    
     cell.textLabel.text = detailShop.nome;
     cell.detailTextLabel.text = detailShop.indirizzo;
-    //NSLog(@"%@",detailShop.nome);
+    NSLog(@"%@",detailShop.nome);
     
     return cell;
 }
@@ -106,7 +104,7 @@
 - (void)seeNegozi {
 
     NSString * url = [[NSString alloc] initWithFormat:@"http://www.eliteadvice.it/webservice/Negozi/get_stores_get.php?lat=%@&lng=%@&dist=50", latitudine, longitudine];
-    //NSLog(@"%@",url);
+    NSLog(@"%@",url);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -122,7 +120,6 @@
                      JSONObjectWithData:responseData //1
                      options:kNilOptions error:nil];
     shops = json;
-    //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
     [self loadNegozi];
     [self.tableView reloadData];
     
@@ -131,23 +128,22 @@
 }
 
 - (void) loadNegozi{
+    @try {
     for (int i =0 ; i< [shops count]; i++) {
-        @try {
+        
             Shop *nuovoShop = [[Shop alloc] init];
             nuovoShop.idnegozio = [[shops objectAtIndex:i] objectForKey:@"ID"];
             nuovoShop.nome = [[shops objectAtIndex:i] objectForKey:@"Name"];
             nuovoShop.indirizzo= [[shops objectAtIndex:i] objectForKey:@"Address"];
-            //NSLog(@"NEGOZIO");
-            //NSLog(@"%@",nuovoShop.nome);
+            NSLog(@"NEGOZIO");
+            NSLog(@"%@",nuovoShop.nome);
             [negozi addObject:nuovoShop];
         }
-        @catch (NSException *exception) {
-            //NSLog(@"No negozi");
-        }
-        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"No negozi");
     }
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    //NSLog(@"count: %d", [negozi count]);
 }
 
 
@@ -196,8 +192,8 @@
 {
     shopSelected = [negozi objectAtIndex:indexPath.row];
     NSString * nam = shopSelected.nome;
-    //NSLog(@"NOME %@",nam);
-    //NSLog(@"INDIRIZZO %@",shopSelected.indirizzo);
+    NSLog(@"NOME %@",nam);
+    NSLog(@"INDIRIZZO %@",shopSelected.indirizzo);
     //loadDetail.negozio =nam;
     //prodView.negozio = nam;
     //prodView.moreShop.titleLabel.text = nam;

@@ -65,9 +65,9 @@
     //self.where.text = prod.where;
     /*float a = [prod.oldprezzo floatValue];
     float sconto = [prod.privateCodeValue floatValue];
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     a = a-(a*sconto);
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
@@ -132,7 +132,7 @@
         return 70.;
     }
     if ([expandedPaths containsObject:indexPath]) {
-        //NSLog(@"ricarico cella");
+        NSLog(@"ricarico cella");
         return 60.;
     }
     else {
@@ -164,10 +164,10 @@
         float sconto = [prod.privateCodeValue floatValue];
         
         
-        //NSLog(@"%f",a);
+        NSLog(@"%f",a);
         a = a-(a*sconto);
 
-        //NSLog(@"Prezzo scontato %f",a);
+        NSLog(@"Prezzo scontato %f",a);
         
         NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
         [formatter setMaximumFractionDigits:2];
@@ -198,7 +198,7 @@
         
         if ([isProfilo isEqualToString:@"YES"]){
             pricesVal.text = prod.oldprezzo;
-            //NSLog(@"CASAAAAAAAA");
+            NSLog(@"CASAAAAAAAA");
         }
         
         
@@ -224,7 +224,7 @@
         wheresVal.backgroundColor = [UIColor clearColor];
         wheresVal.text = prod.where;
         [cell.contentView addSubview:wheresVal];
-        //NSLog(@"%@",prod.address);
+        NSLog(@"%@",prod.address);
         
         UILabel *wheresVall = [[UILabel alloc]initWithFrame:CGRectMake(120, 22, 200, 60)];
         wheresVall.font = [UIFont fontWithName:@"Helvetica" size:15];
@@ -234,7 +234,7 @@
         wheresVall.lineBreakMode = NSLineBreakByTruncatingTail;
         wheresVall.numberOfLines = 0;
         [cell.contentView addSubview:wheresVall];
-        //NSLog(@"%@",prod.address);
+        NSLog(@"%@",prod.address);
         
         UILabel *dist = [[UILabel alloc]initWithFrame:CGRectMake(10, 72, 200, 30)];
         dist.font = [UIFont fontWithName:@"Helvetica" size:15];
@@ -368,7 +368,7 @@
 }
 
 -(void) imageTapped{
-    //NSLog(@"Tapped");
+    NSLog(@"Tapped");
     NSArray * array = [prod.urlfoto componentsSeparatedByString:@"/"];
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@", WEBSERVICEURL, [array objectAtIndex:[array count]-1] ];
     
@@ -577,7 +577,7 @@
     
     
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
-    ////NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
     
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               valUser, @"id_p",
@@ -589,7 +589,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -605,15 +605,15 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
-    ////NSLog(@"%@",theReply);
+    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"%@",theReply);
     
     if ([theReply rangeOfString:@"Array1"].location == NSNotFound) {
-        //NSLog(@"ADD NON RIUSCITO");
+        NSLog(@"ADD NON RIUSCITO");
         TTAlertView *okAlert = [[TTAlertView alloc] initWithTitle:@"Prodotto non Aggiunto!" message:@"Il Prodotto è già nella whishlist!" delegate:nil cancelButtonTitle:@"Continua" otherButtonTitles:nil];
         [okAlert show];
     } else {
-        //NSLog(@"ADD LOGIN RIUSCITO");
+        NSLog(@"ADD LOGIN RIUSCITO");
         
         TTAlertView *okAlert = [[TTAlertView alloc] initWithTitle:@"Successo!" message:@"Prodotto aggiunto correttamente alla tua wishlist" delegate:nil cancelButtonTitle:@"Continua" otherButtonTitles:nil];
         [okAlert show];
@@ -634,10 +634,10 @@
      }
      else{
          [expandedPaths addObject:indexPath];
-         //NSLog(@"ciao");
+         NSLog(@"ciao");
      }
       [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-     //NSLog(@"%@",indexPath);
+     NSLog(@"%@",indexPath);
      */
      DetailViewController *detail = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
      UINavigationController *navDet = [[UINavigationController alloc] initWithRootViewController:detail];

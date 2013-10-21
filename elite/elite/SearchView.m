@@ -69,8 +69,8 @@
     [super viewDidUnload];
 }
 - (IBAction)search:(id)sender {
-    //NSLog(@"%@",searchText.text);
-    //NSLog(@"%d",segment.selectedSegmentIndex);
+    NSLog(@"%@",searchText.text);
+    NSLog(@"%d",segment.selectedSegmentIndex);
     
 }
 - (IBAction)valueChange:(id)sender {
@@ -87,7 +87,7 @@
         
     searchString = [[NSString alloc] initWithFormat:@"%@Prodotti/find_products_distance.php?words=%@&?category=%@&lat=%@&lon=%@&user=%@", WEBSERVICEURL ,searchText.text,categoriaid,lat,lon,valUser ];
     }
-    //NSLog(@"%@", searchString);
+    NSLog(@"%@", searchString);
     ProdottiView *result = [[ProdottiView alloc] initWithNibName:@"ProdottiView" bundle:nil];
     result.urlProdotti = searchString;
     
@@ -97,13 +97,13 @@
 }
 
 - (IBAction)done:(id)sender {
-    //NSLog(@"done");
+    NSLog(@"done");
     [toolBar setHidden:YES];
     [category setHidden:YES];
 }
 
 - (IBAction)seeCategory:(id)sender {
-    //NSLog(@"category");
+    NSLog(@"category");
     categorieView = [[CategoryView alloc] initWithNibName:@"CategoryView" bundle:nil];
     navCate = [[UINavigationController alloc] initWithRootViewController:categorieView];
     categorianome = @"Seleziona Categoria";

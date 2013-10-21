@@ -68,7 +68,7 @@
 }
 
 - (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
-    //NSLog(@"pull");
+    NSLog(@"pull");
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -162,16 +162,16 @@
         cell = itemCell;
         
     }
-    //NSLog(@"entro");
+    NSLog(@"entro");
     Prodotto *pro = [filteredListContent objectAtIndex:indexPath.row];
     
     
     cell.nameProd.text = pro.name;
     float a = [pro.oldprezzo floatValue];
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     float sconto = [pro.privateCodeValue floatValue];
     a = a-(a*sconto);
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
@@ -190,8 +190,8 @@
     //i--;
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@",WEBSERVICEURL ,[array objectAtIndex:[array count]-1] ];
     
-    ////NSLog(@"%@",[array objectAtIndex:i]);
-    //NSLog(@"%@",pro.urlfoto);
+    //NSLog(@"%@",[array objectAtIndex:i]);
+    NSLog(@"%@",pro.urlfoto);
     
     [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"53-house"]];
     //[cell.imageView setImageFromUrl:[[NSURL alloc] initWithString:pro.url] defaultImage:@"53-house"];
@@ -203,7 +203,7 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     //self.tableView.contentOffset = CGPointMake(0.0, 90.0);
-    //NSLog(@"%@", urlProdotti);
+    NSLog(@"%@", urlProdotti);
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];

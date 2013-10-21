@@ -863,7 +863,7 @@ static CGFloat kToolBarViewHeightLadnScape = 100;
             break;
         }
     }
-    //NSLog(@"%i,%i",index,_currentPageIndex);
+    NSLog(@"%i,%i",index,_currentPageIndex);
     return index;
 }
 
@@ -953,7 +953,7 @@ static CGFloat kToolBarViewHeightLadnScape = 100;
     NSDictionary *info = [notification userInfo];
     id <CXPhotoProtocol> photo = [notification object];
     NSError *error = [info objectForKey:@"error"];
-    //NSLog(@"error:%@",error);
+    NSLog(@"error:%@",error);
     //show failure view
     CXZoomingScrollView *page = [self pageDisplayingPhoto:photo];
     if (page)

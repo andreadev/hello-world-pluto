@@ -81,7 +81,7 @@
 }
 
 - (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
-    //NSLog(@"pull");
+    NSLog(@"pull");
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -139,7 +139,7 @@
         }
         @catch (NSException *exception) {
             // deal with the exception
-            ////NSLog(@"eccezione");
+            //NSLog(@"eccezione");
             //PreferitiView *pref = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
             //[self.navigationController pushViewController:pref animated:YES];
             if(x==0){
@@ -189,21 +189,21 @@
         cell.oldPrice.font = [UIFont fontWithName:@"Helvetica" size:16];
     }
     Prodotto *pro;
-    //NSLog(@"entro");
+    NSLog(@"entro");
     @try {
         pro = [ProdottiArray objectAtIndex:indexPath.row];
     }
     @catch (NSException *exception) {
-        //NSLog(@"eccezione");
+        NSLog(@"eccezione");
     }
     
     
     cell.nameProd.text = pro.name;
     float a = [pro.oldprezzo floatValue];
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     float sconto = [pro.privateCodeValue floatValue];
     a = a-(a*sconto);
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
@@ -233,7 +233,7 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     //self.tableView.contentOffset = CGPointMake(0.0, 90.0);
-    //NSLog(@"%@", urlProdotti);
+    NSLog(@"%@", urlProdotti);
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -244,7 +244,7 @@
 
 -(void)pressedLeftButton
 {
-    //NSLog(@"Account");
+    NSLog(@"Account");
 }
 
 
@@ -295,7 +295,7 @@
         NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                            options:NSJSONWritingPrettyPrinted error:&error];
         
-        //NSLog(@"%@",postData);
+        NSLog(@"%@",postData);
         
         
         NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -311,13 +311,13 @@
         NSURLResponse *response;
         NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
         NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-        //NSLog(@"Reply: %@", theReply);
+        NSLog(@"Reply: %@", theReply);
         
         //conrollo risposta
         if ([theReply isEqualToString:@"0"]) {
-            //NSLog(@"Creo NON RIUSCITO");
+            NSLog(@"Creo NON RIUSCITO");
         } else {
-            //NSLog(@"Creo RIUSCITO");
+            NSLog(@"Creo RIUSCITO");
             
         }
     }

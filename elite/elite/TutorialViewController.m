@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //NSLog(@"intro");
+    NSLog(@"intro");
     //NSFileManager *manager = [NSFileManager defaultManager];
     
     NSError *error;
@@ -39,9 +39,9 @@
     if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
         [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
     /*if (error)
-        //NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+        NSLog(@"Error creating directory path: %@", [error localizedDescription]);
     else
-        //NSLog(@"CREATA CARTELLA");*/
+        NSLog(@"CREATA CARTELLA");*/
     /*NSArray *paths = (NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES));
     NSString *cacheDir = [paths objectAtIndex:0];
     
@@ -60,7 +60,7 @@
                             attributes:attr
                                  error:&error];
         if (error)
-            //NSLog(@"Error creating directory path: %@", [error localizedDescription]);
+            NSLog(@"Error creating directory path: %@", [error localizedDescription]);
     }*/
     
     //self.title=@"Prima";
@@ -85,8 +85,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    //NSLog(@"TUTORIAL");
-    //NSLog(@"tento");
+    NSLog(@"TUTORIAL");
+    NSLog(@"tento");
     
     //STEP 1 Construct Panels
     MYIntroductionPanel *panel = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"tut1"] title:@"" description:@""];
@@ -122,14 +122,14 @@
 
 -(void)introductionDidFinishWithType:(MYFinishType)finishType{
     if (finishType == MYFinishTypeSkipButton) {
-        //NSLog(@"Did Finish Introduction By Skipping It");
+        NSLog(@"Did Finish Introduction By Skipping It");
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate  presentLoginController];
         
     }
     else if (finishType == MYFinishTypeSwipeOut){
-        //NSLog(@"Did Finish Introduction By Swiping Out");
+        NSLog(@"Did Finish Introduction By Swiping Out");
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate  presentLoginController];
@@ -141,7 +141,7 @@
 }
 
 -(void)introductionDidChangeToPanel:(MYIntroductionPanel *)panel withIndex:(NSInteger)panelIndex{
-    //NSLog(@"%@ \nPanelIndex: %d", panel.Description, panelIndex);
+    NSLog(@"%@ \nPanelIndex: %d", panel.Description, panelIndex);
 }
 
 
@@ -155,10 +155,10 @@
 
 
 - (void) nextButtonTapped{
-    //NSLog(@"Cambia immagine");
+    NSLog(@"Cambia immagine");
 }
 - (void) skipButtonTapped{
-    //NSLog(@"Chiudi");
+    NSLog(@"Chiudi");
     [self.view removeFromSuperview];
     
 }

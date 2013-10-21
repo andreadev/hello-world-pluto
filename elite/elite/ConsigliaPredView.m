@@ -64,7 +64,7 @@
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     
     NSString *urlPref = [[NSString alloc] initWithFormat:@"%@Preferiti/get_preferiti.php?user=%@",WEBSERVICEURL, valUser];
-    //NSLog(@"%@",urlPref);
+    NSLog(@"%@",urlPref);
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -82,7 +82,7 @@
                      options:kNilOptions error:nil];
     self.preferiti = json;
     //TmpTitle = [[NSMutableArray alloc] initWithCapacity:[json count]];
-    //NSLog(@"%d", [preferiti count]);
+    NSLog(@"%d", [preferiti count]);
     
     [self loadPrefer];
     
@@ -100,13 +100,13 @@
             amico.name = [[preferiti objectAtIndex:i] objectForKey:@"name_f"];
             amico.idfacebook = [[preferiti objectAtIndex:i] objectForKey:@"id_facebook"];
             amico.idelite = [[preferiti objectAtIndex:i] objectForKey:@"id_f"];
-            //NSLog(@"ID AMICO---> %@",amico.idelite);
+            NSLog(@"ID AMICO---> %@",amico.idelite);
             amico.selected = @"0";
             [AmiciArray  addObject:amico];
         }
         @catch (NSException *exception) {
             // deal with the exception
-            ////NSLog(@"eccezione");
+            //NSLog(@"eccezione");
             if (x==0){
                 //alert
                 TTAlertView *alert =[[TTAlertView alloc] initWithTitle:@"Preferiti" message:@"Non hai nessun preferito" delegate:self cancelButtonTitle:@"Continua" otherButtonTitles:nil];
@@ -126,10 +126,10 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     
     
-    //NSLog(@"consiglio");
+    NSLog(@"consiglio");
     NSString *valUserID = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
-    //NSLog(@"USERNAME: %@",valUser);
+    NSLog(@"USERNAME: %@",valUser);
     
     NSString *ima = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, prod.idprodotto ];
     //ima = [[NSString alloc] initWithFormat:@]
@@ -164,7 +164,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -182,7 +182,7 @@
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
     {
         NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"%@",result);
+        NSLog(@"%@",result);
         
         [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
         NSString *alertText = @"Hai consigliato correttamente \n il tuo prodotto";
@@ -196,7 +196,7 @@
     }];
     //NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
     //[MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    ////NSLog(@"Reply: %@", theReply);
+    //NSLog(@"Reply: %@", theReply);
     
     /*[MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
     NSString *alertText = @"Hai consigliato correttamente \n il tuo prodotto";
@@ -210,7 +210,7 @@
     if ([[FBSession activeSession]isOpen]) {
      
         if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
-            //NSLog(@"sessione non aperta");
+            NSLog(@"sessione non aperta");
             [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                                defaultAudience:FBSessionDefaultAudienceFriends
                                                   allowLoginUI:YES
@@ -218,17 +218,17 @@
                                                  if (!error && status == FBSessionStateOpen) {
                                                      [self publishStory];
                                                  }else{
-                                                     //NSLog(@"error");
+                                                     NSLog(@"error");
                                                  }
                                              }];
             
         }else{
-            //NSLog(@"sessione aperta");
+            NSLog(@"sessione aperta");
             [self publishStory];
         }
     }else{
      
-        //NSLog(@"sessione riaperta");
+        NSLog(@"sessione riaperta");
         [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                            defaultAudience:FBSessionDefaultAudienceFriends
                                               allowLoginUI:YES
@@ -236,7 +236,7 @@
                                              if (!error && status == FBSessionStateOpen) {
                                                  [self publishStory];
                                              }else{
-                                                 //NSLog(@"error");
+                                                 NSLog(@"error");
                                              }
                                          }];
     }*/
@@ -361,7 +361,7 @@
  */
 
 - (void)alertView:(TTAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    //NSLog(@"esco alert");
+    NSLog(@"esco alert");
     //[self.navigationController popToRootViewControllerAnimated:YES];
     if([alertView.titleLabel.text isEqualToString:@"Preferiti"]){
         [self.navigationController popViewControllerAnimated:YES];
@@ -380,19 +380,19 @@
 {
     User *amico = [AmiciArray objectAtIndex:indexPath.row];
     if([amico.selected isEqualToString:@"0"]){
-        //NSLog(@"%@",@"asd");
+        NSLog(@"%@",@"asd");
         amico.selected = @"1";
         selezionati =  [selezionati stringByAppendingString:@","];
         selezionati = [selezionati stringByAppendingString:amico.idelite];
         
-        //NSLog(@"%@",selezionati);
+        NSLog(@"%@",selezionati);
     }
     else{
         NSString *idamico = [amico.idelite stringByAppendingString:@","];
         selezionati = [selezionati stringByReplacingOccurrencesOfString:idamico withString:@""];
         amico.selected = @"0";
-        //NSLog(@"id --->%@",idamico);
-        //NSLog(@"%@",selezionati);
+        NSLog(@"id --->%@",idamico);
+        NSLog(@"%@",selezionati);
     }
     [self.tableView reloadData];
     

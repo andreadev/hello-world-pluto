@@ -82,7 +82,7 @@
 }
 
 - (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
-    //NSLog(@"pull");
+    NSLog(@"pull");
     preferiti = nil;
     [AmiciArray removeAllObjects];
     [self loadPreferiti];
@@ -96,7 +96,7 @@
     
     
     NSString *urlPref = [[NSString alloc] initWithFormat:@"%@Preferiti/get_preferiti.php?user=%@",WEBSERVICEURL,valUser];
-    //NSLog(@"%@",urlPref);
+    NSLog(@"%@",urlPref);
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -134,7 +134,7 @@
         }
         @catch (NSException *exception) {
             // deal with the exception
-            ////NSLog(@"eccezione");
+            //NSLog(@"eccezione");
             if (x==0){
                 
                 [self.navigationController pushViewController:seleziona animated:YES];
@@ -192,10 +192,10 @@
     [cell.follow setBackgroundImage:[UIImage imageNamed:@"seguogianew"] forState:UIControlStateNormal];
     cell.follow.titleLabel.textAlignment = NSTextAlignmentCenter;
     [cell.follow addTarget:self action:@selector(nonseguiTo:) forControlEvents:UIControlEventTouchUpInside];
-    ////NSLog(@"ID FB ____> %@", amico.idfacebook);
+    //NSLog(@"ID FB ____> %@", amico.idfacebook);
     if(![amico.idfacebook isEqualToString:@""]){
         NSString *image_url= [[NSString alloc] initWithFormat:@"http://graph.facebook.com/%@/picture", amico.idfacebook];
-        //NSLog(@"%@", image_url);
+        NSLog(@"%@", image_url);
         [cell.imageName setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"girandola@2x.gif"] andId:amico.idelite];
     }
     else{
@@ -213,13 +213,13 @@
     [sender setBackgroundImage:[UIImage imageNamed:@"seguinew"] forState:UIControlStateNormal];
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    //NSLog(@"%d",indexPath.row);
+    NSLog(@"%d",indexPath.row);
     
     User *amicofb = [AmiciArray objectAtIndex:indexPath.row];
     [AmiciArray removeObjectAtIndex:indexPath.row];
     
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
-    ////NSLog(@"PRESSED: %@ -- %@",amicofb.,pass.text );
+    //NSLog(@"PRESSED: %@ -- %@",amicofb.,pass.text );
     
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               valUser, @"id_p",
@@ -229,7 +229,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -246,9 +246,9 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
+    NSLog(@"Reply: %@", theReply);
     [self.tableView reloadData];
-    ////NSLog(@"%@",theReply);
+    //NSLog(@"%@",theReply);
 }
 /*
 // Override to support conditional editing of the table view.

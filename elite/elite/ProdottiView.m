@@ -54,7 +54,7 @@
     iol=0;
     ProdottiArray = [[NSMutableArray alloc] init];
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    //NSLog(@"%@",urlProdotti);
+    NSLog(@"%@",urlProdotti);
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -81,7 +81,7 @@
 }
 
 - (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl{
-    //NSLog(@"pull");
+    NSLog(@"pull");
     prodotti = nil;
     [ProdottiArray removeAllObjects];
     [self loadProducts];
@@ -123,7 +123,7 @@
         }
         @catch (NSException *exception) {
             // deal with the exception
-            ////NSLog(@"eccezione");
+            //NSLog(@"eccezione");
             //PreferitiView *pref = [[PreferitiView alloc] initWithNibName:@"PreferitiView" bundle:nil];
             //[self.navigationController pushViewController:pref animated:YES];
             if(x==0){
@@ -175,16 +175,16 @@
         cell.oldPrice.font = [UIFont fontWithName:@"Helvetica" size:16];
     }
     
-    //NSLog(@"entro");
+    NSLog(@"entro");
     Prodotto *pro = [ProdottiArray objectAtIndex:indexPath.row];
     
     
     cell.nameProd.text = pro.name;
     float a = [pro.oldprezzo floatValue];
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     float sconto = [pro.privateCodeValue floatValue];
     a = a-(a*sconto);
-    //NSLog(@"%f",a);
+    NSLog(@"%f",a);
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:2];
     [formatter setRoundingMode: NSNumberFormatterRoundUp];
@@ -196,7 +196,7 @@
     cell.whereProd.text = pro.where;
     
     
-    //NSLog(@"%@",url);
+    NSLog(@"%@",url);
     cell.prodImage.layer.cornerRadius = 9.0 ;
     cell.prodImage.layer.masksToBounds = YES ;
     cell.prodImage.layer.borderColor = [UIColor whiteColor].CGColor ;
@@ -207,8 +207,8 @@
     //i--;
     NSString *image_url= [[NSString alloc] initWithFormat:@"%@product_images/thumb/%@",WEBSERVICEURL,[array objectAtIndex:[array count]-1] ];
     
-    ////NSLog(@"%@",[array objectAtIndex:i]);
-    //NSLog(@"%@",pro.urlfoto);
+    //NSLog(@"%@",[array objectAtIndex:i]);
+    NSLog(@"%@",pro.urlfoto);
     
     [cell.prodImage setImageFromUrl:[[NSURL alloc] initWithString:image_url] defaultImage:[UIImage imageNamed:@"girandola@2x.gif"] andId:pro.idprodotto];
     cell.oldPrice.textAlignment = NSTextAlignmentRight;

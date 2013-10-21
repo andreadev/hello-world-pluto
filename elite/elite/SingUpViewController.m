@@ -72,9 +72,9 @@
         
         return;
     }
-    //NSLog(@"PRESSED: %@ -- %@ -- %@",mail.text,pass.text,nick.text );
+    NSLog(@"PRESSED: %@ -- %@ -- %@",mail.text,pass.text,nick.text );
     NSString *appToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"Token"];
-    //NSLog(@"%@", appToken);
+    NSLog(@"%@", appToken);
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               mail.text, @"email",
                               pass.text, @"password",
@@ -87,7 +87,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -103,7 +103,7 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    ////NSLog(@"Reply: %@", theReply);
+    //NSLog(@"Reply: %@", theReply);
     if ([theReply isEqualToString:@"0"]) {
         [[[TTAlertView alloc] initWithTitle:@"Ops..."
                                     message:@"Il nick name da te scelto è già utilizzato"
@@ -121,13 +121,13 @@
          show];
     }
     else {
-        //NSLog(@"Creo RIUSCITO");
+        NSLog(@"Creo RIUSCITO");
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Registred"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Tutorial"];
         [[NSUserDefaults standardUserDefaults] setObject:nick.text forKey:@"Username"];
-        //NSLog(@"%@",theReply);
+        NSLog(@"%@",theReply);
         theReply = [theReply stringByReplacingOccurrencesOfString:@" " withString:@""];
-        //NSLog(@"%@",theReply);
+        NSLog(@"%@",theReply);
         [[NSUserDefaults standardUserDefaults] setObject:theReply forKey:@"UserID"];
         [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:@"FacebookID"];
         //[self.navigationController popToRootViewControllerAnimated:YES];

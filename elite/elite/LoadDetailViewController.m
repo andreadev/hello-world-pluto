@@ -142,7 +142,7 @@
     imageUploading = 1;
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     //Carico l'immagine, creo il la tupla del prodotto, ritorna l'id
-    //NSLog(@"CARICO IMMAGINE ");
+    NSLog(@"CARICO IMMAGINE ");
     NSData *imageDatas = UIImageJPEGRepresentation(imageProd,0.4);     //change Image to NSData
     //NSString *ima = [@"temp_ios" stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     if (imageDatas != nil)
@@ -171,7 +171,7 @@
             
         NSData *returnData = [NSURLConnection sendSynchronousRequest:requestimage returningResponse:nil error:nil];
         idProdotto = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-        //NSLog(@"ID PRODOTTO %@", idProdotto);
+        NSLog(@"ID PRODOTTO %@", idProdotto);
         imageUploading = 0;
         imageProd = nil;
         [[ALAlertBannerManager sharedManager] showAlertBannerInView:self.view
@@ -223,7 +223,7 @@
     if (doit == 0){
         if ([[[UIDevice currentDevice] systemVersion] floatValue] <= currentVersion)
         {
-            //NSLog(@"Running in IOS-6");
+            NSLog(@"Running in IOS-6");
             
             if(indexPath.row == 0){
                 
@@ -282,7 +282,7 @@
                 //cell.textLabel.text = [list objectAtIndex:indexPath.row];
             }
             else if(indexPath.row == 3){
-                //NSLog(@"tre");
+                NSLog(@"tre");
                 cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
                 desc = [[UITextField alloc]initWithFrame:CGRectMake(35, 10, 200, 30)];
                 desc.font = [UIFont fontWithName:@"Helvetica" size:18];
@@ -357,7 +357,7 @@
                 //cell.textLabel.text = [list objectAtIndex:indexPath.row];
             }
             else if(indexPath.row == 3){
-                //NSLog(@"tre");
+                NSLog(@"tre");
                 cell.imageView.image = [UIImage imageNamed:@"bollavuota"];
                 desc = [[UITextField alloc]initWithFrame:CGRectMake(45, 5, 200, 30)];
                 desc.font = [UIFont fontWithName:@"Helvetica" size:18];
@@ -446,10 +446,10 @@
             }
         }
         else if(indexPath.row == 3){
-            //NSLog(@"sono al tre");
+            NSLog(@"sono al tre");
             if (settedDesc == YES) {
                 //cell.imageView.image = [UIImage imageNamed:@"bollasok"];
-                //NSLog(@"sono al tre");
+                NSLog(@"sono al tre");
             }
         }
     }
@@ -544,7 +544,7 @@
     
     NSString *valUserID = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
      NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"Username"];
-    //NSLog(@"USERNAME: %@",valUser);
+    NSLog(@"USERNAME: %@",valUser);
     
     ima = [[NSString alloc] initWithFormat:@"%@product_images/%@.jpg",WEBSERVICEURL, idProdotto ];
     //ima = [[NSString alloc] initWithFormat:@]
@@ -562,7 +562,7 @@
      nil];
     
     
-    ////NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
+    //NSLog(@"%@,%@,%@,%@,%@,%@,", name.text,where.text,price.text,cat,ima,desc.text);
 
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               idProdotto,@"id",
@@ -581,7 +581,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -596,14 +596,14 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
+    NSLog(@"Reply: %@", theReply);
     
     if ([[FBSession activeSession]isOpen]) {
         /*
          * if the current session has no publish permission we need to reauthorize
          */
         if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
-            //NSLog(@"sessione non aperta");
+            NSLog(@"sessione non aperta");
             [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                                defaultAudience:FBSessionDefaultAudienceFriends
                                                   allowLoginUI:YES
@@ -611,19 +611,19 @@
                                                  if (!error && status == FBSessionStateOpen) {
                                                      [self publishStory];
                                                  }else{
-                                                     //NSLog(@"error");
+                                                     NSLog(@"error");
                                                  }
                                              }];
             
         }else{
-            //NSLog(@"sessione aperta");
+            NSLog(@"sessione aperta");
             [self publishStory];
         }
     }else{
         /*
          * open a new session with publish permission
          */
-        //NSLog(@"sessione riaperta");
+        NSLog(@"sessione riaperta");
         [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
                                            defaultAudience:FBSessionDefaultAudienceFriends
                                               allowLoginUI:YES
@@ -631,7 +631,7 @@
                                              if (!error && status == FBSessionStateOpen) {
                                                  [self publishStory];
                                              }else{
-                                                 //NSLog(@"error");
+                                                 NSLog(@"error");
                                              }
                                          }];
     }
@@ -723,7 +723,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //NSLog(@"Location");
+    NSLog(@"Location");
     
     lat =[NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
     
@@ -733,7 +733,7 @@
 
 
 - (void) reloadTabella{
-    //NSLog(@"ricarico");
+    NSLog(@"ricarico");
     [self.tabellaView reloadData];
 }
 
@@ -742,7 +742,7 @@
 }
 
 - (void)alertView:(TTAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    //NSLog(@"esco alert");
+    NSLog(@"esco alert");
     if([alertView.titleLabel.text isEqualToString:@"Ops..."]){
         
     }

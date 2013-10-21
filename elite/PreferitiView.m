@@ -96,13 +96,13 @@
 }
 
 - (void)getFriendsFirst{
-    //NSLog(@"GET FRIEND FIRST");
+    NSLog(@"GET FRIEND FIRST");
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
-    //NSLog(@" TOKEN %@", tokenData.accessToken);
+    NSLog(@" TOKEN %@", tokenData.accessToken);
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     NSString *url = [[NSString alloc] initWithFormat:@"%@Preferiti/friendlist_first.php?user=%@&acc=%@", WEBSERVICEURL,valUser ,tokenData.accessToken ];
-    //NSLog(@"%@",url);
+    NSLog(@"%@",url);
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         // Do something...
@@ -125,13 +125,13 @@
 }
 
 - (void)removeFriend{
-    //NSLog(@"REMOVE FRIEND");
+    NSLog(@"REMOVE FRIEND");
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
-    //NSLog(@" TOKEN %@", tokenData.accessToken);
+    NSLog(@" TOKEN %@", tokenData.accessToken);
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     NSString *url = [[NSString alloc] initWithFormat:@"%@Preferiti/remove_all.php?user=%@", WEBSERVICEURL,valUser ];
-    //NSLog(@"%@",url);
+    NSLog(@"%@",url);
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         // Do something...
@@ -147,13 +147,13 @@
 }
 
 - (void)getFriends{
-    //NSLog(@"GET FRIEND");
+    NSLog(@"GET FRIEND");
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     FBAccessTokenData *tokenData = [[FBSession activeSession] accessTokenData];
-    //NSLog(@" TOKEN %@", tokenData.accessToken);
+    NSLog(@" TOKEN %@", tokenData.accessToken);
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
     NSString *url = [[NSString alloc] initWithFormat:@"%@Preferiti/friendlist.php?user=%@&acc=%@", WEBSERVICEURL,valUser ,tokenData.accessToken ];
-    //NSLog(@"%@",url);
+    NSLog(@"%@",url);
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         // Do something...
@@ -183,8 +183,8 @@
            NSError *error) {
              if (!error) {
                  //self.title = user.name;
-                 //NSLog(@"%@", user.name);
-                 //NSLog(@"%@", user.id);
+                 NSLog(@"%@", user.name);
+                 NSLog(@"%@", user.id);
                  
                  
                  
@@ -210,7 +210,7 @@
 
 - (void) loadFriends{
     
-    //NSLog(@"%d",[friends count]);
+    NSLog(@"%d",[friends count]);
     if ([friends count] == 0)
         [self getFriends];
     else{
@@ -221,9 +221,9 @@
             fb.name = [[friends objectAtIndex:i] objectForKey:@"name"];
             fb.idfb= [[friends objectAtIndex:i] objectForKey:@"id"];
             [amici addObject:fb];
-            //NSLog(@"%@", fb.name);
-            //NSLog(@"%@", fb.idfb);
-            //NSLog(@"%@", fb.hasapp);
+            NSLog(@"%@", fb.name);
+            NSLog(@"%@", fb.idfb);
+            NSLog(@"%@", fb.hasapp);
             NSString *str =[NSString stringWithFormat:@"%c",[fb.name characterAtIndex:0]];
             for (int j=0; j<[indexed count]; j++){
                 NSString *lettera = [indexed objectAtIndex:j];
@@ -232,7 +232,7 @@
                     [nomicognomi[j] addObject:fb];
                 }
             }
-            ////NSLog(@"a");
+            //NSLog(@"a");
         }
     
     // crea la lista filtrata, inizializzandola con il numero di elementi dell'array "lista"
@@ -278,7 +278,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    //NSLog(@"%d",[nomicognomi[section] count]);
+    NSLog(@"%d",[nomicognomi[section] count]);
     //return [self numeroRighe:[indexed objectAtIndex:section]];
     return [nomicognomi[section] count];
     
@@ -303,8 +303,8 @@
     
     NSString *str = amicofb.name;
     str =[NSString stringWithFormat:@"%c",[str characterAtIndex:0]];
-    //NSLog(@"%d", indexPath.row);
-    //NSLog(@"%@---->%@",alph,str);
+    NSLog(@"%d", indexPath.row);
+    NSLog(@"%@---->%@",alph,str);
     
     //NSString *alphabet = [friendIndex objectAtIndex:[indexPath section]];
     //---get all states beginning with the letter---
@@ -315,15 +315,15 @@
         if ([str isEqual:alph])  {
             cell.labelNome.text = amicofb.name;
             //cell.detailTextLabel.text = amicofb.idfb;
-            //NSLog(@"%@",amicofb.idfb);
-            //NSLog(@"%@",amicofb.hasapp);
+            NSLog(@"%@",amicofb.idfb);
+            NSLog(@"%@",amicofb.hasapp);
             //int hasapp = amicofb.hasapp;
             NSString *hasApp = [[NSString alloc] initWithFormat:@"%@",amicofb.hasapp ];
-            ////NSLog(hasapp ? @"Yes" : @"No");
-            //NSLog(@"%@",hasApp);
+            //NSLog(hasapp ? @"Yes" : @"No");
+            NSLog(@"%@",hasApp);
             if ([hasApp isEqualToString:@"0"]) {
                 //INVITA
-                //NSLog(@"NO APP");
+                NSLog(@"NO APP");
                 [cell.follow setTitle:@"" forState:UIControlStateNormal];
                 [cell.follow setBackgroundImage:[UIImage imageNamed:@"invitanew"] forState:UIControlStateNormal];
                 [cell.follow setTag:amicofb.idfb];
@@ -332,12 +332,12 @@
             }
             else if ([hasApp isEqualToString:@"1"]){
                 //SEGUI
-                //NSLog(@"SI APP");
+                NSLog(@"SI APP");
                 [cell.follow setTitle:@"" forState:UIControlStateNormal];
                 [cell.follow setTag:amicofb.idfb];
                 [cell.follow setBackgroundImage:[UIImage imageNamed:@"seguinew"] forState:UIControlStateNormal];
                 //[consiglia setBackgroundImage:[UIImage imageNamed:@"consigliapapress"] forState:UIControlStateHighlighted];
-                //NSLog(@"%@",amicofb.idfb);
+                NSLog(@"%@",amicofb.idfb);
                 
                 cell.follow.titleLabel.textAlignment = NSTextAlignmentCenter;
                 [cell.follow addTarget:self action:@selector(seguiTo:) forControlEvents:UIControlEventTouchUpInside];
@@ -345,12 +345,12 @@
             }
             else if ([hasApp isEqualToString:@"2"]){
                 //SEGUI
-                //NSLog(@"SI APP");
+                NSLog(@"SI APP");
                 [cell.follow setTitle:@"" forState:UIControlStateNormal];
                 [cell.follow setTag:amicofb.idfb];
                 [cell.follow setBackgroundImage:[UIImage imageNamed:@"seguogianew"] forState:UIControlStateNormal];
                 //[consiglia setBackgroundImage:[UIImage imageNamed:@"consigliapapress"] forState:UIControlStateHighlighted];
-                //NSLog(@"%@",amicofb.idfb);
+                NSLog(@"%@",amicofb.idfb);
                 
                 cell.follow.titleLabel.textAlignment = NSTextAlignmentCenter;
                 [cell.follow addTarget:self action:@selector(nonseguiTo:) forControlEvents:UIControlEventTouchUpInside];
@@ -368,10 +368,10 @@
 }
 
 - (void) inviteTo:(id) sender{
-    //NSLog(@"%d",[sender tag]);
+    NSLog(@"%d",[sender tag]);
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    //NSLog(@"%d",indexPath.row);
+    NSLog(@"%d",indexPath.row);
     NSMutableArray *index = [nomicognomi objectAtIndex:indexPath.section];
     FBFriend *amicofb = [index objectAtIndex:indexPath.row];
     
@@ -393,8 +393,8 @@
                                            parameters:params
                                               handler:
      ^(FBWebDialogResult result, NSURL *resultURL, NSError *error){
-         //NSLog(@"%@",error);
-         //NSLog(@"%@",resultURL);
+         NSLog(@"%@",error);
+         NSLog(@"%@",resultURL);
          
      }];
     
@@ -406,12 +406,12 @@
     [sender setBackgroundImage:[UIImage imageNamed:@"seguinew"] forState:UIControlStateNormal];
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    //NSLog(@"%d",indexPath.row);
+    NSLog(@"%d",indexPath.row);
     NSMutableArray *index = [nomicognomi objectAtIndex:indexPath.section];
     FBFriend *amicofb = [index objectAtIndex:indexPath.row];
 
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
-    ////NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
     
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               valUser, @"id_p",
@@ -421,7 +421,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -438,30 +438,30 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
-    ////NSLog(@"%@",theReply);
+    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"%@",theReply);
     
     if ([theReply rangeOfString:@"Array1"].location == NSNotFound) {
-        //NSLog(@"Remove NON RIUSCITO");
+        NSLog(@"Remove NON RIUSCITO");
     } else {
-        //NSLog(@"Remove LOGIN RIUSCITO");
+        NSLog(@"Remove LOGIN RIUSCITO");
     }
     
 }
 - (void) seguiTo:(id) sender{
     //100002916262674
-    //NSLog(@"%d",[sender tag]);
-    //NSLog(@"Segui");
+    NSLog(@"%d",[sender tag]);
+    NSLog(@"Segui");
     [sender setBackgroundImage:[UIImage imageNamed:@"seguogianew"] forState:UIControlStateNormal];
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    //NSLog(@"%d",indexPath.row);
+    NSLog(@"%d",indexPath.row);
     NSMutableArray *index = [nomicognomi objectAtIndex:indexPath.section];
     FBFriend *amicofb = [index objectAtIndex:indexPath.row];
 
     
     NSString *valUser = [[NSUserDefaults standardUserDefaults] stringForKey:@"UserID"];
-    ////NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
+    //NSLog(@"PRESSED: %@ -- %@",mail.text,pass.text );
     
     NSDictionary *prodDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               valUser, @"id_p",
@@ -474,7 +474,7 @@
     NSData* postData = [NSJSONSerialization dataWithJSONObject:prodDict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
     
-    //NSLog(@"%@",postData);
+    NSLog(@"%@",postData);
     
     
     NSString *postLength = [NSString stringWithFormat:@"12321443"];
@@ -491,13 +491,13 @@
     NSURLResponse *response;
     NSData *POSTReply = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *theReply = [[NSString alloc] initWithBytes:[POSTReply bytes] length:[POSTReply length] encoding: NSASCIIStringEncoding];
-    //NSLog(@"Reply: %@", theReply);
-    ////NSLog(@"%@",theReply);
+    NSLog(@"Reply: %@", theReply);
+    //NSLog(@"%@",theReply);
     
     if ([theReply rangeOfString:@"Array1"].location == NSNotFound) {
-        //NSLog(@"ADD NON RIUSCITO");
+        NSLog(@"ADD NON RIUSCITO");
     } else {
-        //NSLog(@"ADD LOGIN RIUSCITO");
+        NSLog(@"ADD LOGIN RIUSCITO");
             
     }
     
@@ -569,7 +569,7 @@
 }
 
 - (void)alertView:(TTAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    //NSLog(@"esco alert");
+    NSLog(@"esco alert");
     if(buttonIndex == 0){
         
     }

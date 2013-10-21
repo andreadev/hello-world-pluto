@@ -73,8 +73,8 @@
     
     newImage = UIGraphicsGetImageFromCurrentImageContext();
     if(newImage == nil)
-        //NSLog(@"could not scale image");
-    //else //NSLog(@"Image size %@ // target size %@", NSStringFromCGSize(newImage.size), NSStringFromCGSize(targetSize));
+        NSLog(@"could not scale image");
+    //else NSLog(@"Image size %@ // target size %@", NSStringFromCGSize(newImage.size), NSStringFromCGSize(targetSize));
     //pop the context to get back to the default
     UIGraphicsEndImageContext();
     return newImage;
@@ -92,7 +92,7 @@
      self.layer.masksToBounds = YES;
      self.layer.frame = CGRectMake(5, 5, 70, 70);*/
     //[self setImage: defaultImage];
-    //NSLog(@"%@", url);
+    NSLog(@"%@", url);
     
     UIImage *blur1 = [UIImage imageNamed:@"girandola1"];
     UIImage *blur2 = [UIImage imageNamed:@"girandola2"];
@@ -110,7 +110,7 @@
     [self startAnimating];
     
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
+        NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
         UIImage* image = [[UIImage alloc] initWithData:[[NSData alloc] initWithContentsOfURL:url ]];
         
         NSData *imgData = UIImageJPEGRepresentation(image, 0);
@@ -129,7 +129,7 @@
         // or use the UIImage wherever you like        
         //Eseguo sul thread principale
         dispatch_async( dispatch_get_main_queue(), ^{
-            //NSLog(@"CENTRO");
+            NSLog(@"CENTRO");
             self.image = resizedImage;
             self.alpha = 0;
             
@@ -151,7 +151,7 @@
     //[self setImage: defaultImage];
     
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
+        NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
         UIImage* image = [[UIImage alloc] initWithData:[[NSData alloc] initWithContentsOfURL:url ]];
         
         NSData *imgData = UIImageJPEGRepresentation(image, 0);
@@ -321,7 +321,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
     //[self setImage: defaultImage];
     
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
+        NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
         UIImage* image = [[UIImage alloc] initWithData:[[NSData alloc] initWithContentsOfURL:url ]];
         
         NSData *imgData = UIImageJPEGRepresentation(image, 0);
@@ -391,7 +391,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
         [self startAnimating];
         
         dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            //NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
+            NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
             UIImage* image = [[UIImage alloc] initWithData:[[NSData alloc] initWithContentsOfURL:url ]];
             
             NSData *imgData = UIImageJPEGRepresentation(image, 0);
@@ -403,7 +403,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
                 return;
             }
             
-            //NSLog(@"SCARICO IMMAGINE");
+            NSLog(@"SCARICO IMMAGINE");
             
             //__block UIImage *resizedImage = [self imageByScaling:image size:self.frame.size];
             UIImage *resizedImage = [self imageWithImage:image scaledToSize:CGSizeMake(45, 45)];
@@ -413,7 +413,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
             
             //Eseguo sul thread principale
             dispatch_async( dispatch_get_main_queue(), ^{
-                //NSLog(@"ASSEGNO ");
+                NSLog(@"ASSEGNO ");
                 [self stopAnimating];
                 self.image = resizedImage;
                 self.alpha = 0;
@@ -448,7 +448,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
     __block CGRect oldFrame = self.frame;
     
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
+        NSLog(@"%@ pre", NSStringFromCGRect(self.frame));
         UIImage* image = [[UIImage alloc] initWithData:[[NSData alloc] initWithContentsOfURL:url ]];
         
         NSData *imgData = UIImageJPEGRepresentation(image, 0);

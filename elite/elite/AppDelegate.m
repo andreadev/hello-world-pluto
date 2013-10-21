@@ -126,12 +126,12 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"Tutorial"]){
         //proceed with app normally
-        //NSLog(@"TUTORIAL SI");
+        NSLog(@"TUTORIAL SI");
         
         if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
             // Yes, so just open the session (this won't display any UX).
             
-            //NSLog(@"LOGIN did LOAD");
+            NSLog(@"LOGIN did LOAD");
             [self presentTabBarController];
             
         }
@@ -143,7 +143,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
     }
     else{
         
-        //NSLog(@"TUTORIAL NO");
+        NSLog(@"TUTORIAL NO");
         tutorial = [[TutorialViewController alloc] initWithNibName:@"TutorialViewController" bundle:nil];
         self.window.rootViewController = tutorial;
     }
@@ -200,7 +200,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
              // Replace this implementation with code to handle the error appropriately.
              // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         } 
     }
@@ -272,7 +272,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-        //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    
     
@@ -327,10 +327,10 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
         case FBSessionStateOpen:
             if (!error) {
                 // We have a valid session
-                //NSLog(@"User session found");
-                //NSLog(@"OPEN SESSION");
+                NSLog(@"User session found");
+                NSLog(@"OPEN SESSION");
                 if([[NSUserDefaults standardUserDefaults] boolForKey:@"Registred"]!=YES){
-                    //NSLog(@"Non Registrato");
+                    NSLog(@"Non Registrato");
                     NickViewController *nick = [[NickViewController alloc] initWithNibName:@"NickViewController" bundle:nil];
                     
                     [loginController.navigationController pushViewController:nick animated:YES];
@@ -338,7 +338,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
                     
                 }
                 else{
-                    //NSLog(@"Else");
+                    NSLog(@"Else");
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     [appDelegate  presentTabBarController];
                 }
@@ -373,8 +373,7 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 - (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
     NSArray *permissions = @[
                              @"basic_info",
-                             @"email",
-                             @"user_likes"];
+                             @"email"];
     return [FBSession openActiveSessionWithReadPermissions:permissions
                                               allowLoginUI:allowLoginUI
                                          completionHandler:^(FBSession *session,
@@ -388,13 +387,13 @@ NSString *const WEBSERVICEURL =@"http://www.eliteadvice.it/webservice/";
 
 - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     //NSString *str = [NSString stringWithFormat:@"%@",deviceToken];
-    ////NSLog(@"This is device token%@", deviceToken);
+    //NSLog(@"This is device token%@", deviceToken);
     NSString* str = [[[[deviceToken description]
                                 stringByReplacingOccurrencesOfString: @"<" withString: @""]
                                stringByReplacingOccurrencesOfString: @">" withString: @""]
                               stringByReplacingOccurrencesOfString: @" " withString: @""];
     
-    //NSLog(@"%@",str);
+    NSLog(@"%@",str);
     [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"Token"];
     
 }
